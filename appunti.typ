@@ -73,3 +73,72 @@ Dato l'insieme $A$, la *funzione identità* su $A$ è la funzione $i_A: A arrow.
 Grazie alla funzione identità, possiamo dare una definizione alternativa di funzione inversa: data la funzione $f: A arrow.long B$ biiettiva, la sua inversa è l'unica funzione $f^(-1): B arrow.long A$ che soddisfa: $ f circ f^(-1) = f^(-1) circ f = id_A. $
 
 Possiamo vedere $f^(-1)$ come l'unica funzione che ci permette di _tornare indietro_.
+
+Definiamo un'ulteriore classificazione per le funzioni. Data $f: A arrow.long B$, diciamo che $f$ è:
+- *totale*, se è definita per _ogni_ elemento $a in A$. Formalmente, scriviamo $f(a)arrow.t$;
+- *parziale*, se è definita per _qualche_ elemento $a in A$. Formalmente, scriviamo $f(a)arrow.b$.
+
+Chiamiamo *dominio di esistenza* di $f$ l'insieme: $ text("Dom")_f = \{ a in A : f(a) arrow.b\} subset.eq A. $
+Notiamo che:
+- $text("Dom")_f subset.neq A => f text("parziale")$;
+- $text("Dom")_f = A => f text("totale")$.
+
+== Totalizzare una funzione
+
+Data $f:A -> B$ parziale, possiamo renderla totale aggiungendo un valore speciale, utilizzeremo $perp$, per tutti i valori per cui la funzione di partenza non è definita. La funzione risultante sarà: $ f': A -> B union \{ perp \}. $ Questa viene interpretata nel seguente modo: $ f'(a) = cases(
+  f(a) quad text("se ") a in text("Dom")_f,
+  perp quad text("altrimenti")
+) $
+Da qui in avanti utilizzeremo $B_perp$ come abbreviazione di $B union \{ perp \}$.
+
+== Prodotto cartesiano
+
+Chiamiamo *prodotto cartesiano* l'insieme: $ A times B = \{ (a,b) : a in A and b in B \} $ che rappresenta tutte le coppie di valori in $A$ e in $B$.
+
+In generale, il prodtto cartesiano *non è commutativo*, a meno che $A = B$.
+
+Possiamo estendere il concetto di prodotto cartesiano a $n$-uple di valori: $ A_1 times ... times A_n = \{ (a_1, ..., a_n) : a_i in A_i \}. $
+
+Ad ogni prodotto cartesiano possiamo associare una proiezione che recupera un componente della tupla: $ pi_i : A_1 times ... times A_n -> A_i. $
+
+== Insieme di funzioni
+
+Per indicare l'insieme di tutte le funzioni da $A$ a $B$, scriviamo: $ B^A = \{ f : A -> B \}. $ Viene utilizzata questa notazione in quanto la cardinalità di $B^A$ è esattamente $|B|^(|A|)$.
+
+Se può succedere che $f$ sia parziale, scriviamo: $B^A = \{ f : A -> B_perp \}.$
+
+== Funzione valutazione
+
+Dati $A, B$ e $B_perp^A$ si definisce *funzione di valutazione* la funzione: $ omega : B_perp^A times A -> B $ $ w(f,a) = f(a). $
+Tenendo fisso $a$ posso scorrere tutte le funzioni su $a$, mentre tenendo fisso $f$ riesco a trovare il grafico di $f$.
+
+#pagebreak()
+
+= Teoria della calcolabilità
+
+== Sistema di calcolo
+
+Definiamo un *programma* $P$ come una *sequenza di regole* che trasformano un dato di input in uno di output. Diciamo che $P in text("DATI")_perp^(text("DATI"))$
+
+Il modello classico che viene considerato quando si parla di calcolatori è quello di Von Neumann.
+// TODO: Ho fatto un'immagine da mettere, ma non riesco a regolarne la grandezza. Prova a vedere se riesci tu a inserirla
+
+In questa architettura $cal(C)$, dato il programma $P$ e input $x$, abbiamo due possibili situazioni:
+- la macchina restituisce un output -> $y$;
+- la macchina entra in loop -> $perp$.
+
+Formalmente, abbiamo che $cal(C) : text("DATI")_perp^(text("DATI")) times text("DATI") -> text("DATI")_perp$. 
+Possiamo interpretare una funzione di valutazione come una macchina di Von Neumann, in cui $cal(C)$ è la funzione di valutazione e $cal(C)(P,x)$ è la funzione calcolata da $P$ (anche chiamata *semantica* di $P$).
+
+== Potenza computazionale
+
+Definiamo la potenza computazionale di un calcolatore $cal(C)$: $ F(cal(C)) = \{ cal(C)(P,_) : P in text("PROG") \} subset.eq text("DATI")_perp^(text("DATI")). $
+
+Stabilire _cosa_ può l'informatica equivale a studiare quest'ultima inclusione, in particolare se:
+- $F(cal(C)) subset.neq text("DATI")_perp^(text("DATI")) =>$ esistono compiti non automatizzabili;
+- $F(cal(C)) = text("DATI")_perp^(text("DATI")) =>$ l'informatica può fare tutto.
+
+Dato che ogni problema può essere visto come una "funzione soluzione", calcolare funzioni equivale a risolvere problemi.
+
+_Ma in che modo possiamo risolvere l'inclusione?_ \
+Possiamo analizzare la cardinalità dei due insiemi e metterli a confronto. Questo discorso ha senso ovviamente solo se abbiamo a che fare con insiemi di cardinalità #underline("finita").
