@@ -8,6 +8,23 @@
 
 #import "@preview/ouset:0.1.1": overset
 
+#import "@preview/lemmify:0.1.5": *
+
+#let (
+  theorem, lemma, corollary,
+  remark, proposition, example,
+  proof, rules: thm-rules
+) = default-theorems("thm-group", lang: "it")
+
+#show: thm-rules
+
+#show thm-selector("thm-group", subgroup: "proof"): it => block(
+  it,
+  stroke: green + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #pagebreak()
 
 // Appunti
@@ -43,7 +60,7 @@ Una *funzione* da un insieme $A$ ad un insieme $B$ è una _legge_, spesso indica
 
 Abbiamo due tipi di funzioni:
 - *generale*: la funzione è definita in modo generale come $f: A arrow.long B$, in cui $A$ è detto *dominio* di $f$ e $B$ è detto *codominio* di $f$;
-- *locale/puntuale*: la funzione riguarda i singoli valori $a$ e $b$: $ f(a) = b quad bar.v quad a overset(arrow.long.bar, f) b $ in cui $b$ è detta *immagine* di $a$ rispetto ad $f$ e $a$ è detta *controimmagine* di $b$ rispetto ad $f$.
+- *locale/puntuale*: la funzione riguarda i singoli valori $a$ e $b$: $ f(a) = b quad bar.v quad a arrow.long.bar^f b $ in cui $b$ è detta *immagine* di $a$ rispetto ad $f$ e $a$ è detta *controimmagine* di $b$ rispetto ad $f$.
 
 #let quarter = $space.quarter$
 
@@ -173,7 +190,9 @@ Il modello classico che viene considerato quando si parla di calcolatori è quel
 
 === Potenza computazionale
 
-Definiamo la *potenza computazionale* di un calcolatore come l'insieme di tutte le funzioni che quel sistema di calcolo può calcolare grazie ai programmi, ovvero $ F(cal(C)) = { cal(C)(P, \_) bar.v P in programmi } subset.eq dati_bot^dati. $
+Prima di definire la potenza computazionale facciamo una breve premessa: indichiamo con $ cal(C)(P,\_): dati arrow.long dati_bot $ la funzione che viene calcolata dal programma $P$, ovvero la semantica di $P$.
+
+Fatta questa premessa, definiamo la *potenza computazionale* di un calcolatore come l'insieme di tutte le funzioni che quel sistema di calcolo può calcolare grazie ai programmi, ovvero $ F(cal(C)) = { cal(C)(P, \_) bar.v P in programmi } subset.eq dati_bot^dati. $
 
 In poche parole, $F(cal(C))$ rappresenta l'insieme di tutte le possibili semantiche di funzioni che sono calcolabili con il sistema $cal(C)$.
 
@@ -199,3 +218,126 @@ Ad esempio, gli insiemi
 sono tali che $PP subset.neq NN$ ma hanno cardinalità $|NN| = |PP| = infinity$.
 
 Dobbiamo dare una definizione diversa di cardinalità, visto che possono esistere "_infiniti più fitti/densi di altri_", come abbiamo visto nell'esempio precedente.
+
+#pagebreak()
+
+= Lezione 03
+
+== Relazioni di equivalenza
+
+=== Definizione
+
+Una *relazione* $R$ su due insiemi $A,B$ è un sottoinsieme $R subset.eq A times B$ di coppie ordinate. Una relazione particolare che ci interessa è quella *binaria*, ovvero $R subset.eq A^2$. Due elementi $a,b in A$ sono in relazione $R$ se e solo se $(a,b) in R$. Indichiamo la relazione tra due elementi tramite notazione infissa $a R b$.
+
+Una classe molto importante di relazioni é quella delle *relazioni di equivalenza*: una relazione $R subset.eq A^2$ é una relazione di equivalenza se e solo se $R$ é $R S T$, ovvero:
+- *riflessiva*: $forall a in A quad a R a$;
+- *simmetrica*: $forall a,b in A quad a R b arrow.long.double b R a$;
+- *transitiva*: $forall a,b,c in A quad a R b and b R c arrow.long.double a R c$.
+
+=== Classi di equivalenza e insieme quoziente
+
+Ad ogni relazione di equivalenza viene associata una *partizione*: infatti, ogni relazione di equivalenza $R$ su $A^2$ _induce_ una partizione su $A$ formata da $A_1, A_2, dots$ sottoinsiemi tali che:
+- $forall i gt.eq 1 quad A_1 eq.not emptyset.rev$;
+- $forall i,j gt.eq 1 quad i eq.not j arrow.long.double A_i sect A_j = emptyset.rev$;
+- $limits(union.big)_(i gt.eq 1) A_i = A$.
+
+Dato un elemento $a in A$, la sua *classe di equivalenza* é l'insieme $ [a]_R = {b in A bar.v a R b}, $ ovvero tutti gli elementi che sono in relazione con $a$, detto anche _rappresentante della classe_.
+
+Si può dimostrare che:
+- non esistono classi di equivalenza vuote, garantito dalla proprietà _riflessiva_;
+- dati $a,b in A$ allora $[a]_R sect [b]_R = emptyset.rev$ oppure $[a]_R = [b]_R$;
+- $limits(union.big)_(a in A) [a]_R = A$.
+
+/* Trovare un modo per scrivere l'insieme quoziente */
+
+Ma allora l'insieme delle classi di equivalenza é una partizione indotta dalla relazione $R$ sull'insieme $A$. Questa partizione é detta *insieme quoziente* di $A$ rispetto a $R$ ed é denotato con $A \/ R$.
+
+== Cardinalità
+
+=== Isomorfismi
+
+Due insiemi $A$ e $B$ sono *isomorfi* se esiste una biiezione tra essi. Formalmente scriviamo $ A tilde B. $
+
+Sinonimi di _isomorfi_ sono _equinumerosi_ o _insiemi che hanno la stessa cardinalità_.
+
+Notiamo come $tilde$ sia una relazione: infatti, due insiemi appartengono alla relazione $tilde$ se e solo se sono isomorfi. Detto $cal(U)$ l'insieme di tutti gli insiemi, la relazione $tilde$ é sottoinsieme di $cal(U)^2$.
+
+Dimostriamo che $tilde$ é una relazione di equivalenza:
+- _riflessiva_: $A tilde A$ se la biiezione é $i_A$;
+- _simmetrica_: $A tilde B arrow.long.double B tilde A$ se la biiezione é la funzione inversa usata per $A tilde B$;
+- _transitiva_: $A tilde B and B tilde C arrow.long.double A tilde C$ se la biiezione é la composizione della funzione usata per $A tilde B$ con la funzione usata per $B tilde C$.
+
+Essendo $tilde$ una relazione di equivalenza posso partizionare l'insieme $cal(U)$: la partizione creata contiene classi di equivalenza che contengono insiemi con la stessa cardinalità, ovvero isomorfi tra loro.
+
+La *cardinalità* é questo: l'insieme quoziente di $cal(U)$ rispetto alla relazione $tilde$.
+
+La comodità di questo approccio é che possiamo utilizzare la nozione di _cardinalità_ anche con gli insiemi infiniti.
+
+=== Cardinalità finita
+
+La prima classe di cardinalità che vediamo é quella delle *cardinalità finite*: prima di tutto definiamo la famiglia di insiemi $ J_n = cases(emptyset.rev text(" se ") n = 0, {1,...,n} text(" se ") n > 0) quad . $
+
+Un insieme $A$ ha cardinalità finita se $A tilde J_n$ per qualche $n in NN$, e in tal caso scriviamo "tranquillamente" $|A| = n$.
+
+La classe di equivalenza $[J_n]_tilde$ riunisce tutti gli insiemi di $cal(U)$ contenenti $n$ elementi.
+
+=== Cardinalità infinita
+
+Un insieme che non sia finito, ovvero non in relazione con $J_n$, si dice a *cardinalità infinita*.
+
+==== Insiemi numerabili
+
+La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*: un insieme $A$ é numerabile se e solo se $NN tilde A$, ovvero $A in [NN]_tilde$.
+
+Gli insiemi numerabili sono "*listabili*", ovvero posso elencare _tutti_ gli elementi dell'insieme $A$ tramite una regola, che in questo caso é la funzione $f$ biiezione tra $NN$ e $A$.
+
+Infatti, grazie alla funzione $f$ posso elencare gli elementi di $A$ formando l'insieme $ A = {f(0), space f(1), space dots}. $ Questo insieme é _esaustivo_, ovvero elenco ogni elemento dell'insieme $A$ senza perderne alcuno.
+
+Gli insiemi numerabili più famosi sono:
+- numeri pari $PP$ e numeri dispari $DD$;
+- numeri interi $ZZ$ generati con la biiezione $f(n) = (-1)^n (frac(n + (n mod 2), 2))$;
+- numeri razionali $QQ$.
+
+==== Insiemi non numerabili
+
+La classe degli *insiemi non numerabili* raccoglie gli insiemi a cardinalità infinita ma che non sono listabili come gli insiemi numerabili, ovvero sono "più fitti" di $NN$.
+
+Il _non poter listare gli elementi_ si traduce in _qualunque lista generata mancherebbe di qualche elemento_, ovvero non é una lista esaustiva di tutti gli elementi presenti nell'insieme.
+
+Il più famoso insieme non numerabile é l'insieme dei numeri reali $RR$.
+
+In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
+
+#theorem()[
+  L'insieme $RR$ non é numerabile
+]<thm>
+
+#proof[
+  \ Suddividiamo la dimostrazione in tre punti:
+  + dimostriamo che $RR tilde (0,1)$;
+  + dimostriamo che $NN tilde.not (0,1)$;
+  + dimostriamo che $RR tilde.not NN$.
+
+  [1] Partiamo con il dimostrare che $RR tilde (0,1)$: mostro che esiste una biiezione tra $RR$ e $(0,1)$. Usiamo come biiezione "grafica" quella che:
+  - disegna la circonferenza di raggio $1/2$ centrata in $1/2$;
+  - disegna la perpendicolare al punto da mappare che interseca la circonferenza;
+  - disegna la retta passante per il centro $C$ e l'intersezione precedente.
+
+  L'intersezione tra l'asse reale e la retta finale é il punto mappato.
+
+  #v(-36pt)
+
+  #figure(
+      image("assets/biiezione.svg", width: 70%)
+  )
+
+  #v(12pt)
+
+  In realtà, $RR$ é isomorfo a qualsiasi segmento di lunghezza maggiore di 0.
+
+  La stessa biiezione vale anche sull'intervallo chiuso $[0,1]$ utilizzando la "compattificazione" $overset(RR, °) = RR union {plus.minus infinity}$ di $RR$, mappando $0$ su $-infinity$ e $1$ su $+infinity$.
+
+  [2] Continuiamo dimostrando che $NN tilde.not (0,1)$: ...
+
+  [3] Terminiamo dimostrando che $RR tilde.not NN$: ...
+]<proof>
