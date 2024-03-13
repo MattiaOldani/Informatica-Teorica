@@ -227,87 +227,87 @@ Dobbiamo dare una definizione diversa di cardinalità, visto che possono esister
 
 === Definizione
 
-Una *relazione* $R$ su due insiemi $A,B$ è un sottoinsieme $R subset.eq A times B$ di coppie ordinate. Una relazione particolare che ci interessa è quella *binaria*, ovvero $R subset.eq A^2$. Due elementi $a,b in A$ sono in relazione $R$ se e solo se $(a,b) in R$. Indichiamo la relazione tra due elementi tramite notazione infissa $a R b$.
+Una *relazione binaria* $R$ su due insiemi $A,B$ è un sottoinsieme $R subset.eq A times B$ di coppie ordinate. Una relazione particolare che ci interessa è $R subset.eq A^2$. Due elementi $a,b in A$ sono in relazione $R$ se e solo se $(a,b) in R$. Indichiamo la relazione tra due elementi tramite notazione infissa $a R b$.
 
 Una classe molto importante di relazioni é quella delle *relazioni di equivalenza*: una relazione $R subset.eq A^2$ é una relazione di equivalenza se e solo se $R$ é $R S T$, ovvero:
 - *riflessiva*: $forall a in A quad a R a$;
 - *simmetrica*: $forall a,b in A quad a R b arrow.long.double b R a$;
 - *transitiva*: $forall a,b,c in A quad a R b and b R c arrow.long.double a R c$.
 
+=== Partizione
+
+Ad ogni relazione di equivalenza si può associare una *partizione*, ovvero un insieme di sottoinsiemi tali che: 
+- $forall i in NN^+ quad A_i eq.not emptyset.rev$;
+- $forall i,j in NN^+ quad i eq.not j arrow.long.double A_i sect A_j = emptyset.rev$;
+- $limits(union.big)_(i in NN^+) A_i = A$.
+Diremo che $R$ definita su $A^2$ _induce_ una partizione $A_1, A_2, dots$ su $A$.
+
 === Classi di equivalenza e insieme quoziente
 
-Ad ogni relazione di equivalenza viene associata una *partizione*: infatti, ogni relazione di equivalenza $R$ su $A^2$ _induce_ una partizione su $A$ formata da $A_1, A_2, dots$ sottoinsiemi tali che:
-- $forall i gt.eq 1 quad A_1 eq.not emptyset.rev$;
-- $forall i,j gt.eq 1 quad i eq.not j arrow.long.double A_i sect A_j = emptyset.rev$;
-- $limits(union.big)_(i gt.eq 1) A_i = A$.
-
-Dato un elemento $a in A$, la sua *classe di equivalenza* é l'insieme $ [a]_R = {b in A bar.v a R b}, $ ovvero tutti gli elementi che sono in relazione con $a$, detto anche _rappresentante della classe_.
+Dato un elemento $a in A$, la sua *classe di equivalenza* é l'insieme $ [a]_R = {b in A bar.v a R b}, $ ovvero tutti gli elementi che sono in relazione con $a$, chiamato anche _rappresentante della classe_.
 
 Si può dimostrare che:
-- non esistono classi di equivalenza vuote, garantito dalla proprietà _riflessiva_;
-- dati $a,b in A$ allora $[a]_R sect [b]_R = emptyset.rev$ oppure $[a]_R = [b]_R$;
+- non esistono classi di equivalenza vuote $arrow$ garantito dalla riflessività;
+- dati $a,b in A$ allora $[a]_R sect [b]_R = emptyset.rev$ oppure $[a]_R = [b]_R$ $arrow$ in altre parole, due elementi o sono in relazione o non lo sono;
 - $limits(union.big)_(a in A) [a]_R = A$.
 
 /* Trovare un modo per scrivere l'insieme quoziente */
 
-Ma allora l'insieme delle classi di equivalenza é una partizione indotta dalla relazione $R$ sull'insieme $A$. Questa partizione é detta *insieme quoziente* di $A$ rispetto a $R$ ed é denotato con $A \/ R$.
+/* Potremmo usare semplicemente una frazione se non troviamo nulla... */
+
+Notiamo che, per definizione, l'insieme delle classi di equivalenza é una partizione indotta dalla relazione $R$ sull'insieme $A$. Questa partizione é detta *insieme quoziente* di $A$ rispetto a $R$ ed é denotato con $A \/ R$.
+
+== Isomorfismi
+
+Due insiemi $A$ e $B$ sono *isomorfi* (_equinumerosi_, _insiemi che hanno la stessa cardinalità_) se esiste una biiezione tra essi. Formalmente scriviamo: $ A tilde B. $
+
+Detto $cal(U)$ l'insieme di tutti gli insiemi, la relazione $tilde$ é sottoinsieme di $cal(U)^2$.
+
+Dimostriamo che $tilde$ é una relazione di equivalenza:
+- _riflessività_: $A tilde A$ se la biiezione é $i_A$;
+- _simmetria_: $A tilde B arrow.long.double B tilde A$ se la biiezione é la funzione inversa;
+- _transitività_: $A tilde B and B tilde C arrow.long.double A tilde C$ se la biiezione é la composizione della funzione usata per $A tilde B$ con la funzione usata per $B tilde C$.
+
+Dato che $tilde$ è una relazione di equivalenza, è possibile partizionare l'insieme $cal(U)$. La partizione creata è formata da classi di equivalenza che contengono insiemi isomorfi, ossia con la stessa cardinalità.
 
 == Cardinalità
 
-=== Isomorfismi
+Possiamo definire la *cardinalità* come l'insieme quoziente di $cal(U)$ rispetto alla relazione $tilde$.
 
-Due insiemi $A$ e $B$ sono *isomorfi* se esiste una biiezione tra essi. Formalmente scriviamo $ A tilde B. $
+Questo approccio permette di utilizzare la nozione di _cardinalità_ anche con gli insiemi infiniti, dato che l'unica cosa da trovare è una funzione biettiva tra i due insiemi.
 
-Sinonimi di _isomorfi_ sono _equinumerosi_ o _insiemi che hanno la stessa cardinalità_.
+La prima classe di cardinalità che vediamo é quella delle *cardinalità finite*. Prima di tutto definiamo la famiglia di insiemi: $ J_n = cases(emptyset.rev & text(" se ") n = 0, {1,...,n} & text(" se ") n > 0) quad . $
 
-Notiamo come $tilde$ sia una relazione: infatti, due insiemi appartengono alla relazione $tilde$ se e solo se sono isomorfi. Detto $cal(U)$ l'insieme di tutti gli insiemi, la relazione $tilde$ é sottoinsieme di $cal(U)^2$.
-
-Dimostriamo che $tilde$ é una relazione di equivalenza:
-- _riflessiva_: $A tilde A$ se la biiezione é $i_A$;
-- _simmetrica_: $A tilde B arrow.long.double B tilde A$ se la biiezione é la funzione inversa usata per $A tilde B$;
-- _transitiva_: $A tilde B and B tilde C arrow.long.double A tilde C$ se la biiezione é la composizione della funzione usata per $A tilde B$ con la funzione usata per $B tilde C$.
-
-Essendo $tilde$ una relazione di equivalenza posso partizionare l'insieme $cal(U)$: la partizione creata contiene classi di equivalenza che contengono insiemi con la stessa cardinalità, ovvero isomorfi tra loro.
-
-La *cardinalità* é questo: l'insieme quoziente di $cal(U)$ rispetto alla relazione $tilde$.
-
-La comodità di questo approccio é che possiamo utilizzare la nozione di _cardinalità_ anche con gli insiemi infiniti.
-
-=== Cardinalità finita
-
-La prima classe di cardinalità che vediamo é quella delle *cardinalità finite*: prima di tutto definiamo la famiglia di insiemi $ J_n = cases(emptyset.rev text(" se ") n = 0, {1,...,n} text(" se ") n > 0) quad . $
-
-Un insieme $A$ ha cardinalità finita se $A tilde J_n$ per qualche $n in NN$, e in tal caso scriviamo "tranquillamente" $|A| = n$.
+Un insieme $A$ ha cardinalità finita se $A tilde J_n$ per qualche $n in NN$. In tal caso possiamo scrivere $|A| = n$.
 
 La classe di equivalenza $[J_n]_tilde$ riunisce tutti gli insiemi di $cal(U)$ contenenti $n$ elementi.
 
-=== Cardinalità infinita
+L'altra classe da studiare è quella delle *cardinalità infinite*, ovvero non in relazione con $J_n$.
 
-Un insieme che non sia finito, ovvero non in relazione con $J_n$, si dice a *cardinalità infinita*.
+=== Insiemi numerabili
 
-==== Insiemi numerabili
+La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*. Un insieme $A$ é numerabile se e solo se $NN tilde A$, ovvero $A in [NN]_tilde$.
 
-La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*: un insieme $A$ é numerabile se e solo se $NN tilde A$, ovvero $A in [NN]_tilde$.
+Gli insiemi numerabili sono "*listabili*", che significa che è possibile elencare tutti gli elementi dell'insieme $A$ tramite una regola, in questo caso la funzione $f$ biiezione tra $NN$ e $A$.
 
-Gli insiemi numerabili sono "*listabili*", ovvero posso elencare _tutti_ gli elementi dell'insieme $A$ tramite una regola, che in questo caso é la funzione $f$ biiezione tra $NN$ e $A$.
-
-Infatti, grazie alla funzione $f$ posso elencare gli elementi di $A$ formando l'insieme $ A = {f(0), space f(1), space dots}. $ Questo insieme é _esaustivo_, ovvero elenco ogni elemento dell'insieme $A$ senza perderne alcuno.
+Infatti, grazie alla funzione $f$, è possibile elencare gli elementi di $A$ formando l'insieme: $ A = {f(0), space f(1), space dots}. $ Questo insieme é esaustivo, quindi elenca ogni elemento dell'insieme $A$ senza perderne nessuno.
 
 Gli insiemi numerabili più famosi sono:
 - numeri pari $PP$ e numeri dispari $DD$;
 - numeri interi $ZZ$ generati con la biiezione $f(n) = (-1)^n (frac(n + (n mod 2), 2))$;
 - numeri razionali $QQ$.
 
-==== Insiemi non numerabili
+=== Insiemi non numerabili
 
-La classe degli *insiemi non numerabili* raccoglie gli insiemi a cardinalità infinita ma che non sono listabili come gli insiemi numerabili, ovvero sono "più fitti" di $NN$.
+La classe degli *insiemi non numerabili* raccoglie gli insiemi a cardinalità infinita, che non sono listabili come gli insiemi numerabili, ovvero sono "più fitti" di $NN$.
 
-Il _non poter listare gli elementi_ si traduce in _qualunque lista generata mancherebbe di qualche elemento_, ovvero non é una lista esaustiva di tutti gli elementi presenti nell'insieme.
+Il _non poter listare gli elementi_ si traduce in _qualunque lista generata mancherebbe di qualche elemento_, di conseguenza non sarebbe una lista esaustiva di tutti gli elementi.
 
 Il più famoso insieme non numerabile é l'insieme dei numeri reali $RR$.
 
 In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
 
+/* Non mi piace molto il numero del teorema, c'è un modo di mettere "Teorema 1"? è il primo teorema effettivo alal fine */
 #theorem()[
   L'insieme $RR$ non é numerabile
 ]<thm>
@@ -318,7 +318,7 @@ In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
   + dimostriamo che $NN tilde.not (0,1)$;
   + dimostriamo che $RR tilde.not NN$.
 
-  [1] Partiamo con il dimostrare che $RR tilde (0,1)$: mostro che esiste una biiezione tra $RR$ e $(0,1)$. Usiamo come biiezione "grafica" quella che:
+  [1] Partiamo con il dimostrare che $RR tilde (0,1) arrow.double$ mostro che esiste una biiezione tra $RR$ e $(0,1)$. Usiamo una biiezione "grafica" costruita in questo modo:
   - disegna la circonferenza di raggio $1/2$ centrata in $1/2$;
   - disegna la perpendicolare al punto da mappare che interseca la circonferenza;
   - disegna la retta passante per il centro $C$ e l'intersezione precedente.
