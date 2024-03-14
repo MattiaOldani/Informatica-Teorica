@@ -115,7 +115,7 @@ Notiamo che:
 
 === Totalizzare una funzione
 
-È possibile _totalizzazione_ una funzione parziale definendo una funzione a tratti $f: A arrow.long B union {bot}$ tale che $ overline(f)(a) = cases(f(a) quad a in op("Dom")_f (a), bot quad text("altrimenti")). $
+È possibile _totalizzazione_ una funzione parziale definendo una funzione a tratti $f: A arrow.long B union {bot}$ tale che $ overline(f)(a) = cases(f(a) quad & a in op("Dom")_f (a), bot & text("altrimenti")) quad . $
 
 Il nuovo simbolo introdotto è il _simbolo di indefinito_, e viene utilizzato per tutti i valori per cui la funzione di partenza $f$ non è appunto definita.
 
@@ -251,15 +251,13 @@ Si può dimostrare che:
 - dati $a,b in A$ allora $[a]_R sect [b]_R = emptyset.rev$ oppure $[a]_R = [b]_R$ $arrow$ in altre parole, due elementi o sono in relazione o non lo sono;
 - $limits(union.big)_(a in A) [a]_R = A$.
 
-/* Trovare un modo per scrivere l'insieme quoziente */
-
-/* Potremmo usare semplicemente una frazione se non troviamo nulla... */
-
 Notiamo che, per definizione, l'insieme delle classi di equivalenza é una partizione indotta dalla relazione $R$ sull'insieme $A$. Questa partizione é detta *insieme quoziente* di $A$ rispetto a $R$ ed é denotato con $A \/ R$.
 
-== Isomorfismi
+== Cardinalità
 
-Due insiemi $A$ e $B$ sono *isomorfi* (_equinumerosi_, _insiemi che hanno la stessa cardinalità_) se esiste una biiezione tra essi. Formalmente scriviamo: $ A tilde B. $
+=== Isomorfismi
+
+Due insiemi $A$ e $B$ sono *isomorfi* (_equinumerosi_ o _insiemi che hanno la stessa cardinalità_) se esiste una biiezione tra essi. Formalmente scriviamo: $ A tilde B. $
 
 Detto $cal(U)$ l'insieme di tutti gli insiemi, la relazione $tilde$ é sottoinsieme di $cal(U)^2$.
 
@@ -270,11 +268,11 @@ Dimostriamo che $tilde$ é una relazione di equivalenza:
 
 Dato che $tilde$ è una relazione di equivalenza, è possibile partizionare l'insieme $cal(U)$. La partizione creata è formata da classi di equivalenza che contengono insiemi isomorfi, ossia con la stessa cardinalità.
 
-== Cardinalità
+Possiamo quindi definire la *cardinalità* come l'insieme quoziente di $cal(U)$ rispetto alla relazione $tilde$.
 
-Possiamo definire la *cardinalità* come l'insieme quoziente di $cal(U)$ rispetto alla relazione $tilde$.
+Questo approccio permette di utilizzare la nozione di _cardinalità_ anche con gli insiemi infiniti, dato che l'unica incognita da trovare è una funzione biettiva tra i due insiemi.
 
-Questo approccio permette di utilizzare la nozione di _cardinalità_ anche con gli insiemi infiniti, dato che l'unica cosa da trovare è una funzione biettiva tra i due insiemi.
+=== Cardinalità finita
 
 La prima classe di cardinalità che vediamo é quella delle *cardinalità finite*. Prima di tutto definiamo la famiglia di insiemi: $ J_n = cases(emptyset.rev & text(" se ") n = 0, {1,...,n} & text(" se ") n > 0) quad . $
 
@@ -282,20 +280,22 @@ Un insieme $A$ ha cardinalità finita se $A tilde J_n$ per qualche $n in NN$. In
 
 La classe di equivalenza $[J_n]_tilde$ riunisce tutti gli insiemi di $cal(U)$ contenenti $n$ elementi.
 
-L'altra classe da studiare è quella delle *cardinalità infinite*, ovvero non in relazione con $J_n$.
+=== Cardinalità infinita
 
-=== Insiemi numerabili
+L'altra classe da studiare è quella delle *cardinalità infinite*, ovvero gli insiemi non in relazione con $J_n$.
 
-La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*. Un insieme $A$ é numerabile se e solo se $NN tilde A$, ovvero $A in [NN]_tilde$.
+==== Insiemi numerabili
 
-Gli insiemi numerabili sono "*listabili*", che significa che è possibile elencare tutti gli elementi dell'insieme $A$ tramite una regola, in questo caso la funzione $f$ biiezione tra $NN$ e $A$.
+La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*. Un insieme $A$ é numerabile se e solo se $A tilde NN$, ovvero $A in [NN]_tilde$.
 
-Infatti, grazie alla funzione $f$, è possibile elencare gli elementi di $A$ formando l'insieme: $ A = {f(0), space f(1), space dots}. $ Questo insieme é esaustivo, quindi elenca ogni elemento dell'insieme $A$ senza perderne nessuno.
+Gli insiemi numerabili sono "*listabili*", ovvero é possibile elencare _tutti_ gli elementi dell'insieme $A$ tramite una regola, in questo caso la funzione $f$ biiezione tra $NN$ e $A$. Infatti, grazie alla funzione $f$, è possibile elencare gli elementi di $A$ formando l'insieme: $ A = {f(0), space f(1), space dots}. $ Questo insieme é esaustivo, quindi elenca ogni elemento dell'insieme $A$ senza perderne nessuno.
 
 Gli insiemi numerabili più famosi sono:
 - numeri pari $PP$ e numeri dispari $DD$;
 - numeri interi $ZZ$ generati con la biiezione $f(n) = (-1)^n (frac(n + (n mod 2), 2))$;
 - numeri razionali $QQ$.
+
+Gli insiemi numerabili hanno cardinalità $aleph_0$ (si legge _"aleph"_).
 
 === Insiemi non numerabili
 
@@ -307,7 +307,6 @@ Il più famoso insieme non numerabile é l'insieme dei numeri reali $RR$.
 
 In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
 
-/* Non mi piace molto il numero del teorema, c'è un modo di mettere "Teorema 1"? è il primo teorema effettivo alal fine */
 #theorem()[
   L'insieme $RR$ non é numerabile
 ]<thm>
@@ -318,7 +317,7 @@ In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
   + dimostriamo che $NN tilde.not (0,1)$;
   + dimostriamo che $RR tilde.not NN$.
 
-  [1] Partiamo con il dimostrare che $RR tilde (0,1) arrow.double$ mostro che esiste una biiezione tra $RR$ e $(0,1)$. Usiamo una biiezione "grafica" costruita in questo modo:
+  [1] Partiamo con il dimostrare che $RR tilde (0,1)$: mostro che esiste una biiezione tra $RR$ e $(0,1)$. Usiamo una biiezione "grafica" costruita in questo modo:
   - disegna la circonferenza di raggio $1/2$ centrata in $1/2$;
   - disegna la perpendicolare al punto da mappare che interseca la circonferenza;
   - disegna la retta passante per il centro $C$ e l'intersezione precedente.
@@ -337,7 +336,22 @@ In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
 
   La stessa biiezione vale anche sull'intervallo chiuso $[0,1]$ utilizzando la "compattificazione" $overset(RR, °) = RR union {plus.minus infinity}$ di $RR$, mappando $0$ su $-infinity$ e $1$ su $+infinity$.
 
-  [2] Continuiamo dimostrando che $NN tilde.not (0,1)$: ...
+  [2] Continuiamo dimostrando che $NN tilde.not (0,1)$: devo dimostrare che l'intervallo $(0,1)$ non é listabile, ovvero ogni lista che scrivo é un "colabrodo", termine tecnico che indica la possibilità di costruire un elemento che dovrebbe appartenere alla lista ma che invece non é presente. \ Per assurdo sia $NN tilde (0,1)$, allora posso listare gli elementi di $(0,1)$ esaustivamente come: $ 0.& space a_(00) space a_(01) space a_(02) space dots \ 0.& space a_(10) space a_(11) space a_(12) space dots \ 0.& space a_(20) space a_(21) space a_(22) space dots \ 0.& space dots quad , $
+  dove con $a_(i j)$ indichiamo la cifra di posto $j$ dell'$i$-esimo elemento della lista.
 
-  [3] Terminiamo dimostrando che $RR tilde.not NN$: ...
+  Costruisco il _"numero colpevole"_ $c = 0.c_0 c_1 c_2 dots$ tale che $ c_i = cases(2 "se" a_(i i) eq.not 2, 3 "se" a_(i i) = 3) quad . $
+  In poche parole, questo numero é costruito "guardando" tutte le cifre sulla diagonale.
+
+  Questo numero sicuramente appartiene a $(0,1)$ ma non appare nella lista: infatti ogni cifra $c_i$ del colpevole differisce da qualunque numero nella lista in almeno una posizione, che é quella della diagonale. Ma questo é assurdo: avevamo assunto $(0,1)$ numerabile.
+
+  Quindi $N tilde.not (0,1)$.
+  
+  Questo tipo di dimostrazione é detta *dimostrazione per diagonalizzazione*.
+
+  [3] Terminiamo dimostrando che $RR tilde.not NN$: per transitività. Vale il generico, ovvero non si riesce a listare nessun segmento di lunghezza maggiore di 0.
 ]<proof>
+
+L'insieme $RR$ viene detto *insieme continuo* e tutti gli insiemi isomorfi a $RR$ si dicono a loro volta _continui_. I più famosi insiemi continui sono:
+- $RR$ insieme dei numeri reali;
+- $CC$ insieme dei numeri complessi;
+- $TT subset II$ insieme dei numeri trascendenti.
