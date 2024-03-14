@@ -282,11 +282,11 @@ La classe di equivalenza $[J_n]_tilde$ riunisce tutti gli insiemi di $cal(U)$ co
 
 === Cardinalità infinita
 
-L'altra classe da studiare è quella delle *cardinalità infinite*, ovvero gli insiemi non in relazione con $J_n$.
+L'altra classe di cardinalità da studiare è quella delle *cardinalità infinite*, ovvero gli insiemi non in relazione con $J_n$.
 
 ==== Insiemi numerabili
 
-La prima classe di insiemi a cardinalità infinita é quella degli *insiemi numerabili*. Un insieme $A$ é numerabile se e solo se $A tilde NN$, ovvero $A in [NN]_tilde$.
+I primi insiemi a cardinalità infinita sono gli *insiemi numerabili*. Un insieme $A$ é numerabile se e solo se $A tilde NN$, ovvero $A in [NN]_tilde$.
 
 Gli insiemi numerabili sono "*listabili*", ovvero é possibile elencare _tutti_ gli elementi dell'insieme $A$ tramite una regola, in questo caso la funzione $f$ biiezione tra $NN$ e $A$. Infatti, grazie alla funzione $f$, è possibile elencare gli elementi di $A$ formando l'insieme: $ A = {f(0), space f(1), space dots}. $ Questo insieme é esaustivo, quindi elenca ogni elemento dell'insieme $A$ senza perderne nessuno.
 
@@ -297,15 +297,13 @@ Gli insiemi numerabili più famosi sono:
 
 Gli insiemi numerabili hanno cardinalità $aleph_0$ (si legge _"aleph"_).
 
-=== Insiemi non numerabili
+==== Insiemi non numerabili
 
-La classe degli *insiemi non numerabili* raccoglie gli insiemi a cardinalità infinita, che non sono listabili come gli insiemi numerabili, ovvero sono "più fitti" di $NN$.
+Gli *insiemi non numerabili* sono insiemi a cardinalità infinita che non sono listabili come gli insiemi numerabili, ovvero sono "più fitti" di $NN$.
 
 Il _non poter listare gli elementi_ si traduce in _qualunque lista generata mancherebbe di qualche elemento_, di conseguenza non sarebbe una lista esaustiva di tutti gli elementi.
 
 Il più famoso insieme non numerabile é l'insieme dei numeri reali $RR$.
-
-In generale, qualsiasi _insieme continuo_ é un insieme non numerabile.
 
 #theorem()[
   L'insieme $RR$ non é numerabile
@@ -355,3 +353,115 @@ L'insieme $RR$ viene detto *insieme continuo* e tutti gli insiemi isomorfi a $RR
 - $RR$ insieme dei numeri reali;
 - $CC$ insieme dei numeri complessi;
 - $TT subset II$ insieme dei numeri trascendenti.
+
+#pagebreak()
+
+= Lezione 04
+
+== Cardinalità
+
+Vediamo due insiemi continui che saranno importanti successivamente.
+
+=== Insieme delle parti
+
+Il primo insieme che vediamo é l'*insieme delle parti*, o _power set_, di $NN$.
+
+Quest'ultimo é l'insieme $ P(NN) = 2^NN = {S bar.v S "é sottoinsieme di" NN}. $
+
+#theorem()[
+  $P(NN) tilde.not NN$.
+]<thm>
+
+#proof[
+  \ Dimostriamo questo teorema con la diagonalizzazione.
+  
+  Rappresentiamo il sottoinsieme $A subset.eq NN$ tramite il suo *vettore caratteristico*: $ NN&: 0 space 1 space 2 space 3 space 4 space 5 space 6 space dots \ A&: 0 space 1 space 1 space 0 space 1 space 1 space 0 space dots quad . $ Il vettore caratteristico di un sottoinsieme é un vettore che nella posizione $p_i$ ha $1$ se $i in A$, altrimenti ha $0$.
+  
+  Per assurdo sia $P(NN)$ numerabile. Vista questa proprietà posso listare tutti i vettori caratteristici che appartengono a $P(NN)$ come $ b_0 &= b_(00) space b_(01) space b_(02) space dots \ b_1 &= b_(10) space b_(11) space b_(12) space dots \ b_2 &= b_(20) space b_(21) space b_(22) space dots quad . $
+
+  Costruiamo un _colpevole among us_ che appartiene a $P(NN)$ ma non é presente nella lista precedente. Definiamo il vettore $ c = overline(b_(00)) space overline(b_(11)) space overline(b_(22)) dots $ che contiene nella posizione $c_i$ il complemento di $b_(i i)$.
+
+  Questo vettore appartiene a $P(NN)$ ma non é presente nella lista precedente perché é diverso da ogni elemento della lista in almeno una cifra.
+
+  Ma questo é assurdo perché $P(NN)$ era numerabile, quindi $P(NN) tilde.not NN$.
+]<proof>
+
+Visto questo teorema possiamo affermare che: $ P(NN) tilde [0,1] tilde overset(RR, °). $
+
+=== Insieme delle funzioni
+
+Il secondo insieme che vediamo é l'insieme delle funzioni da $NN$ in $NN$.
+
+Quest'ultimo é l'insieme $ NN_bot^NN = {f: NN arrow.long NN}. $
+
+#theorem()[
+  $NN_bot^NN tilde.not NN$.
+]<thm>
+
+#proof[
+  \ Anche in questo caso useremo la dimostrazione per diagonalizzazione.
+  
+  Per assurdo sia $NN_bot^NN$ numerabile, quindi possiamo listare $NN_bot^NN$ come ${f_0, f_1, f_2, dots}$.
+
+  #align(center)[
+    #table(
+      columns: (10%, 15%, 15%, 15%, 15%, 15%, 15%),
+      inset: 10pt,
+      align: horizon,
+
+      [], [$0$], [$1$], [$2$], [$3$], [$dots$], [$NN$],
+
+      [$f_0$], [$f_0 (0)$], [$f_0 (1)$], [$f_0 (2)$], [$f_0 (3)$], [$dots$], [$dots$],
+      [$f_1$], [$f_1 (0)$], [$f_1 (1)$], [$f_1 (2)$], [$f_1 (3)$], [$dots$], [$dots$],
+      [$f_2$], [$f_2 (0)$], [$f_2 (1)$], [$f_2 (2)$], [$f_2 (3)$], [$dots$], [$dots$],
+      [$f_3$], [$f_3 (0)$], [$f_3 (1)$], [$f_3 (2)$], [$f_3 (3)$], [$dots$], [$dots$],
+    )
+  ]
+
+  Scriviamo un colpevole $phi: NN arrow.long NN_bot$ per dimostrare l'assurdo. Una prima versione potrebbe essere la funzione $phi(n) = f_n (n) + 1$ per _disallineare_ la diagonale, ma questo non va bene: infatti, se $f_n (n) = bot$ non sappiamo dare un valore a $phi(n) = bot + 1$.
+
+  Definiamo quindi la funzione $ phi(n) = cases(1 & "se" f_n (n) = bot, f_n (n) + 1 quad & "se" f_n (n) arrow.b) quad . $
+
+  Questa funzione é una funzione che appartiene a $NN_bot^NN$ ma non é presente nella lista precedente: infatti, $forall k in NN$ otteniamo $ phi(k) = cases(1 eq.not f_k (k) = bot & "se" f_k (k) = bot, f_k (k) + 1 eq.not f_k (k) quad & "se" f_k (k) arrow.b) quad . $
+  
+  Ma questo é assurdo perché $P(NN)$ era numerabile, quindi $P(NN) tilde.not NN$.
+]<proof>
+
+== Potenza computazionale
+
+=== Validità dell'inclusione $F(cal(C)) subset.eq dati_bot^dati$
+
+Ora che abbiamo una definizione "potente" di cardinalità, essendo basata su strutture matematiche, possiamo verificare la validità dell'inclusione $ F(cal(C)) subset.eq dati_bot^dati. $
+
+Diamo prima qualche considerazione:
+- $programmi tilde NN$: identifico ogni programma con un numero, ad esempio la sua codifica in binario;
+- $dati tilde NN$: come prima, identifico ogni dato con la sua codifica in binario.
+
+In poche parole, stiamo dicendo che programmi e dati non sono più dei numeri naturali $NN$.
+
+Ma questo ci permette di dire che: $ F(cal(C)) tilde programmi tilde NN tilde.not NN_bot^NN tilde dati_bot^dati. $
+
+Questo é un risultato importantissimo: abbiamo appena dimostrato con la relazione precedente che *esistono funzioni non calcolabili*. Il problema é che _ho pochi programmi e troppe funzioni_.
+
+Questo risultato però é arrivato considerando vere le due considerazioni precedenti: andiamo quindi a dimostrarle utilizzando le *tecniche di aritmetizzazione* (o _godelizzazione_) *di strutture*, ovvero delle tecniche che rappresentano delle strutture con un numero, così da avere la matematica e l'insiemi degli strumenti che ha a disposizione.
+
+=== $dati tilde NN$
+
+Vogliamo formare una legge che:
++ associ biunivocamente dati a numeri e viceversa;
++ consenta di operare direttamente sui numeri per operare sui corrispondenti dati, ovvero abbia delle primitive per lavorare il numero che "riflettano" il risultato sul dato senza ripassare per il dato stesso;
++ ci consenta di dire, senza perdita di generalità, che i nostri programmi lavorano sui numeri, ovvero grazie al punto $2$ possiamo lavorare bene sui numeri senza ripassare dai dati.
+
+#theorem()[
+  $NN times NN tilde NN^+$.
+]
+
+#proof[
+
+]<proof>
+
+Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN tilde NN^+ arrow.long.squiggly NN times NN tilde NN. $
+
+/* Da fare nella lezione 05 */
+
+Grazie a questi risultati si può dimostrare che $QQ tilde NN$.
