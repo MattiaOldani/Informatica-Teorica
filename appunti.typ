@@ -465,3 +465,117 @@ Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN ti
 /* Da fare nella lezione 05 */
 
 Grazie a questi risultati si può dimostrare che $QQ tilde NN$.
+
+#pagebreak()
+
+= Lezione 05
+
+I risultati ottenuti fino a questo punto ci permettono di dire che ogni dato è trasformabile in un numero, che può essere soggetto a trasformazioni e manipolazioni matematiche.
+
+== Strutture dati
+
+Mostriamo come, tramite questo principio, è possibile mappare in numeri alcune delle principali strutture dati utilizzate nei programmi.
+
+=== Liste
+In generale, lavorando con delle liste non ne è nota la grandezza. Di conseguenza, ci serve sempre un modo per capire quando siamo arrivati all'ultimo elemento, in modo da sapere quando finiscono gli elementi della lista.
+
+Codifichiamo la lista $x_1, dots, x_n$ con $<x_1, dots, x_n>$, in cui: $ <x_1, dots, x_n> = <x_1, <x_2, < dots < x_n, 0 > dots >>>. $
+
+Se volessimo codificare la lista $1,2,5$, otterremmo: 
+$ <1,2,5> &= <1, <2, <5,0>>> \
+  &= <1,<2,16>> \
+  &= <1, 188> \
+  &= 18144. $
+
+Per decodificare una lista $M$, ci basterà utilizzare la funzione $text("left")(M_i)$ fintanto che $text("right")(M_n) eq.not 0 $. Siamo sicuri che non avremo problemi a salvare 0 nella lista in quanto non si confonderebbe con lo 0 che indica la fine della lista, perché uno appare nella parte sinistra, mentre l'altro nella parte destra.
+
+Vogliamo anche che le funzioni $text("Codifica")$ e $text("Decodifica")$ siano implementabili facilmente. Assumiamo:
+- che 0 codifichi la lista nulla;
+- di avere routine per $<,>$, $text("left")$ e $text("right")$.
+
+#grid(
+  columns: (1fr, 1fr),
+  align(center)[
+    Codifica
+    ```c int encode(x_1, ..., x_n) {
+      int k = 0;
+      for (int i = n; i >= 1; i--)
+        k = <x_1, k>
+      return k;
+    }```
+  ],
+  align(center)[
+    Decodifica
+    ```c void decode(n) {
+        if (n != 0) {
+          print(left(n));
+          decode(rigt(n));
+        }
+    }```
+  ]
+)
+
+Un'altra funzione utile è la funzione $text("Lunghezza")$:
+```C int length (int n) {
+   return n == 0? 0 : 1 + length(right(n));
+}```
+
+Definiamo anche la funzione $text("Proiezione")$:
+$ text("proj")(t,n) = cases(-1 & text("se ") t > text("length")(n) || t = 0 \ x_t & text("altrimenti")) $
+e la sua implementazione:
+```C int proj(int t, int n) {
+  if (t == 0 || t > length(n))
+    return -1;
+  else
+    if (t == 1)
+      return left(n);
+    else
+      return proj(t-1, right(n));
+}```
+
+=== Array
+Per gli array, il discorso è più semplice, in quanto la dimensione è nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array $x_1, dots, x_n$ viene codificato in $[x_1, dots, x_n]$ dove:
+$ [x_1, dots, x_n] = [x_1, ..., [x_(n-1), x_n]...]. $
+
+=== Matrici
+Discorso simile vale per una matrice, che codifica singolarmente le righe e successivamente codifica per tutte le colonne.
+La matrice $mat(x_11, x_12; x_21 , x_22)$ viene codificata in:
+#set math.mat(delim: "[")
+$ mat(x_11, x_12; x_21, x_22) = [[x_11, x_12], [x_21, x_22]].$
+
+=== Grafi
+Un primo modo per codificare i grafi è sfruttando le liste di adiacenza dei vertici. Consideriamo il seguente grafo:
+/* Disegno del grafo nelle slide */
+La sua codifica si ottiene da:
+$ <<2,3,4>,<1,2>,<1,2,4>,<1,3>> = n $
+in cui, codifichiamo singolarmente ogni lista di adiacenza e successivamente codifichiamo i risultati del passo precedente.
+
+Un secondo modo per farlo è sfruttando la matrice di adiacenza dei vertici. Una volta costruita la matrice, ci basta codificarla come abbiamo già descritto.
+
+== Applicazioni
+
+Una volta visto come rappresentare le principali strutture dati, è facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi.
+
+=== Testi
+Dato un testo, possiamo ottenere un compressore in questo modo: trasformiamo il testo in numeri tramite le codifiche ASCII dei singoli caratteri e successivamente sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
+
+Per esempio, $text("ciao") arrow 99 105 97 111 arrow <99, <105, <97, <111, 0>>>.$
+
+_Perché non è un buon compressore?_ \
+Si vede facilmente come i bit necessari a rappresentare il numero associato al testo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un _pessimo_ modo per comprimere messaggi.
+
+_Perché non è un buon sistema crittografico?_ \
+La natura stessa del processo garantisce la possibilità di trovare un modo per decrittare in modo analitico, di conseguenza chiunque potrebbe in poco tempo decifrare il mio messaggio. Inolte è molto sensibile agli errori.
+
+=== Suoni
+Dato un suono, possiamo campionare il suo impulso elettrico e codificare i valori campionati. Diventa una codifica di un array di numeri.
+
+=== Immagini
+Esistono diverse tecniche, per esempio la *bitmap*: ogni pixel contiene la codifica numerica di un colore $arrow.double$ codifico separatamente ogni pixel e infine codifico insieme i risultati appena ottenuti.
+
+== Conclusioni
+Abbiamo mostrato come i dati possano essere buttati via, per considerare solo i numeri associati ad essi. 
+
+Di conseguenza, possiamo sostituire tutte le funzioni $f:dati arrow dati_bot$ con delle funzioni $f':NN arrow NN$.
+
+In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rapprestabile da $NN_bot^NN.$
