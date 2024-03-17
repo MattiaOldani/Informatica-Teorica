@@ -564,33 +564,31 @@ Grazie a questi risultati si può dimostrare che $QQ tilde NN$: infatti, i numer
 
 === Dimostrazione
 
-/* Da aggiungere dopo quando controllo */
+I risultati ottenuti fino a questo punto ci permettono di dire che ogni dato é trasformabile in un numero, che può essere soggetto a trasformazioni e manipolazioni matematiche.
 
-== PARTE DI GIGI
+La dimostrazione _formale_ non verrà fatta, ma verranno fatti esempi di alcune strutture dati che possono essere trasformate in un numero tramite la funzione coppia di Cantor. Vedremo come ogni struttura dati verrà manipolata e trasformata in una coppia $(x,y)$ per poterla applicare alla funzione coppia.
 
-I risultati ottenuti fino a questo punto ci permettono di dire che ogni dato è trasformabile in un numero, che può essere soggetto a trasformazioni e manipolazioni matematiche.
+==== Strutture dati
 
-== Strutture dati
+===== Liste
 
-Mostriamo come, tramite questo principio, è possibile mappare in numeri alcune delle principali strutture dati utilizzate nei programmi.
+Le *liste* sono le strutture dati più utilizzate nei programmi. In generale non ne è nota la grandezza, di conseguenza dobbiamo trovare un modo, soprattutto durante la applicazione di _sin_ e _des_, per capire quando abbiamo esaurito gli elementi della lista.
 
-=== Liste
+Codifichiamo la lista $[x_1, dots, x_n]$ con $ <x_1, dots, x_n> = <x_1, <x_2, < dots < x_n, 0 > dots >>>. $
 
-In generale, lavorando con delle liste non ne è nota la grandezza. Di conseguenza, ci serve sempre un modo per capire quando siamo arrivati all'ultimo elemento, in modo da sapere quando finiscono gli elementi della lista.
+Abbiamo quindi applicato la funzione coppia di Cantor alla coppia formata da un elemento della lista e il risultato della funzione coppia stessa applicata ai successivi elementi.
 
-Codifichiamo la lista $x_1, dots, x_n$ con $<x_1, dots, x_n>$, in cui: $ <x_1, dots, x_n> = <x_1, <x_2, < dots < x_n, 0 > dots >>>. $
+Ad esempio, la codifica della lista $M = [1,2,5]$ risulta essere: $ <1,2,5> &= <1, <2, <5,0>>> \ &= <1,<2,16>> \ &= <1, 188> \ &= 18144. $
 
-Se volessimo codificare la lista $1,2,5$, otterremmo: 
-$ <1,2,5> &= <1, <2, <5,0>>> \
-  &= <1,<2,16>> \
-  &= <1, 188> \
-  &= 18144. $
+Per decodificare la lista $M$ applichiamo le funzioni _sin_ e _des_ al risultato precedente. Alla prima iterazione otterremo il primo elemento della lista e la restante parte ancora da decodificare.
 
-Per decodificare una lista $M$, ci basterà utilizzare la funzione $text("left")(M_i)$ fintanto che $text("right")(M_n) eq.not 0 $. Siamo sicuri che non avremo problemi a salvare 0 nella lista in quanto non si confonderebbe con lo 0 che indica la fine della lista, perché uno appare nella parte sinistra, mentre l'altro nella parte destra.
+Quando ci fermiamo? Durante la creazione della codifica di $M$ abbiamo inserito un _"tappo"_, ovvero la prima iterazione della funzione coppia $<x_n, 0>$. Questo ci indica che quando $#cantor_des (M)$ sarà uguale a $0$ ci dovremo fermare.
 
-Vogliamo anche che le funzioni $text("Codifica")$ e $text("Decodifica")$ siano implementabili facilmente. Assumiamo:
-- che 0 codifichi la lista nulla;
-- di avere routine per $<,>$, $text("left")$ e $text("right")$.
+Cosa succede se abbiamo uno $0$ nella lista? Non ci sono problemi: il controllo avviene sulla funzione _des_, che restituisce la _"somma parziale"_ e non sulla funzione _sin_, che restituisce i valori della lista.
+
+Possiamo anche anche delle implementazioni di queste funzioni. Assumiamo che:
+- $0$ codifichi la lista nulla;
+- esistano delle routine per $<,>$, $#cantor_sin$ e $#cantor_des$.
 
 #v(12pt)
 
@@ -598,91 +596,117 @@ Vogliamo anche che le funzioni $text("Codifica")$ e $text("Decodifica")$ siano i
   columns: (1fr, 1fr),
   align(center)[
     Codifica
-    ```c int encode(x_1, ..., x_n) {
-      int k = 0;
-      for (int i = n; i >= 1; i--)
-        k = <x_1, k>
-      return k;
-    }```
+    ```python
+    def encode(numbers: list[int]) -> int:
+      k = 0
+      for i in range(n,0,-1):
+        xi = numbers[i]
+        k = <xi,k>
+      return k
+    ```
   ],
   align(center)[
     Decodifica
-    ```c void decode(n) {
-        if (n != 0) {
-          print(left(n));
-          decode(rigt(n));
-        }
-    }```
+    ```python
+    def decode(n: int) -> list[int]:
+      numbers = []
+      while True:
+        left, n = sin(n), des(n)
+        numbers.append(left)
+        if n == 0:
+          break
+      return numbers
+    ```
   ]
 )
 
 #v(12pt)
 
-Un'altra funzione utile è la funzione $text("Lunghezza")$:
-```C int length (int n) {
-   return n == 0? 0 : 1 + length(right(n));
-}```
+Un metodo molto utile delle liste é quello che ritorna la sua *lunghezza*.
 
-Definiamo anche la funzione $text("Proiezione")$:
-$ text("proj")(t,n) = cases(-1 & text("se ") t > text("length")(n) || t = 0 \ x_t & text("altrimenti")) $
+#align(center)[
+  Lunghezza
+  ```python
+  def length(n: int) -> int:
+    return 0 if n == 0 else 1 + length(des(n))
+  ```
+]
+
+Infine, definiamo la funzione *proiezione* come: $ op("proj")(t,n) = cases(-1 quad & text("se") t > op("length")(n) or t lt.eq 0 \ x_t & text("altrimenti")) $
+
 e la sua implementazione:
-```C int proj(int t, int n) {
-  if (t == 0 || t > length(n))
-    return -1;
-  else
-    if (t == 1)
-      return left(n);
-    else
-      return proj(t-1, right(n));
-}```
 
-=== Array
+#align(center)[
+  Proiezione
+  ```python
+  def proj(t: int, n: int) -> int:
+    if t <= 0 or t > length(n):
+      return -1
+    else:
+      if t == 1:
+        return sin(n)
+      else:
+        return proj(t - 1, des(n))
+  ```
+]
 
-Per gli array, il discorso è più semplice, in quanto la dimensione è nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array $x_1, dots, x_n$ viene codificato in $[x_1, dots, x_n]$ dove:
-$ [x_1, dots, x_n] = [x_1, ..., [x_(n-1), x_n]...]. $
+===== Array
 
-=== Matrici
+Per gli *array* il discorso è più semplice, in quanto la dimensione é nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array ${x_1, dots, x_n}$ viene codificato con: $ [x_1, dots, x_n] = [x_1, dots [x_(n-1), x_n] dots ]. $
 
-Discorso simile vale per una matrice, che codifica singolarmente le righe e successivamente codifica per tutte le colonne.
-La matrice $mat(x_11, x_12; x_21 , x_22)$ viene codificata in:
+===== Matrici
+
+Per quanto riguarda *matrici* l'approccio utilizzato codifica singolarmente le righe e successivamente codifica i risultati ottenuti come se fossero un array di dimensione uguale al numero di righe.
+
 #set math.mat(delim: "[")
-$ mat(x_11, x_12; x_21, x_22) = [[x_11, x_12], [x_21, x_22]].$
 
-=== Grafi
+Ad esempio, la matrice $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) $ viene codificata in: $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) = [[x_11, x_12, x_13], [x_21, x_22, x_23], [x_31, x_32, x_33]]. $
 
-Un primo modo per codificare i grafi è sfruttando le liste di adiacenza dei vertici. Consideriamo il seguente grafo:
-/* Disegno del grafo nelle slide */
-La sua codifica si ottiene da:
-$ <<2,3,4>,<1,2>,<1,2,4>,<1,3>> = n $
-in cui, codifichiamo singolarmente ogni lista di adiacenza e successivamente codifichiamo i risultati del passo precedente.
+===== Grafi
 
-Un secondo modo per farlo è sfruttando la matrice di adiacenza dei vertici. Una volta costruita la matrice, ci basta codificarla come abbiamo già descritto.
+Consideriamo il seguente grafo.
 
-== Applicazioni
+#v(12pt)
 
-Una volta visto come rappresentare le principali strutture dati, è facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi.
+#figure(
+  image("assets/grafo.svg", width: 25%)
+)
 
-=== Testi
+#v(12pt)
 
-Dato un testo, possiamo ottenere un compressore in questo modo: trasformiamo il testo in numeri tramite le codifiche ASCII dei singoli caratteri e successivamente sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
+I *grafi* sono rappresentati principalmente in due modi:
+- *liste di adiacenza dei vertici*: per ogni vertice si ha una lista che contiene gli identificatori dei vertici che collegati direttamente con esso. Il grafo precedente ha $ {1:[2,3,4], 2:[1,3], 3:[1,2,4], 4:[1,3]} $ come lista di adiacenza, e la sua codifica si calcola come: $ [<2,3,4>,<1,2>,<1,2,4>,<1,3>]. $ Questa soluzione esegue prima la codifica di ogni lista di adiacenza e poi la codifica dei risultati del passo precedente.
+- *matrice di adiacenza*: per ogni cella $m_(i j)$ della matrice $|V| times |V|$, dove $V$ é l'insieme dei vertici, si ha:
+  - $1$ se esiste un arco dal vertice $i$ al vertice $j$;
+  - $0$ altrimenti;
+  Essendo questa una matrice la andiamo a codificare come abbiamo già descritto.
 
-Per esempio, $text("ciao") arrow 99 105 97 111 arrow <99, <105, <97, <111, 0>>>.$
+==== Applicazioni
 
-_Perché non è un buon compressore?_ \
-Si vede facilmente come i bit necessari a rappresentare il numero associato al testo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un _pessimo_ modo per comprimere messaggi.
+Una volta visto come rappresentare le principali strutture dati, é facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi.
 
-_Perché non è un buon sistema crittografico?_ \
-La natura stessa del processo garantisce la possibilità di trovare un modo per decrittare in modo analitico, di conseguenza chiunque potrebbe in poco tempo decifrare il mio messaggio. Inoltre è molto sensibile agli errori.
+===== Testi
 
-=== Suoni
-Dato un suono, possiamo campionare il suo impulso elettrico e codificare i valori campionati. Diventa una codifica di un array di numeri.
+Dato un *testo*, possiamo ottenere la sua codifica nel seguente modo:
++ trasformiamo il testo in una lista di numeri tramite la codifica ASCII dei singoli caratteri;
++ sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
 
-=== Immagini
-Esistono diverse tecniche, per esempio la *bitmap*: ogni pixel contiene la codifica numerica di un colore $arrow.double$ codifico separatamente ogni pixel e infine codifico insieme i risultati appena ottenuti.
+Per esempio, $ "ciao" = [99, 105, 97, 111] = <99, <105, <97, <111, 0>>>. $
 
-== Conclusioni
-Abbiamo mostrato come i dati possano essere buttati via, per considerare solo i numeri associati ad essi. 
+Possiamo chiederci:
+- _Il codificatore proposto é un buon compressore?_ \ No, si vede facilmente che il numero ottenuto tramite la funzione coppia (o la sua concatenazione) sia generalmente molto grande, e che i bit necessari a rappresentarlo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un _pessimo_ modo per comprimere messaggi.
+- _Il codificatore proposto é un buon sistema crittografico?_ \ La natura stessa del processo garantisce la possibilità di trovare un modo per decifrare in modo analitico, di conseguenza chiunque potrebbe, in poco tempo, decifrare il mio messaggio. Inoltre, questo metodo é molto sensibile agli errori.
 
-Di conseguenza, possiamo sostituire tutte le funzioni $f:dati arrow dati_bot$ con delle funzioni $f':NN arrow NN$.
+===== Suoni
 
-In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rappresentabile da $NN_bot^NN.$
+Dato un *suono*, possiamo _campionare_ il suo segnale elettrico a intervalli di tempo regolari e codificare la sequenza dei valori campionati tramite liste o array.
+
+===== Immagini
+
+Per codificare le *immagini* esistono diverse tecniche, ma la più usata é la *bitmap*: ogni pixel contiene la codifica numerica di un colore, quindi posso codificare separatamente ogni pixel e poi codificare i singoli risultati insieme tramite liste o array.
+
+=== Conclusioni
+
+Abbiamo mostrato come i dati possano essere _"buttati via"_ in favore delle codifiche numeriche associate ad essi. 
+
+Di conseguenza, possiamo sostituire tutte le funzioni $f: dati arrow.long dati_bot$ con delle funzioni $f': NN arrow NN_bot$. In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rappresentabile dall'insieme $NN_bot^NN.$
