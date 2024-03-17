@@ -441,34 +441,132 @@ In poche parole, stiamo dicendo che programmi e dati non sono più dei numeri na
 
 Ma questo ci permette di dire che: $ F(cal(C)) tilde programmi tilde NN tilde.not NN_bot^NN tilde dati_bot^dati. $
 
-Questo é un risultato importantissimo: abbiamo appena dimostrato con la relazione precedente che *esistono funzioni non calcolabili*. Il problema é che _ho pochi programmi e troppe funzioni_.
+Questo é un risultato importantissimo: abbiamo appena dimostrato con la relazione precedente che *esistono funzioni non calcolabili*. Le funzioni non calcolabili sono problemi pratici e molto sentiti al giorno d'oggi: un esempio di funzione non calcolabile é la funzione che, dato un software, dice se é corretto o no. Il problema é che _ho pochi programmi e troppe/i funzioni/problemi_.
 
 Questo risultato però é arrivato considerando vere le due considerazioni precedenti: andiamo quindi a dimostrarle utilizzando le *tecniche di aritmetizzazione* (o _godelizzazione_) *di strutture*, ovvero delle tecniche che rappresentano delle strutture con un numero, così da avere la matematica e l'insiemi degli strumenti che ha a disposizione.
 
-=== $dati tilde NN$
+#pagebreak()
+
+= Lezione 05
+
+== $dati tilde NN$
 
 Vogliamo formare una legge che:
 + associ biunivocamente dati a numeri e viceversa;
 + consenta di operare direttamente sui numeri per operare sui corrispondenti dati, ovvero abbia delle primitive per lavorare il numero che "riflettano" il risultato sul dato senza ripassare per il dato stesso;
-+ ci consenta di dire, senza perdita di generalità, che i nostri programmi lavorano sui numeri, ovvero grazie al punto $2$ possiamo lavorare bene sui numeri senza ripassare dai dati.
++ ci consenta di dire, senza perdita di generalità, che i nostri programmi lavorano sui numeri.
+
+=== Funzione coppia di Cantor
+
+==== Definizione
+
+#let cantor_sin = $op("sin")$
+#let cantor_des = $op("des")$
+
+La *funzione coppia di Cantor* é la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione é formata da due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ #cantor_sin: NN^+ arrow.long NN, & quad #cantor_sin (n) = x \ #cantor_des: NN^+ arrow.long NN, & quad #cantor_des (n) = y. $
+
+Vediamo una rappresentazione grafica della funzione di Cantor.
+
+#v(12pt)
+
+#figure(
+  image("assets/cantor-01.svg", width: 50%)
+)
+
+#v(12pt)
+
+$<x,y>$ rappresenta il valore all'incrocio tra la $x$-esima riga e la $y$-esima colonna.
+
+La tabella viene riempita _diagonale per diagonale_, ovvero:
++ si inserisce $1$ nella cella in _alto a sinistra_;
++ si riempiono le celle della diagonale andando in _alto a destra_ fino alla cella in prima riga;
++ si ripete dal punto $2$ iniziando dalla cella sotto la precedente cella di partenza.
+
+Vogliamo che questa funzione sia iniettiva e suriettiva, quindi:
+- non posso avere celle con lo stesso numero (_iniettiva_);
+- ogni numero in $NN^+$ deve comparire.
+
+A tutti gli effetti questa funzione é iniettiva e suriettiva, perché:
+- numeriamo in maniera incrementale (_iniettiva_);
+- ogni numero prima o poi compare in una cella, quindi ho una coppia che lo genera (_suriettiva_).
+
+==== Forma analitica della funzione coppia
+
+Quello che vogliamo fare ora é cercare una forma analitica della funzione coppia, questo perché non é molto comodo costruire ogni volta la tabella sopra. Nella successiva immagine notiamo come valga la relazione $ <x,y> = <x+y,0> + y. $
+
+#v(12pt)
+
+#figure(
+  image("assets/cantor-02.svg", width: 40%)
+)
+
+#v(12pt)
+
+Questo é molto comodo perché il calcolo della funzione coppia si riduce al calcolo di $<x+y,0>$.
+
+Chiamiamo $x+ y = z$, osserviamo con la successiva immagine un'altra proprietà.
+
+#v(12pt)
+
+#figure(
+  image("assets/cantor-03.svg", width: 15%)
+)
+
+#v(12pt)
+
+Ogni cella $<z,0>$ la si può calcolare come la somma di $z$ e $<z-1,0>$, ma allora $ <z,0> &= z + <z-1,0> = \ &= z + (z-1) + <z-2,0> = \ &= dots = \ &= z + (z-1) + dots + 1 + <0,0> = \ &= z + (z-1) + dots + 1 + 1 = \ &= sum_(i=1)^z i + 1 = frac(z(z+1),2) + 1. $
+
+Questa forma é molto più compatta ed evita il calcolo di tutti i singoli $<z,0>$.
+
+Possiamo quindi dare la formula analitica della funzione coppia come $ <x,y> = <x+y,0> + y = frac((x+y)(x+y+1), 2) + y + 1. $
+
+==== Forma analitica di #cantor_sin e #cantor_des
+
+Vogliamo adesso dare la forma analitica di _sin_ e _des_ per poter _"tornare indietro"_ dato $n$.
+
+Grazie alle osservazioni precedenti sappiamo che $ n = y + <gamma,0> space &arrow.long.double space y = n - <gamma,0>, \ gamma = x + y space & arrow.long.double space x = gamma - y. $
+
+Se troviamo il valore di gamma abbiamo trovato anche i valori di $x$ e $y$.
+
+Notiamo come $gamma$ sia il _"punto di attacco"_ della diagonale che contiene $n$, ma allora $ gamma = max{z in NN bar.v <z,0> lt.eq n} $ perché tra tutti i punti di attacco $<z,0>$ voglio quello che potrebbe contenere $n$ ($<z,0> lt.eq n$) e che sia massimo, ovvero sia esattamente la diagonale che contiene $n$.
+
+Risolviamo quindi la disequazione $ <z,0> lt.eq n & arrow.long.double frac(z(z+1),2) + 1 lt.eq n \ & arrow.long.double z^2 + z - 2n + 2 lt.eq 0 \ & arrow.long.double z_(1,2) = frac(-1 plus.minus sqrt(1 + 8n - 8), 2) \ & arrow.long.double frac(-1 - sqrt(8n - 7), 2) lt.eq z lt.eq frac(-1 + sqrt(8n - 7), 2). $
+
+Come valore di $gamma$ scelgo $ gamma = floor(frac(-1 + sqrt(8n - 7), 2)). $
+
+Ora che abbiamo $gamma$ possiamo definire le funzioni _sin_ e _des_ come $ #cantor_des (n) = y = n - <gamma,0> = n - frac(gamma (gamma + 1), 2) - 1, \ #cantor_sin (n) = x = gamma - y. $
+
+==== $NN times NN tilde NN$
+
+Con la funzione coppia di Cantor possiamo dimostrare un importante risultato.
 
 #theorem()[
   $NN times NN tilde NN^+$.
 ]
 
 #proof[
-
+  \ La funzione di Cantor é una funzione biiettiva tra l'insieme $NN times NN$ e l'insieme $NN^+$, quindi i due insiemi sono isomorfi.
 ]<proof>
 
 Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN tilde NN^+ arrow.long.squiggly NN times NN tilde NN. $
 
-/* Da fare nella lezione 05 */
+#theorem()[
+  $NN times NN tilde NN$.
+]
 
-Grazie a questi risultati si può dimostrare che $QQ tilde NN$.
+#proof[
+  \ Definiamo la funzione $ [,]: NN times NN arrow.long NN $ tale che $ [x,y] = <x,y> - 1. $
+  
+  Questa funzione é anch'essa biiettiva, quindi i due insiemi sono isomorfi.
+]<proof>
 
-#pagebreak()
+Grazie a questi risultati si può dimostrare che $QQ tilde NN$: infatti, i numeri razionali li possiamo rappresentare come coppie $("num", "den")$. In generale, tutte le tuple sono isomorfe a $NN$, iterando in qualche modo la funzione coppia di Cantor.
 
-= Lezione 05
+=== Dimostrazione
+
+/* Da aggiungere dopo quando controllo */
+
+== PARTE DI GIGI
 
 I risultati ottenuti fino a questo punto ci permettono di dire che ogni dato è trasformabile in un numero, che può essere soggetto a trasformazioni e manipolazioni matematiche.
 
@@ -477,6 +575,7 @@ I risultati ottenuti fino a questo punto ci permettono di dire che ogni dato è 
 Mostriamo come, tramite questo principio, è possibile mappare in numeri alcune delle principali strutture dati utilizzate nei programmi.
 
 === Liste
+
 In generale, lavorando con delle liste non ne è nota la grandezza. Di conseguenza, ci serve sempre un modo per capire quando siamo arrivati all'ultimo elemento, in modo da sapere quando finiscono gli elementi della lista.
 
 Codifichiamo la lista $x_1, dots, x_n$ con $<x_1, dots, x_n>$, in cui: $ <x_1, dots, x_n> = <x_1, <x_2, < dots < x_n, 0 > dots >>>. $
@@ -492,6 +591,8 @@ Per decodificare una lista $M$, ci basterà utilizzare la funzione $text("left")
 Vogliamo anche che le funzioni $text("Codifica")$ e $text("Decodifica")$ siano implementabili facilmente. Assumiamo:
 - che 0 codifichi la lista nulla;
 - di avere routine per $<,>$, $text("left")$ e $text("right")$.
+
+#v(12pt)
 
 #grid(
   columns: (1fr, 1fr),
@@ -515,6 +616,8 @@ Vogliamo anche che le funzioni $text("Codifica")$ e $text("Decodifica")$ siano i
   ]
 )
 
+#v(12pt)
+
 Un'altra funzione utile è la funzione $text("Lunghezza")$:
 ```C int length (int n) {
    return n == 0? 0 : 1 + length(right(n));
@@ -534,16 +637,19 @@ e la sua implementazione:
 }```
 
 === Array
+
 Per gli array, il discorso è più semplice, in quanto la dimensione è nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array $x_1, dots, x_n$ viene codificato in $[x_1, dots, x_n]$ dove:
 $ [x_1, dots, x_n] = [x_1, ..., [x_(n-1), x_n]...]. $
 
 === Matrici
+
 Discorso simile vale per una matrice, che codifica singolarmente le righe e successivamente codifica per tutte le colonne.
 La matrice $mat(x_11, x_12; x_21 , x_22)$ viene codificata in:
 #set math.mat(delim: "[")
 $ mat(x_11, x_12; x_21, x_22) = [[x_11, x_12], [x_21, x_22]].$
 
 === Grafi
+
 Un primo modo per codificare i grafi è sfruttando le liste di adiacenza dei vertici. Consideriamo il seguente grafo:
 /* Disegno del grafo nelle slide */
 La sua codifica si ottiene da:
@@ -557,6 +663,7 @@ Un secondo modo per farlo è sfruttando la matrice di adiacenza dei vertici. Una
 Una volta visto come rappresentare le principali strutture dati, è facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi.
 
 === Testi
+
 Dato un testo, possiamo ottenere un compressore in questo modo: trasformiamo il testo in numeri tramite le codifiche ASCII dei singoli caratteri e successivamente sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
 
 Per esempio, $text("ciao") arrow 99 105 97 111 arrow <99, <105, <97, <111, 0>>>.$
@@ -565,7 +672,7 @@ _Perché non è un buon compressore?_ \
 Si vede facilmente come i bit necessari a rappresentare il numero associato al testo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un _pessimo_ modo per comprimere messaggi.
 
 _Perché non è un buon sistema crittografico?_ \
-La natura stessa del processo garantisce la possibilità di trovare un modo per decrittare in modo analitico, di conseguenza chiunque potrebbe in poco tempo decifrare il mio messaggio. Inolte è molto sensibile agli errori.
+La natura stessa del processo garantisce la possibilità di trovare un modo per decrittare in modo analitico, di conseguenza chiunque potrebbe in poco tempo decifrare il mio messaggio. Inoltre è molto sensibile agli errori.
 
 === Suoni
 Dato un suono, possiamo campionare il suo impulso elettrico e codificare i valori campionati. Diventa una codifica di un array di numeri.
@@ -578,4 +685,4 @@ Abbiamo mostrato come i dati possano essere buttati via, per considerare solo i 
 
 Di conseguenza, possiamo sostituire tutte le funzioni $f:dati arrow dati_bot$ con delle funzioni $f':NN arrow NN$.
 
-In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rapprestabile da $NN_bot^NN.$
+In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rappresentabile da $NN_bot^NN.$
