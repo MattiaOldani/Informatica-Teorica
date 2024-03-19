@@ -463,7 +463,7 @@ Vogliamo formare una legge che:
 #let cantor_sin = $op("sin")$
 #let cantor_des = $op("des")$
 
-La *funzione coppia di Cantor* é la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione é formata da due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ #cantor_sin: NN^+ arrow.long NN, & quad #cantor_sin (n) = x \ #cantor_des: NN^+ arrow.long NN, & quad #cantor_des (n) = y. $
+La *funzione coppia di Cantor* é la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione sfrutta due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ #cantor_sin: NN^+ arrow.long NN, & quad #cantor_sin (n) = x \ #cantor_des: NN^+ arrow.long NN, & quad #cantor_des (n) = y. $
 
 Vediamo una rappresentazione grafica della funzione di Cantor.
 
@@ -478,15 +478,15 @@ Vediamo una rappresentazione grafica della funzione di Cantor.
 $<x,y>$ rappresenta il valore all'incrocio tra la $x$-esima riga e la $y$-esima colonna.
 
 La tabella viene riempita _diagonale per diagonale_, ovvero:
-+ si inserisce $1$ nella cella in _alto a sinistra_;
-+ si riempiono le celle della diagonale andando in _alto a destra_ fino alla cella in prima riga;
-+ si ripete dal punto $2$ iniziando dalla cella sotto la precedente cella di partenza.
++ sia $x=0$;
++ partendo dalla cella $(x,0)$ si enumerano le celle della diagonale identificata da $(x,0)$ e da $(0,x)$;
++ si ripete il punto $2$ aumentando $x$ di $1$.
 
-Vogliamo che questa funzione sia iniettiva e suriettiva, quindi:
+Vorremmo che questa funzione sia iniettiva e suriettiva, quindi:
 - non posso avere celle con lo stesso numero (_iniettiva_);
 - ogni numero in $NN^+$ deve comparire.
 
-A tutti gli effetti questa funzione é iniettiva e suriettiva, perché:
+Questa richiesta é soddisfatta in quanto:
 - numeriamo in maniera incrementale (_iniettiva_);
 - ogni numero prima o poi compare in una cella, quindi ho una coppia che lo genera (_suriettiva_).
 
@@ -514,21 +514,21 @@ Chiamiamo $x+ y = z$, osserviamo con la successiva immagine un'altra proprietà.
 
 #v(12pt)
 
-Ogni cella $<z,0>$ la si può calcolare come la somma di $z$ e $<z-1,0>$, ma allora $ <z,0> &= z + <z-1,0> = \ &= z + (z-1) + <z-2,0> = \ &= dots = \ &= z + (z-1) + dots + 1 + <0,0> = \ &= z + (z-1) + dots + 1 + 1 = \ &= sum_(i=1)^z i + 1 = frac(z(z+1),2) + 1. $
+Ogni cella $<z,0>$ la si può calcolare come la somma di $z$ e $<z-1,0>$, ma allora $ <z,0> &= z + <z-1,0> = \ &= z + (z-1) + <z-2,0> = \ &= z + (z-1) + dots + 1 + <0,0> = \ &= z + (z-1) + dots + 1 + 1 = \ &= sum_(i=1)^z i + 1 = frac(z(z+1),2) + 1. $
 
 Questa forma é molto più compatta ed evita il calcolo di tutti i singoli $<z,0>$.
 
-Possiamo quindi dare la formula analitica della funzione coppia come $ <x,y> = <x+y,0> + y = frac((x+y)(x+y+1), 2) + y + 1. $
+Mettiamo insieme le due proprietà per ottenere la formula analitica della funzione coppia: $ <x,y> = <x+y,0> + y = frac((x+y)(x+y+1), 2) + y + 1. $
 
 ==== Forma analitica di #cantor_sin e #cantor_des
 
-Vogliamo adesso dare la forma analitica di _sin_ e _des_ per poter _"tornare indietro"_ dato $n$.
+Vogliamo adesso dare la forma analitica di _sin_ e _des_ per poter computare l'inversa della funzione di Cantor, dato $n$.
 
 Grazie alle osservazioni precedenti sappiamo che $ n = y + <gamma,0> space &arrow.long.double space y = n - <gamma,0>, \ gamma = x + y space & arrow.long.double space x = gamma - y. $
 
 Se troviamo il valore di gamma abbiamo trovato anche i valori di $x$ e $y$.
 
-Notiamo come $gamma$ sia il _"punto di attacco"_ della diagonale che contiene $n$, ma allora $ gamma = max{z in NN bar.v <z,0> lt.eq n} $ perché tra tutti i punti di attacco $<z,0>$ voglio quello che potrebbe contenere $n$ ($<z,0> lt.eq n$) e che sia massimo, ovvero sia esattamente la diagonale che contiene $n$.
+Notiamo come $gamma$ sia il _"punto di attacco"_ della diagonale che contiene $n$, ma allora $ gamma = max{z in NN bar.v <z,0> lt.eq n} $ perché tra tutti i punti di attacco $<z,0>$ voglio quello che potrebbe contenere $n$ e che sia massimo, ovvero sia esattamente la diagonale che contiene $n$.
 
 Risolviamo quindi la disequazione $ <z,0> lt.eq n & arrow.long.double frac(z(z+1),2) + 1 lt.eq n \ & arrow.long.double z^2 + z - 2n + 2 lt.eq 0 \ & arrow.long.double z_(1,2) = frac(-1 plus.minus sqrt(1 + 8n - 8), 2) \ & arrow.long.double frac(-1 - sqrt(8n - 7), 2) lt.eq z lt.eq frac(-1 + sqrt(8n - 7), 2). $
 
