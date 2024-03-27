@@ -19,6 +19,8 @@
   breakable: true
 )
 
+#import "alias.typ": *
+
 // Appunti
 
 = Lezione 07

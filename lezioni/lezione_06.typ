@@ -2,12 +2,11 @@
 
 #import "@preview/ouset:0.1.1": overset
 
+#import "alias.typ": *
+
 // Appunti
 
 = Lezione 06
-
-#let dati = $text("DATI")$
-#let programmi = $text("PROG")$
 
 == $programmi tilde NN$
 
@@ -24,9 +23,6 @@ Per fare questo vediamo l'insieme $programmi$ come l'insieme dei programmi scrit
 ==== Introduzione
 
 Come supporto alla dimostrazione usiamo il *sistema di calcolo RAM*: esso è formato dalla *macchina RAM* e dal *linguaggio RAM*. In generale, ogni sistema di calcolo ha la propria macchina e il proprio linguaggio.
-
-#let ram = $text("RAM")$
-#let mwhile = $text("while")$
 
 Questo sistema è molto semplice e ci permette di definire rigorosamente:
 - $programmi tilde NN$;
@@ -51,10 +47,6 @@ Un altro registro molto importante, che non rientra nei registri $R_k$, è il re
 
 Dato un programma $P$, il numero di istruzione che contiene si indica con $|P|$.
 
-#let inc(reg) = $reg arrow.long.l reg + 1$
-#let subsus(reg) = $reg arrow.long.l reg overset(-,.) 1$
-#let ifgoto(reg,m) = $"IF" reg = 0 "THEN GOTO" m$
-
 Le istruzioni nel linguaggio RAM sono:
 - *incremento* $inc(R_k)$;
 - *decremento sus* $subsus(R_k)$;
@@ -63,8 +55,6 @@ Le istruzioni nel linguaggio RAM sono:
 L'istruzione di decremento é tale che $ x overset(-,.) y = cases(x - y quad & "se" x gt.eq y, 0 & "altrimenti") quad . $
 
 ==== Fasi dell'esecuzione su macchina RAM
-
-#let istr(index) = $"Istr"_index$
 
 L'esecuzione di un programma su una macchina RAM segue i seguenti passi:
 + *inizializzazione*:
@@ -94,10 +84,6 @@ La foto della macchina si chiama *stato* e deve descrivere completamente la situ
 Cosa deve comparire nella foto per descrivere completamente la macchina che sto osservando? Sicuramente la situazione globale dei registri $R_k$ e il registro $L$. Il programma invece non è utile salvarlo nella foto, visto che rimane sempre uguale.
 
 La *computazione* del programma $P$ è una sequenza di stati $S_i$, ognuno generato dall'esecuzione di un'istruzione del programma. Si dice che $P$ induce una sequenza di stati $S_i$. Se quest'ultima è formata da un numero infinito di stati allora il programma è andato in loop, altrimenti nel registro $R_0$ ho il risultato $y$ della computazionale di $P$. In poche parole: $ phi_P: NN arrow.long NN_bot "tale che" phi_P (n) = cases(y & "se" exists S_("finale"), bot quad & "altrimenti") quad . $
-
-#let stati = $text("STATI")$
-#let iniziale = $S_("iniziale")$
-#let inizializzazione = $text("in")$
 
 Definiamo ora come passiamo da uno stato all'altro. Per far ciò ci servono alcuni _ingredienti_:
 - *stato*: foto istantanea di tutte le componenti della macchina, lo definiamo come una funzione $ S: {L,R_i} arrow.long NN $ tale che $S(R_k)$ restituisce il contenuto del registro $R_k$ quando la macchina si trova nello stato $S$. Gli stati appartengono all'insieme $ stati = {f : {L,R_i} arrow.long NN} = NN^({L,R_i}), $ che descrive tutti i possibili stati della macchina. Questa rappresentazione è molto comoda perché ho potenzialmente un numero di registri infinito. Se così non fosse avrei delle tuple per indicare tutti i possibili registri al posto dell'insieme ${L, R_i}$;

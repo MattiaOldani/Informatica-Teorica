@@ -19,6 +19,8 @@
   breakable: true
 )
 
+#import "alias.typ": *
+
 // Appunti
 
 = Lezione 04
@@ -93,9 +95,6 @@ Quest'ultimo è l'insieme $ NN_bot^NN = {f: NN arrow.long NN}. $
 ]<proof>
 
 == Potenza computazionale
-
-#let dati = $text("DATI")$
-#let programmi = $text("PROG")$
 
 === Validità dell'inclusione $F(cal(C)) subset.eq dati_bot^dati$
 

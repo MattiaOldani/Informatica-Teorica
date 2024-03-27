@@ -1,5 +1,7 @@
 // Setup
 
+#import "alias.typ": *
+
 // Appunti
 
 = Lezione 02
@@ -8,21 +10,17 @@
 
 === Funzioni totali e parziali
 
-#let quarter = $space.quarter$
-
 Prima di fare un'ulteriore classificazione per le funzioni, introduciamo la notazione $f(a) arrow.b$ per indicare che la funzione $f$ è definita per l'input $a$, mentre la notazione $f(a) arrow.t$ per indicare la situazione opposta.
 
 Ora, data $f: A arrow.long B$ diciamo che $f$ è:
 - *totale* se è definita _per ogni elemento_ $a in A$, ovvero $f(a) arrow.b quarter forall a in A$;
 - *parziale* se è definita _per qualche elemento_ $a in A$, ovvero $exists a in A bar.v f(a) arrow.t$.
 
-#let dominio(funzione) = $op("Dom")_funzione$
-
 Chiamiamo *dominio* (o _campo_) *di esistenza* di $f$ l'insieme $ dominio(f) = { a in A bar.v f(a) arrow.b} subset.eq A. $
 
 Notiamo che:
 - $dominio(f) subset.neq A arrow.long.double f$ parziale;
-- $text("Dom")_f = A arrow.long.double f$ totale.
+- $dominio(f) = A arrow.long.double f$ totale.
 
 === Totalizzare una funzione
 
@@ -67,9 +65,6 @@ Abbiamo due possibili approcci:
 === Sistema di calcolo
 
 Quello che faremo ora è _modellare teoricamente un sistema di calcolo_.
-
-#let dati = $text("DATI")$
-#let programmi = $text("PROG")$
 
 Un *sistema di calcolo* lo possiamo vedere come una _black-box_ che prende un programma $P$, una serie di dati $x$ e calcola il risultato di $P$ sull'input $x$.
 

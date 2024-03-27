@@ -17,12 +17,11 @@
   breakable: true
 )
 
+#import "alias.typ": *
+
 // Appunti
 
 = Lezione 05
-
-#let dati = $text("DATI")$
-#let programmi = $text("PROG")$
 
 == $dati tilde NN$
 
@@ -34,9 +33,6 @@ Vogliamo formare una legge che:
 === Funzione coppia di Cantor
 
 ==== Definizione
-
-#let cantor_sin = $text("sin")$
-#let cantor_des = $text("des")$
 
 La *funzione coppia di Cantor* è la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione sfrutta due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ #cantor_sin: NN^+ arrow.long NN, & quad #cantor_sin (n) = x \ #cantor_des: NN^+ arrow.long NN, & quad #cantor_des (n) = y. $
 
