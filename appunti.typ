@@ -832,3 +832,8 @@ La semantica di $P$ è $ phi_P (n) = cases(y quad & "se" P "termina in" S_m", co
 La potenza computazionale del sistema RAM è: $ F(ram) = {f in NN_bot^NN bar.v exists P in programmi bar.v phi_P = f} = {phi_P bar.v P in programmi} subset.neq NN_bot^NN. $ 
 
 L'insieme è formato da tutte le funzioni $f: NN arrow.long NN_bot$ che hanno un programma che le calcola in un sistema RAM.
+
+
+#pagebreak()
+
+= Appunti Lezione
