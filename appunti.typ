@@ -29,3 +29,6 @@
 #pagebreak()
 
 #include "lezioni/lezione_07.typ"
+#pagebreak()
+
+#include "lezioni/lezione_08.typ"
