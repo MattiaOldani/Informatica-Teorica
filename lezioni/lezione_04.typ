@@ -33,7 +33,7 @@ Il primo insieme che vediamo è l'*insieme delle parti*, o _power set_, di $NN$.
 
 Quest'ultimo è l'insieme $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. $
 
-#theorem()[
+#theorem(numbering: none)[
   $P(NN) tilde.not NN$.
 ]<thm>
 
@@ -59,7 +59,7 @@ Il secondo insieme che vediamo è l'insieme delle funzioni da $NN$ in $NN$.
 
 Quest'ultimo è l'insieme $ NN_bot^NN = {f: NN arrow.long NN}. $
 
-#theorem()[
+#theorem(numbering: none)[
   $NN_bot^NN tilde.not NN$.
 ]<thm>
 

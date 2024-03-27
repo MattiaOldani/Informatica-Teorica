@@ -115,7 +115,7 @@ Ora che abbiamo $gamma$ possiamo definire le funzioni _sin_ e _des_ come $ #cant
 
 Con la funzione coppia di Cantor possiamo dimostrare un importante risultato.
 
-#theorem()[
+#theorem(numbering: none)[
   $NN times NN tilde NN^+$.
 ]
 
@@ -125,7 +125,7 @@ Con la funzione coppia di Cantor possiamo dimostrare un importante risultato.
 
 Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN tilde NN^+ arrow.long.squiggly NN times NN tilde NN. $
 
-#theorem()[
+#theorem(numbering: none)[
   $NN times NN tilde NN$.
 ]
 

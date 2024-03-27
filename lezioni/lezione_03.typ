@@ -105,7 +105,7 @@ Il _non poter listare gli elementi_ si traduce in _qualunque lista generata manc
 
 Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
-#theorem()[
+#theorem(numbering: none)[
   L'insieme $RR$ non è numerabile
 ]<thm>
 
