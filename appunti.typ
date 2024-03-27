@@ -836,4 +836,11 @@ L'insieme è formato da tutte le funzioni $f: NN arrow.long NN_bot$ che hanno un
 
 #pagebreak()
 
-= Appunti Lezione
+= Lezione 07
+
+/* GIGI */
+
+#pagebreak()
+
+= Lezione 08
+
