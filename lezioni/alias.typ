@@ -32,6 +32,7 @@
 #let stati = $"STATI"$
 #let iniziale = $S_("iniziale")$
 #let inizializzazione = $"in"$
+#let ar = $"Ar"$
 
 // Sistema while
 #let composto = $"begin" C_1";"dots";"C_m "end"$
