@@ -50,3 +50,7 @@
 #let c1programmi = $C_1"-"programmi$
 #let c2programmi = $C_2"-"programmi$
 #let compilatore = $op("Comp")$
+#let colorcode(color,code) = text(fill: color)[$#code$]
+#let proiezione(index,lista) = $op("Pro")(index,lista)$
+#let macroincr(index,lista) = $op("incr")(index,lista)$
+#let macrodecr(index,lista) = $op("decr")(index,lista)$
