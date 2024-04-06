@@ -10,5 +10,4 @@ Materiali e appunti del corso di Informatica teorica
 
 ## Revisionare
 
-- Lezione 09 del 03/04/2024 [gigi]
 - Lezione 10 del 05/04/2024 [tia]
