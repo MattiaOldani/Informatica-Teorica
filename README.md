@@ -6,8 +6,11 @@ Materiali e appunti del corso di Informatica teorica
 
 ## Scrivere
 
-- Lezione 10 del 05/04/2024 [gigi]
+- Lezione 11 del 10/04/2024 [tia]
+- Lezione 12 del 12/04/2024 [gigi]
 
 ## Revisionare
 
 - Lezione 10 del 05/04/2024 [tia]
+- Lezione 11 del 10/04/2024 [gigi]
+- Lezione 12 del 12/04/2024 [tia]
