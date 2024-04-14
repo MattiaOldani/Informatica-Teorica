@@ -2,6 +2,8 @@
 
 #import "@preview/ouset:0.1.1": overset
 
+#import "@preview/algo:0.3.3": code
+
 #import "@preview/lemmify:0.1.5": *
 
 #let (
