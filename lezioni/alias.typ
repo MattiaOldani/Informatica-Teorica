@@ -54,3 +54,10 @@
 #let proiezione(index,lista) = $op("Proj")(index,lista)$
 #let macroincr(index,lista) = $op("incr")(index,lista)$
 #let macrodecr(index,lista) = $op("decr")(index,lista)$
+
+// Definizione formale di calcolabilità
+#let elem = $"ELEM"$
+#let comp = $"COMP"$
+#let rp = $"RP"$
+#let ricprim = $"RICPRIM"$
+#let lfor = $"FOR"$
