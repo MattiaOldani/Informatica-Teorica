@@ -61,3 +61,4 @@
 #let rp = $"RP"$
 #let ricprim = $"RICPRIM"$
 #let lfor = $"FOR"$
+#let min = $"MIN"$

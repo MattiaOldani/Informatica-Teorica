@@ -43,8 +43,7 @@
 #include "lezioni/lezione_11.typ"
 #pagebreak()
 
-// De-commentare
-// #include "lezioni/lezione_12.typ"
-// #pagebreak()
+#include "lezioni/lezione_12.typ"
+#pagebreak()
 
 #include "lezioni/lezione_13.typ"
