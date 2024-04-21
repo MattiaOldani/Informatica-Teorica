@@ -10,5 +10,4 @@ Materiali e appunti del corso di Informatica teorica
 
 ## Revisionare
 
-- Lezione 12 del 12/04/2024 [tia]
 - Lezione 14 del 19/04/2024 [tia]
