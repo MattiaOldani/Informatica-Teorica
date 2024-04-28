@@ -62,3 +62,5 @@
 #let ricprim = $"RICPRIM"$
 #let lfor = $"FOR"$
 #let min = $"MIN"$
+#let arresto(programma) = $"AR"_programma$
+#let ristretto = $overset(P,§)$
