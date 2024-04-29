@@ -12,6 +12,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -37,7 +44,7 @@ Quest'ultimo è l'insieme $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. 
 
 #theorem(numbering: none)[
   $P(NN) tilde.not NN$.
-]<thm>
+]
 
 #proof[
   \ Dimostriamo questo teorema con la diagonalizzazione.
@@ -51,7 +58,7 @@ Quest'ultimo è l'insieme $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. 
   Questo vettore appartiene a $P(NN)$ ma non è presente nella lista precedente perché è diverso da ogni elemento della lista in almeno una cifra.
 
   Ma questo è assurdo perché $P(NN)$ era numerabile, quindi $P(NN) tilde.not NN$.
-]<proof>
+]
 
 Visto questo teorema possiamo affermare che: $ P(NN) tilde [0,1] tilde overset(RR, °). $
 
@@ -63,7 +70,7 @@ Quest'ultimo è l'insieme $ NN_bot^NN = {f: NN arrow.long NN}. $
 
 #theorem(numbering: none)[
   $NN_bot^NN tilde.not NN$.
-]<thm>
+]
 
 #proof[
   \ Anche in questo caso useremo la dimostrazione per diagonalizzazione.
@@ -92,7 +99,7 @@ Quest'ultimo è l'insieme $ NN_bot^NN = {f: NN arrow.long NN}. $
   Questa funzione è una funzione che appartiene a $NN_bot^NN$ ma non è presente nella lista precedente: infatti, $forall k in NN$ otteniamo $ phi(k) = cases(1 eq.not f_k (k) = bot & "se" f_k (k) = bot, f_k (k) + 1 eq.not f_k (k) quad & "se" f_k (k) arrow.b) quad . $
   
   Ma questo è assurdo perché $P(NN)$ era numerabile, quindi $P(NN) tilde.not NN$.
-]<proof>
+]
 
 == Potenza computazionale
 

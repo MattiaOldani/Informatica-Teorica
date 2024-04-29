@@ -10,6 +10,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -117,7 +124,7 @@ Con la funzione coppia di Cantor possiamo dimostrare un importante risultato.
 
 #proof[
   \ La funzione di Cantor è una funzione biiettiva tra l'insieme $NN times NN$ e l'insieme $NN^+$, quindi i due insiemi sono isomorfi.
-]<proof>
+]
 
 Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN tilde NN^+ arrow.long.squiggly NN times NN tilde NN. $
 
@@ -129,7 +136,7 @@ Estendiamo adesso il risultato all'interno insieme $NN$, ovvero $ NN times NN ti
   \ Definiamo la funzione $ [,]: NN times NN arrow.long NN $ tale che $ [x,y] = <x,y> - 1. $
   
   Questa funzione è anch'essa biiettiva, quindi i due insiemi sono isomorfi.
-]<proof>
+]
 
 Grazie a questi risultati si può dimostrare che $QQ tilde NN$: infatti, i numeri razionali li possiamo rappresentare come coppie $("num", "den")$. In generale, tutte le tuple sono isomorfe a $NN$, iterando in qualche modo la funzione coppia di Cantor.
 

@@ -10,6 +10,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -176,8 +183,9 @@ L'insieme $cal(P)$ cattura tutti i sistemi di calcolo esistenti: WHILE, RAM, Mac
 
 Infatti, dal 1930 in poi sono stati proposti un sacco di modelli di calcolo che volevano catturare ciò che è calcolabile, ma tutti questi modelli individuavano sempre la classe delle funzioni ricorsive parziali. Visti questi risultati, negli anni 1930/1940 *Church* e *Turing* decidono di enunciare un risultato molto importante.
 
+// Sistemare lo stile
 #rect(
-  stroke: green
+  stroke: red
 )[
   *Tesi di Church-Turing*: la classe delle funzioni intuitivamente calcolabili coincide con la classe $cal(P)$ delle funzioni ricorsive parziali.
 ]

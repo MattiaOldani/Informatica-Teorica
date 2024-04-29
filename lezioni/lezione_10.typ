@@ -12,6 +12,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -116,11 +123,11 @@ Abbiamo dimostrato quindi che $ F(ram) subset.eq F(mwhile), $ che è l'inclusion
 Il risultato appena ottenuto ci permette di definire un teorema molto importante.
 
 #theorem(
-  name: "Teorema di Böhm-Jacopini del 1970",
+  name: "Teorema di Böhm-Jacopini (1970)",
   numbering: none
 )[
   Per ogni programma con GOTO (RAM) ne esiste uno equivalente in un linguaggio strutturato (WHILE).
-]<thm>
+]
 
 Questo teorema è fondamentale perché lega la programmazione a basso livello con quella ad alto livello. In poche parole, il GOTO può essere eliminato e la programmazione a basso livello può essere sostituita da quella ad alto livello.
 
@@ -183,7 +190,7 @@ Due risposte ovvie a questo problema sono:
   + $forall a in A arrow.long.double a in A^"op"$;
   + $forall a_1, dots, a_k in A^"op" arrow.long.double "op"(a_1, dots, a_k) in A^"op"$;
   + nient'altro sta in $A^"op"$.
-]<thm>
+]
 
 Vediamo una definizione più _operativa_ di $A^"op"$:
 + metti in $A^"op"$ tutti gli elementi di $A$;

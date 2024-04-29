@@ -10,6 +10,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -81,7 +88,7 @@ Dati $C_1$ e $C_2$ due sistemi di calcolo, definiamo *traduzione* da $C_1$ a $C_
 
 #theorem(numbering: none)[
   Se esiste $T : c1programmi arrow.long c2programmi$ allora $F(C_1) subset.eq F(C_2)$.
-]<thm>
+]
 
 #proof[
   \ Se $f in F(C_1)$ allora esiste un programma $P_1 in c1programmi$ tale che $Psi_P_1 = f$.
@@ -89,6 +96,6 @@ Dati $C_1$ e $C_2$ due sistemi di calcolo, definiamo *traduzione* da $C_1$ a $C_
   A questo programma $P_1$ applico $T$, ottenendo $T(P_1) = P_2 in c2programmi$ (per _completezza_) tale che $phi_P_2 = Psi_P_1 = f$ (per _correttezza_).
   
   Ho trovato un programma $P_2 in c2programmi$ la cui semantica è $f$, allora $F(C_1) subset.eq F(C_2)$.
-]<proof>
+]
 
 Mostreremo che $F(mwhile) subset.eq F(ram)$, ovvero il sistema $mwhile$ non è più potente del sistema $ram$. Quello che faremo sarà costruire un compilatore $ op("Comp") : wprogrammi arrow.long programmi. $

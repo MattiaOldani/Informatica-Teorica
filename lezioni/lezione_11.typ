@@ -14,6 +14,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -119,7 +126,7 @@ Vediamo come è definita RICPRIM:
 
 #theorem(numbering: none)[
   $ricprim subset.eq F(mwhile)$.
-]<thm>
+]
 
 #proof[
   \ $underline("Passo base")$: \
@@ -178,7 +185,7 @@ Vediamo come è definita RICPRIM:
   ]
 
   Quindi $Psi_w (<x,y>) = rp(h,g)(wstato(x), y)$.
-]<proof>
+]
 
 Abbiamo quindi dimostrato che $ricprim subset.eq F(mwhile)$, _ma questa inclusione è propria?_
 

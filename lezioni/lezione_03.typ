@@ -12,6 +12,13 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -107,7 +114,7 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
 #theorem(numbering: none)[
   L'insieme $RR$ non è numerabile
-]<thm>
+]
 
 #proof[
   \ Suddividiamo la dimostrazione in tre punti:
@@ -147,7 +154,7 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
   Questo tipo di dimostrazione è detta *dimostrazione per diagonalizzazione*.
 
   [3] Terminiamo dimostrando che $RR tilde.not NN$: per transitività. Vale il generico, ovvero non si riesce a listare nessun segmento di lunghezza maggiore di 0.
-]<proof>
+]
 
 L'insieme $RR$ viene detto *insieme continuo* e tutti gli insiemi isomorfi a $RR$ si dicono a loro volta _continui_. I più famosi insiemi continui sono:
 - $RR$ insieme dei numeri reali;

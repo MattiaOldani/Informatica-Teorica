@@ -10,6 +10,20 @@
 
 #show: thm-rules
 
+#show thm-selector("thm-group", subgroup: "theorem"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
+#show thm-selector("thm-group", subgroup: "corollary"): it => block(
+  it,
+  stroke: red + 1pt,
+  inset: 1em,
+  breakable: true
+)
+
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -51,7 +65,8 @@ La prima proprietà che vogliamo in un sistema di programmazione riguarda la *po
 La seconda proprietà che vogliamo in un sistema di programmazione riguarda la presenza di un *interprete universale*. Un interprete universale è un programma $mu in NN$ tale che $ forall x,n in NN quad phi_mu (<x,n>) = phi_n (x). $
 In sostanza è un programma scritto in un certo linguaggio, che riesce a interpretare ogni altro programma $n$ scritto nello stesso linguaggio, su qualsiasi input $x$.
 
-// forse voglio mettere quelle due righe sulle slide
+// gigi: forse voglio mettere quelle due righe sulle slide
+// tia: quale?
 
 La presenza di un interprete universale permette un'*algebra* sui programmi, quindi permette la trasformazione di quest'ultimi.
 

@@ -11,4 +11,3 @@ Materiali e appunti del corso di Informatica teorica
 ## Revisionare
 
 - Lezione 15 del 24/04/2024 [gigi]
-- Mettere i bordi (rossi) ai teoremi [tia+gigi]
