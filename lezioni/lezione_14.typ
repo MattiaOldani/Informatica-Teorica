@@ -186,11 +186,40 @@ Per il teorema di ricorsione possiamo concludere che $ exists n in NN bar.v phi_
 
 === Esercizi
 
-// Da fare assieme, lo metto nel README
-Dato un spa ${phi_i}, exists n in NN$ tale che:
-+ $phi_n (x) = phi_x (n) + phi_(phi_x (n)) (n)$;
-+ $phi_n (x) = phi_x (x) + n$;
-+ $phi_n (x) = phi_x (<n, phi_x (1)>)$;
-+ $phi_n (x) = phi_(phi_x (#cantor_sin (n))) (#cantor_des (n))$;
-+ $phi_n (x) = n^x + (phi_x (x))^2$;
-+ $phi_n (x) = phi_x (n+2) + (phi_(phi_x (n)) (n+3))^2$.
+In tutti gli esercizi viene dato un SPA ${phi_i}$.
+
+==== Esercizio 01
+
+$ exists n in NN bar.v phi_n (x) = phi_x (n) + phi_(phi_x (n)) (n)? $
+
+$ phi_n (x) & =^((2)) phi_u (n,x) + phi_(phi_u (n,x)) (n) \ & =^((2)) phi_u (n,x) + phi_u (n, phi_u (n,x)) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+
+==== Esercizio 02
+
+$ exists n in NN bar.v phi_n (x) = phi_x (x) + n? $
+
+$ phi_n (x) & =^((2)) phi_u (x,x) + n \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+
+==== Esercizio 03
+
+$ exists n in NN bar.v phi_n (x) = phi_x (<n, phi_x (1)>)? $
+
+$ phi_n (x) & =^((2)) phi_u (<n, phi_u (1,x)>, x) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+
+==== Esercizio 04
+
+$ exists n in NN bar.v phi_n (x) = phi_(phi_x (#cantor_sin (n))) (#cantor_des (n))? $
+
+$ phi_n (x) & =^((2)) phi_(phi_u (#cantor_sin (n), x)) (#cantor_des (n)) \ & =^((2)) phi_u (#cantor_des (n), phi_u (#cantor_sin (n), x)) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+
+==== Esercizio 05
+
+$ exists n in NN bar.v phi_n (x) = n^x + (phi_x (x))^2? $
+
+$ phi_n (x) & =^((2)) n^x + (phi_u (x,x))^2 \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+
+==== Esercizio 06
+
+$ exists n in NN bar.v phi_n (x) = phi_x (n+2) + (phi_(phi_x (n)) (n+3))^2? $
+
+$ phi_n (x) & =^((2)) phi_u (n+2,x) + (phi_(phi_u (n,x)) (n+3))^2 \ & =^((2)) phi_u (n+2,x) + (phi_u (n+3, phi_u (n,x)))^2 \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $

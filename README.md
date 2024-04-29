@@ -6,8 +6,7 @@ Materiali e appunti del corso di Informatica teorica
 
 ## Scrivere
 
-- Esercizi (opzionali) lezione 14 del 19/04/2024 [tia+gigi]
-
 ## Revisionare
 
+- Esercizi lezione 14 del 19/04/2024 [gigi]
 - Lezione 15 del 24/04/2024 [gigi]
