@@ -60,58 +60,58 @@ Se, per esempio, mi viene chiesto _"questo polinomio ha uno zero?"_ non devo dir
 Vediamo qualche esempio di problemi di decisione noti. L'assegnamento di un valore a $x in D$ genera un'*istanza particolare* del problema:
 
 1. *Parità*
-  - Nome: Parità.
-  - Istanza: $n in NN$.
-  - Domanda: $n$ è pari?
+- Nome: Parità.
+- Istanza: $n in NN$.
+- Domanda: $n$ è pari?
 
 2. *Equazione diofantea*
-  - Nome: Equazione Diofantea.
-  - Istanza: $a,b,c in NN^+$.
-  - Domanda: $exists x,y in ZZ bar.v a x + b y = c$?
+- Nome: Equazione Diofantea.
+- Istanza: $a,b,c in NN^+$.
+- Domanda: $exists x,y in ZZ bar.v a x + b y = c$?
 
-  Questa domanda nei reali avrebbe poco senso, perché ci sarebbero infiniti punti che soddisfano l'equazione della retta. Considerando punti interi, invece, ha più senso in quanto niente garantisce che la retta ne abbia.
+Questa domanda nei reali avrebbe poco senso, perché ci sarebbero infiniti punti che soddisfano l'equazione della retta. Considerando punti interi, invece, ha più senso in quanto niente garantisce che la retta ne abbia.
 
-  Ad esempio, per $a=3$, $b=4$ e $c=5$ rispondo _SI_, visto che la proprietà vale per $x = -1$ e $y = 2$.
+Ad esempio, per $a=3$, $b=4$ e $c=5$ rispondo _SI_, visto che la proprietà vale per $x = -1$ e $y = 2$.
 
-  Il nome di queste equazioni deriva dal matematico Diofanto, che per primo le trattò nel contesto dell'aritmetica di, appunto, Diofanto.
+Il nome di queste equazioni deriva dal matematico Diofanto, che per primo le trattò nel contesto dell'aritmetica di, appunto, Diofanto.
 
 3. *Fermat*
-  - Nome: Ultimo Teorema di Fermat.
-  - Istanza: $n in NN^+$.
-  - Domanda: $exists x,y,z in NN^+ bar.v x^n + y^n = z^n$?
+- Nome: Ultimo Teorema di Fermat.
+- Istanza: $n in NN^+$.
+- Domanda: $exists x,y,z in NN^+ bar.v x^n + y^n = z^n$?
 
-  Questo problema è, in un certo senso, riconducibile al precedente.
+Questo problema è, in un certo senso, riconducibile al precedente.
 
-  Per $n = 1$ rispondo _SI_: è facile trovare tre numeri tali che $x + y = z$, ne ho infiniti.
+Per $n = 1$ rispondo _SI_: è facile trovare tre numeri tali che $x + y = z$, ne ho infiniti.
 
-  Per $n = 2$ rispondo _SI_, i numeri nella forma $x^2 + y^2 = z^2$ rappresentano le *terne pitagoriche*.
+Per $n = 2$ rispondo _SI_, i numeri nella forma $x^2 + y^2 = z^2$ rappresentano le *terne pitagoriche*.
 
-  Per $n gt.eq 3$ rispondo _NO_, è stato dimostrato da Eulero.
+Per $n gt.eq 3$ rispondo _NO_, è stato dimostrato da Eulero.
 
-  Questo problema è rimasto irrisolto per circa 400 anni, fino a quando nel 1994 viene dimostrato il *teorema di Andrew-Wiles* (dall'omonimo matematico), come banale conseguenza di una dimostrazione sulla modularità delle curve ellittiche.
+Questo problema è rimasto irrisolto per circa 400 anni, fino a quando nel 1994 viene dimostrato il *teorema di Andrew-Wiles* (dall'omonimo matematico), come banale conseguenza di una dimostrazione sulla modularità delle curve ellittiche.
 
-  Si dice che il primo a risolvere questo problema sia stato Fermat, giurista che nel tempo libero giocava con la matematica, tanto da meritarsi il nome di _principe dei dilettanti_, lo dimostra il fatto che questo teorema non ha nessuna conseguenza pratica, è totalmente "inutile".
+Si dice che il primo a risolvere questo problema sia stato Fermat, giurista che nel tempo libero giocava con la matematica, tanto da meritarsi il nome di _principe dei dilettanti_, lo dimostra il fatto che questo teorema non ha nessuna conseguenza pratica, è totalmente "inutile".
 
 4. *Raggiungibilità*
-  - Nome: Raggiungibilità.
-  - Istanza: grafo $G = ({1,dots,n}, E)$.
-  - Domanda: $exists pi$ cammino dal nodo $1$ al nodo $n$?
+- Nome: Raggiungibilità.
+- Istanza: grafo $G = ({1,dots,n}, E)$.
+- Domanda: $exists pi$ cammino dal nodo $1$ al nodo $n$?
 
 5. *Circuito hamiltoniano*
-  - Nome: Circuito Hamiltoniano.
-  - Istanza: grafo $G = (V,E)$.
-  - Domanda: $exists gamma$ circuito hamiltoniano nel grafo $G$?
+- Nome: Circuito Hamiltoniano.
+- Istanza: grafo $G = (V,E)$.
+- Domanda: $exists gamma$ circuito hamiltoniano nel grafo $G$?
 
-    Un *circuito hamiltoniano* è un circuito che coinvolge ogni nodo una e una sola volta.
+Un *circuito hamiltoniano* è un circuito che coinvolge ogni nodo una e una sola volta.
 
 6. *Circuito euleriano*
-  - Nome: Circuito Euleriano.
-  - Istanza: grafo $G = (V,E)$.
-  - Domanda: $exists gamma$ circuito euleriano nel grafo $G$?
+- Nome: Circuito Euleriano.
+- Istanza: grafo $G = (V,E)$.
+- Domanda: $exists gamma$ circuito euleriano nel grafo $G$?
 
-    Un *circuito euleriano* è un circuito che coinvolge ogni arco una e una sola volta.
+Un *circuito euleriano* è un circuito che coinvolge ogni arco una e una sola volta.
     
-    Questo quesito ha dato via alla teoria dei grafi.
+Questo quesito ha dato via alla teoria dei grafi.
 
 === Decidibilità
 
