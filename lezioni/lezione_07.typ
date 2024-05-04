@@ -26,7 +26,7 @@ Dobbiamo quindi trovare una funzione biunivoca $ar : istruzioni arrow.long NN$ c
 
 Dovendo codificare tre istruzioni nel linguaggio RAM, definiamo la funzione $ar$ tale che: $ ar(I) = cases(3k & "se" I equiv inc(R_k), 3k + 1 & "se" I equiv subsus(R_k), 3 <k\,m> - 1 quad & "se" I equiv ifgoto(R_k, m)) quad . $
 
-Come è fatta l'inversa $ar^(-1)$? In base al modulo tra $n$ e $3$ ottengo una certa istruzione: $ ar^(-1)(n) = cases(inc(R_(n/3)) & "se" n mod 3 = 0, subsus(R_(frac(n-1,3))) & "se" n mod 3 = 1, "IF" R_(#cantor_sin (frac(n+1,3))) = 0 "THEN GOTO" #cantor_des (frac(n+1,3)) quad & "se" n mod 3 = 2) quad . $
+Come è fatta l'inversa $ar^(-1)$? In base al modulo tra $n$ e $3$ ottengo una certa istruzione: $ ar^(-1)(n) = cases(inc(R_(n/3)) & "se" n mod 3 = 0, subsus(R_(frac(n-1,3))) & "se" n mod 3 = 1, "IF" R_(cantorsin(frac(n+1,3))) = 0 "THEN GOTO" cantordes(frac(n+1,3)) quad & "se" n mod 3 = 2) quad . $
 
 La codifica del programma $P$ è quindi $ cod(P) = <ar(istr(1)), dots, ar(istr(n))>. $ Per tornare indietro devo prima invertire la funzione coppia di Cantor e poi invertire la funzione $ar$.
 

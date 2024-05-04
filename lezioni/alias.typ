@@ -17,8 +17,8 @@
 #let programmi = $"PROG"$
 
 // Funzione coppia di Cantor
-#let cantor_sin = $"sin"$
-#let cantor_des = $"des"$
+#let cantorsin = $op("sin")$
+#let cantordes = $op("des")$
 #let listlength = $op("length")$
 
 // Sistemi di calcolo

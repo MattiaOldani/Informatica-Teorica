@@ -74,7 +74,7 @@ La presenza di un interprete universale permette un'*algebra* sui programmi, qui
 
 L'ultima proprietà che vogliamo in un sistema di programmazione riguarda il soddisfacimento del teorema $S_1^1$. Questo teorema afferma che è possibile costruire automaticamente programmi specifici da programmi più generali, ottenuti fissando alcuni degli input.
 
-Supponiamo di avere $ P in programmi : phi_P (<x,y>) = x + y. $ Un programma RAM per questa funzione potrebbe essere $ P equiv & R_2 arrow.long.l #cantor_sin (R_1) \ & R_3 arrow.long.l #cantor_des (R_1) \ & R_0 arrow.long.l R_2 + R_3 quad . $
+Supponiamo di avere $ P in programmi : phi_P (<x,y>) = x + y. $ Un programma RAM per questa funzione potrebbe essere $ P equiv & R_2 arrow.long.l cantorsin(R_1) \ & R_3 arrow.long.l cantordes(R_1) \ & R_0 arrow.long.l R_2 + R_3 quad . $
 
 _Siamo in grado di produrre automaticamente un programma $overline(P)$ che riceve in input solo $x$ e calcola, ad esempio, $x+3$ a partire da $P$ e 3?_
 

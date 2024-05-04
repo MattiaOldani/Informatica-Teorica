@@ -208,9 +208,9 @@ $ phi_n (x) & =^((2)) phi_u (<n, phi_u (1,x)>, x) \ & = f(x,n) \ & =^((1)) phi_e
 
 ==== Esercizio 04
 
-$ exists n in NN bar.v phi_n (x) = phi_(phi_x (#cantor_sin (n))) (#cantor_des (n))? $
+$ exists n in NN bar.v phi_n (x) = phi_(phi_x (cantorsin(n))) (cantordes(n))? $
 
-$ phi_n (x) & =^((2)) phi_(phi_u (#cantor_sin (n), x)) (#cantor_des (n)) \ & =^((2)) phi_u (#cantor_des (n), phi_u (#cantor_sin (n), x)) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+$ phi_n (x) & =^((2)) phi_(phi_u (cantorsin(n), x)) (cantordes(n)) \ & =^((2)) phi_u (cantordes(n), phi_u (cantorsin(n), x)) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
 
 ==== Esercizio 05
 

@@ -99,6 +99,6 @@ Le macro utilizzate sono:
 - proiezione $x_k := proiezione(x_j, x_s) arrow$ estrae l'elemento $x_j$-esimo dalla lista codificata in $x_s$;
 - incremento $x_k := macroincr(x_j, x_s) arrow$ codifica la lista $x_s$ con l'elemento in posizione $x_j$-esima aumentato di uno;
 - decremento $x_k := macrodecr(x_j, x_s) arrow$ codifica la lista $x_s$ con l'elemento in posizione $x_j$-esima diminuito di uno;
-- $x_k := #cantor_sin (x_j)$;
-- $x_k := #cantor_des (x_j)$;
+- $x_k := cantorsin(x_j)$;
+- $x_k := cantordes(x_j)$;
 - costrutto $"if" dots "then" dots "else"$.

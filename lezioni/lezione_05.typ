@@ -41,7 +41,7 @@ Vogliamo formare una legge che:
 
 ==== Definizione
 
-La *funzione coppia di Cantor* è la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione sfrutta due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ #cantor_sin: NN^+ arrow.long NN, & quad #cantor_sin (n) = x \ #cantor_des: NN^+ arrow.long NN, & quad #cantor_des (n) = y. $
+La *funzione coppia di Cantor* è la funzione $ <,>: NN times NN arrow.long NN^+. $ Questa funzione sfrutta due _"sotto-funzioni"_, _sin_ e _des_, tali che $ <x,y> &= n, \ cantorsin: NN^+ arrow.long NN, & quad cantorsin (n) = x \ cantordes: NN^+ arrow.long NN, & quad cantordes (n) = y. $
 
 Vediamo una rappresentazione grafica della funzione di Cantor.
 
@@ -98,7 +98,7 @@ Questa forma è molto più compatta ed evita il calcolo di tutti i singoli $<z,0
 
 Mettiamo insieme le due proprietà per ottenere la formula analitica della funzione coppia: $ <x,y> = <x+y,0> + y = frac((x+y)(x+y+1), 2) + y + 1. $
 
-==== Forma analitica di #cantor_sin e #cantor_des
+==== Forma analitica di sin e des
 
 Vogliamo adesso dare la forma analitica di _sin_ e _des_ per poter computare l'inversa della funzione di Cantor, dato $n$.
 
@@ -112,7 +112,7 @@ Risolviamo quindi la disequazione $ <z,0> lt.eq n & arrow.long.double frac(z(z+1
 
 Come valore di $gamma$ scelgo $ gamma = floor(frac(-1 + sqrt(8n - 7), 2)). $
 
-Ora che abbiamo $gamma$ possiamo definire le funzioni _sin_ e _des_ come $ #cantor_des (n) = y = n - <gamma,0> = n - frac(gamma (gamma + 1), 2) - 1, \ #cantor_sin (n) = x = gamma - y. $
+Ora che abbiamo $gamma$ possiamo definire le funzioni _sin_ e _des_ come $ cantordes(n) = y = n - <gamma,0> = n - frac(gamma (gamma + 1), 2) - 1, \ cantorsin(n) = x = gamma - y. $
 
 ==== $NN times NN tilde NN$
 
@@ -160,13 +160,13 @@ Ad esempio, la codifica della lista $M = [1,2,5]$ risulta essere: $ <1,2,5> &= <
 
 Per decodificare la lista $M$ applichiamo le funzioni _sin_ e _des_ al risultato precedente. Alla prima iterazione otterremo il primo elemento della lista e la restante parte ancora da decodificare.
 
-Quando ci fermiamo? Durante la creazione della codifica di $M$ abbiamo inserito un _"tappo"_, ovvero la prima iterazione della funzione coppia $<x_n, 0>$. Questo ci indica che quando $#cantor_des (M)$ sarà uguale a $0$ ci dovremo fermare.
+Quando ci fermiamo? Durante la creazione della codifica di $M$ abbiamo inserito un _"tappo"_, ovvero la prima iterazione della funzione coppia $<x_n, 0>$. Questo ci indica che quando $cantordes(M)$ sarà uguale a $0$ ci dovremo fermare.
 
 Cosa succede se abbiamo uno $0$ nella lista? Non ci sono problemi: il controllo avviene sulla funzione _des_, che restituisce la _"somma parziale"_ e non sulla funzione _sin_, che restituisce i valori della lista.
 
 Possiamo anche anche delle implementazioni di queste funzioni. Assumiamo che:
 - $0$ codifichi la lista nulla;
-- esistano delle routine per $<,>$, $#cantor_sin$ e $#cantor_des$.
+- esistano delle routine per $<,>$, $cantorsin$ e $cantordes$.
 
 #v(12pt)
 
