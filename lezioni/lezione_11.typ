@@ -184,7 +184,7 @@ Vediamo come è definita RICPRIM:
     ```
   ]
 
-  Quindi $Psi_w (<x,y>) = rp(h,g)(wstato(x), y)$.
+  Quindi $Psi_w (cantor(x,y)) = rp(h,g)(wstato(x), y)$.
 ]
 
 Abbiamo quindi dimostrato che $ricprim subset.eq F(mwhile)$, _ma questa inclusione è propria?_

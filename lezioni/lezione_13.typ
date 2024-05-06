@@ -62,7 +62,7 @@ La prima proprietà che vogliamo in un sistema di programmazione riguarda la *po
 
 ==== Interprete universale
 
-La seconda proprietà che vogliamo in un sistema di programmazione riguarda la presenza di un *interprete universale*. Un interprete universale è un programma $mu in NN$ tale che $ forall x,n in NN quad phi_mu (<x,n>) = phi_n (x). $
+La seconda proprietà che vogliamo in un sistema di programmazione riguarda la presenza di un *interprete universale*. Un interprete universale è un programma $mu in NN$ tale che $ forall x,n in NN quad phi_mu (cantor(x,n)) = phi_n (x). $
 In sostanza è un programma scritto in un certo linguaggio, che riesce a interpretare ogni altro programma $n$ scritto nello stesso linguaggio, su qualsiasi input $x$.
 
 // gigi: forse voglio mettere quelle due righe sulle slide
@@ -74,23 +74,23 @@ La presenza di un interprete universale permette un'*algebra* sui programmi, qui
 
 L'ultima proprietà che vogliamo in un sistema di programmazione riguarda il soddisfacimento del teorema $S_1^1$. Questo teorema afferma che è possibile costruire automaticamente programmi specifici da programmi più generali, ottenuti fissando alcuni degli input.
 
-Supponiamo di avere $ P in programmi : phi_P (<x,y>) = x + y. $ Un programma RAM per questa funzione potrebbe essere $ P equiv & R_2 arrow.long.l cantorsin(R_1) \ & R_3 arrow.long.l cantordes(R_1) \ & R_0 arrow.long.l R_2 + R_3 quad . $
+Supponiamo di avere $ P in programmi : phi_P (cantor(x,y)) = x + y. $ Un programma RAM per questa funzione potrebbe essere $ P equiv & R_2 arrow.long.l cantorsin(R_1) \ & R_3 arrow.long.l cantordes(R_1) \ & R_0 arrow.long.l R_2 + R_3 quad . $
 
 _Siamo in grado di produrre automaticamente un programma $overline(P)$ che riceve in input solo $x$ e calcola, ad esempio, $x+3$ a partire da $P$ e 3?_
 
 $ (P,3) arrow.long.squiggly S^1_1 in programmi arrow.long.squiggly overline(P). $
 
-Per generare $overline(P)$, potrei ad esempio fare $ overline(P) equiv & inc(R_0) \ & inc(R_0) \ & inc(R_0) \ & R_1 arrow.long.l <R_1, R_0> \ & R_0 arrow.long.l 0 \ & P quad . $ 
+Per generare $overline(P)$, potrei ad esempio fare $ overline(P) equiv & inc(R_0) \ & inc(R_0) \ & inc(R_0) \ & R_1 arrow.long.l cantor(R_1, R_0) \ & R_0 arrow.long.l 0 \ & P quad . $ 
 
 Vediamo come questo programma segua principalmente quattro fasi:
 + si fissa il valore $y$ in $R_0$;
-+ si calcola l'input $<x,y>$ del programma $P$;
++ si calcola l'input $cantor(x,y)$ del programma $P$;
 + si resetta la memoria alla situazione iniziale, tranne per il registro $R_1$;
 + si chiama il programma $P$.
 
-In generale, il programma $S_1^1$ implementa la funzione $ S_1^1 (n,y) = overline(n), $ con $n$ codifica di $P$ e $overline(n)$ codifica del nuovo programma $overline(P)$, tale che $ phi_(overline(n)) (x) = phi_n (<x,y>) . $
+In generale, il programma $S_1^1$ implementa la funzione $ S_1^1 (n,y) = overline(n), $ con $n$ codifica di $P$ e $overline(n)$ codifica del nuovo programma $overline(P)$, tale che $ phi_(overline(n)) (x) = phi_n (cantor(x,y)) . $
 
-Questo teorema è molto comodo perché permette di calcolare facilmente la codifica $overline(n)$: avendo $n$ devo solo codificare le istruzioni iniziali di fissaggio di $y$, la funzione coppia di Cantor per creare l'input e l'azzeramento dei registri utilizzati. In poche parole, $ S_1^1 (n,y) = overline(n) = <underbracket(0\, dots\, 0, y), s, t, n>, $ con $s$ codifica dell'istruzione che calcola la funzione coppia di Cantor e $t$ codifica dell'istruzione di azzeramento.
+Questo teorema è molto comodo perché permette di calcolare facilmente la codifica $overline(n)$: avendo $n$ devo solo codificare le istruzioni iniziali di fissaggio di $y$, la funzione coppia di Cantor per creare l'input e l'azzeramento dei registri utilizzati. In poche parole, $ S_1^1 (n,y) = overline(n) = cantor(underbracket(0\, dots\, 0, y), s, t, n), $ con $s$ codifica dell'istruzione che calcola la funzione coppia di Cantor e $t$ codifica dell'istruzione di azzeramento.
 
 $S_1^1$ è una funzione totale e programmabile, quindi $S_1^1 in cal(T)$ (funzione *ricorsiva totale*).
 
@@ -100,7 +100,7 @@ In sintesi, per RAM, esiste una funzione $S_1^1$ *ricorsiva totale* che accetta 
 e produce il codice $overline(n) = S_1^1(n,y)$ di un programma che si comporta come $n$ nel caso in cui il secondo input è fissato ad essere $y$.
 
 #theorem(numbering: none)[
-  Dato $phi_i$ sistema RAM, esiste una funzione $S_1^1 in cal(T)$ tale che $ forall n,x,y in NN quad phi_n (<x,y>) = phi_(S_1^1 (n,y)) (x). $
+  Dato $phi_i$ sistema RAM, esiste una funzione $S_1^1 in cal(T)$ tale che $ forall n,x,y in NN quad phi_n (cantor(x,y)) = phi_(S_1^1 (n,y)) (x). $
 ]
 
 Questo teorema ci garantisce un modo di usare l'algebra sui programmi.
@@ -108,7 +108,7 @@ Questo teorema ci garantisce un modo di usare l'algebra sui programmi.
 Inoltre, ha anche una forma generale $S_n^m$ che riguarda programmi a $m+n$ input in cui si prefissano $n$ input e si lasciano variare i primi $m$.
 
 #theorem(numbering: none)[
-  Dato $phi_i$ sistema RAM, esiste una funzione $S_n^m in cal(T)$ tale che per ogni programma $k in NN$, $wstato(x) in NN^m$ e $wstato(y) in NN^n$ vale $ phi_k (<wstato(x), wstato(y)>) = phi_(S_n^m (k,wstato(y))) (<wstato(x)>). $
+  Dato $phi_i$ sistema RAM, esiste una funzione $S_n^m in cal(T)$ tale che per ogni programma $k in NN$, $wstato(x) in NN^m$ e $wstato(y) in NN^n$ vale $ phi_k (cantor(wstato(x), wstato(y))) = phi_(S_n^m (k,wstato(y))) (cantor(wstato(x))). $
 ]
 
 === Sistemi di programmazione accettabili (SPA)
@@ -135,9 +135,9 @@ I primi due punti ci dicono che $t in cal(T)$.
 #proof[
   \ Consideriamo ${phi_i}$ e ${Psi_i}$ due SPA. Valgono i tre assiomi di Rogers:
   + ${phi_i} = cal(P)$;
-  + $exists u : phi_u (<x,n>)=phi_n (x)$;
-  + $exists S_1^1 in cal(T) : phi_n (<x,y>)=phi_(S_1^1(e,i)) (x)$;
-  Voglio trovare un compilatore $t in cal(T)$ che sia corretto. Ma allora $ phi_i (x) =^((2)) phi_u (<x,i>) =^((1)) Psi_e (<x,i>) =^((3)) Psi_(S_1^1 (e,i)) (x) $
+  + $exists u : phi_u (cantor(x,n))=phi_n (x)$;
+  + $exists S_1^1 in cal(T) : phi_n (cantor(x,y))=phi_(S_1^1(e,i)) (x)$;
+  Voglio trovare un compilatore $t in cal(T)$ che sia corretto. Ma allora $ phi_i (x) =^((2)) phi_u (cantor(x,i)) =^((1)) Psi_e (cantor(x,i)) =^((3)) Psi_(S_1^1 (e,i)) (x) $
     
   In poche parole, il compilatore cercato è la funzione $t(i) = S_1^1 (e,i)$ per ogni $i in NN$. 
   \ Infatti:

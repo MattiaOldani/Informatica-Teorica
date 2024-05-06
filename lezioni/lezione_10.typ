@@ -47,8 +47,8 @@ La risposta è no. Infatti, se $cod(P) = n$ allora $P$ non utilizza mai dei regi
 Di conseguenza, possiamo restringerci a modellare i registri $R_0, dots, R_(n+2)$. Usiamo i registri fino a a $n+2$ solo per avere un paio di registri in più che potrebbero tornare utili. Ciò ci permette di codificare la memoria utilizzata dal programma $P$ tramite la funzione di Cantor.
 
 // Magari mettere arrow.long.l se graficamente appaga di più
-Vediamo, nel dettaglio, l'interno di $I_w (<x,n>) = phi_n (x)$:
-- $x_0$ contiene $<R_0, dots, R_(n+2)>$, lo stato della memoria della macchina RAM;
+Vediamo, nel dettaglio, l'interno di $I_w (cantor(x,n)) = phi_n (x)$:
+- $x_0$ contiene $cantor(R_0, dots, R_(n+2))$, lo stato della memoria della macchina RAM;
 - $x_1$ contiene $L$, il program counter;
 - $x_2$ contiene $x$, il dato su cui lavora $P$;
 - $x_3$ contiene $n$, il "listato" del programma P;
@@ -109,14 +109,14 @@ Ricordiamo che all'avvio l'interprete $I_w$ trova il suo input nella variabile d
 // Sistemare, in WHILE non puoi fare n <-- cod(P)
 // Io farei piuttosto x2 := cod(P)
 // Non mi torna comunque sta cosa
-Avendo in mano l'interprete $I_W$, possiamo costruire un compilatore $ compilatore : programmi arrow.long wprogrammi $ tale che $ compilatore(P in programmi) equiv & n arrow.long.l cod(P) \ & x_1 := <x_1, n> \ & I_W quad . $
+Avendo in mano l'interprete $I_W$, possiamo costruire un compilatore $ compilatore : programmi arrow.long wprogrammi $ tale che $ compilatore(P in programmi) equiv & n arrow.long.l cod(P) \ & x_1 := cantor(x_1, n) \ & I_W quad . $
 
 Questo significa che il compilatore non fa altro che cablare all'input $x$ il programma RAM da interpretare e procede con l'esecuzione dell'interprete.
 
 Vediamo se le tre proprietà di un compilatore sono soddisfatte:
 - *programmabile*: sì, lo abbiamo appena fatto;
 - *completo*: l'interprete riesce a riconoscere ogni istruzione RAM e la riesce a codificare;
-- *corretto*: vale $P in programmi arrow.long.bar compilatore(P) in wprogrammi$, quindi: $ Psi_(compilatore(P)) (x) = Psi_I_W (<x,n>) = phi_n (x) = phi_P (x) $ rappresenta la sua semantica.
+- *corretto*: vale $P in programmi arrow.long.bar compilatore(P) in wprogrammi$, quindi: $ Psi_(compilatore(P)) (x) = Psi_I_W (cantor(x,n)) = phi_n (x) = phi_P (x) $ rappresenta la sua semantica.
 
 Abbiamo dimostrato quindi che $ F(ram) subset.eq F(mwhile), $ che è l'inclusione opposta del precedente risultato.
 
@@ -143,7 +143,7 @@ Un altro risultato che abbiamo dimostrato _formalmente_ è che nei sistemi di pr
 
 Facciamo una mossa esotica: usiamo il compilatore da WHILE a RAM $compilatore : wprogrammi arrow programmi$ sul programma $I_w$. Lo possiamo fare? Certo, posso compilare $I_W$ perché è un programma WHILE.
 
-Chiamiamo questo risultato $ cal(U) = compilatore(I_W) in programmi. $ La sua semantica è $ phi_(cal(U)) (<x,n>) = Psi_(I_W) (<x,n>) = phi_n (x) $ dove $n$ è la codifica del programma RAM e $x$ il dato di input.
+Chiamiamo questo risultato $ cal(U) = compilatore(I_W) in programmi. $ La sua semantica è $ phi_(cal(U)) (cantor(x,n)) = Psi_(I_W) (cantor(x,n)) = phi_n (x) $ dove $n$ è la codifica del programma RAM e $x$ il dato di input.
 
 Cosa abbiamo fatto vedere? Abbiamo appena mostrato che esiste un programma RAM in grado di simulare tutti gli altri programmi RAM.
 

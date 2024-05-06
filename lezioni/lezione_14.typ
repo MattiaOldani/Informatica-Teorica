@@ -98,7 +98,7 @@ Il *teorema di ricorsione* ci fornisce una risposta precisa a entrambi i quesiti
 
 #theorem(numbering: none)[
   Dato un SPA ${phi_i}$, per ogni $t : NN arrow.long NN$ ricorsiva totale vale $ exists n in NN bar.v phi_n = phi_t(n). $
-]<thm>
+]
 
 Diamo una chiave di lettura a questo teorema:
 - consideriamo $t$ come un programma che prende in input un programma $n$ e lo cambia nel programma $t(n)$, anche nella maniera più assurda;
@@ -110,7 +110,7 @@ Prima di vedere la sua dimostrazione, torniamo a considerare le due domande che 
 
 Consideriamo il programma RAM $ P equiv & inc(R_0) \ & inc(R_0) \ & dots \ & inc(R_0) $ che ripete l'istruzione di incremento di $R_0$ un numero $j$ di volte. La semantica di questo programma è esattamente $j$: infatti, dopo la sua esecuzione avremo $j$ nel registro di output $R_0$.
 
-Calcoliamo la codifica di $P$ come $ cod(P) = < underbracket(0 \, dots \, 0, j"-volte") > = Z(j) in cal(T). $ 
+Calcoliamo la codifica di $P$ come $ cod(P) = cantor(underbracket(0 \, dots \, 0, j"-volte")) = Z(j) in cal(T). $ 
 
 Questa funzione è ricorsiva totale in quanto programmabile e totale, visto che sfrutta solo la funzione di Cantor. Vale quindi $ phi_Z(j) (x) = j. $
 
@@ -137,7 +137,7 @@ Di conseguenza, la risposta alla seconda domanda è _NO_.
 #proof[
   \ Siamo in un SPA ${phi_i}$ quindi valgono i tre assiomi di Rogers.
   
-  D'ora in avanti, per semplicità, scriveremo $phi_n (x,y)$ al posto di $phi_n (<x,y>)$.
+  D'ora in avanti, per semplicità, scriveremo $phi_n (x,y)$ al posto di $phi_n (cantor(x,y))$.
 
   Dobbiamo esibire, data una funzione $t$, uno specifico valore di $n$.
 
@@ -202,9 +202,9 @@ $ phi_n (x) & =^((2)) phi_u (x,x) + n \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3
 
 ==== Esercizio 03
 
-$ exists n in NN bar.v phi_n (x) = phi_x (<n, phi_x (1)>)? $
+$ exists n in NN bar.v phi_n (x) = phi_x (cantor(n, phi_x (1)))? $
 
-$ phi_n (x) & =^((2)) phi_u (<n, phi_u (1,x)>, x) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
+$ phi_n (x) & =^((2)) phi_u (cantor(n, phi_u (1,x)), x) \ & = f(x,n) \ & =^((1)) phi_e (x,n) =^((3)) phi_(S_1^1 (e,n)) (x) \ & =^("TR") "OK" . $
 
 ==== Esercizio 04
 

@@ -17,6 +17,10 @@
 #let programmi = $"PROG"$
 
 // Funzione coppia di Cantor
+#let cantor(..params) = {
+  let add = params.pos().join(", ")
+  $angle.l add angle.r$
+}
 #let cantorsin = $op("sin")$
 #let cantordes = $op("des")$
 #let listlength = $op("length")$

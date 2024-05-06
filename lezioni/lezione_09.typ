@@ -84,9 +84,9 @@ Notiamo come l'interprete non crei dei prodotti intermedi, ma si limita ad esegu
 
 Abbiamo due problemi principali: 
 1. Il primo riguarda il tipo di input della macchina $mwhile$: questa non sa leggere il programma $P$ (listato di istruzioni $ram$), sa leggere solo numeri. Dobbiamo modificare $I_W$ in modo che non passi più $P$, piuttosto la sua codifica $cod(P) = n in NN$. Questo mi restituisce la semantica del programma codificato con $n$, che è $P$, quindi $phi_n (x) = phi_P (x)$.
-2. Il secondo problema riguarda la quantità di dati di input della macchina $mwhile$: quest'ultima legge l'input da un singolo registro, mentre qui ne stiamo passando due. Dobbiamo modificare $I_W$ condensando l'input con la funzione coppia di Cantor, che diventa $<x,n>$.
+2. Il secondo problema riguarda la quantità di dati di input della macchina $mwhile$: quest'ultima legge l'input da un singolo registro, mentre qui ne stiamo passando due. Dobbiamo modificare $I_W$ condensando l'input con la funzione coppia di Cantor, che diventa $cantor(x,n)$.
 
-La semantica di $I_W$ diventa $ forall x,n in NN quad Psi_I_W (<x,n>) = phi_n (x) = phi_P (x). $
+La semantica di $I_W$ diventa $ forall x,n in NN quad Psi_I_W (cantor(x,n)) = phi_n (x) = phi_P (x). $
 
 ==== Macro-$mwhile$
 
@@ -94,8 +94,8 @@ Come prima, per comodità di scrittura useremo un altro linguaggio, il *macro-$m
 
 Le macro utilizzate sono:
 - $x_k := x_j + x_s$;
-- $x_k := <x_j, x_s>$;
-- $x_k := <x_1, dots, x_n>$;
+- $x_k := cantor(x_j, x_s)$;
+- $x_k := cantor(x_1, dots, x_n)$;
 - proiezione $x_k := proiezione(x_j, x_s) arrow$ estrae l'elemento $x_j$-esimo dalla lista codificata in $x_s$;
 - incremento $x_k := macroincr(x_j, x_s) arrow$ codifica la lista $x_s$ con l'elemento in posizione $x_j$-esima aumentato di uno;
 - decremento $x_k := macrodecr(x_j, x_s) arrow$ codifica la lista $x_s$ con l'elemento in posizione $x_j$-esima diminuito di uno;

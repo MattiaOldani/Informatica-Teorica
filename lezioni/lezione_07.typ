@@ -18,17 +18,17 @@ Quello che dobbiamo fare è trovare una funzione che trasforma le istruzioni in 
 
 Troviamo una funzione $ar$ che associ ad ogni istruzione $I_k$ la sua codifica numerica $c_k$. Se la funzione trovata è anche biunivoca siamo sicuri di trovare la sua inversa, ovvero quella funzione che ci permette di ricavare l'istruzione $I_k$ data la sua codifica $c_k$.
 
-Riassumendo quanto detto finora, abbiamo deciso di trasformare ogni lista di istruzioni in una lista di numeri e, successivamente, applicare la funzione coppia di Cantor, ovvero $ [istr(1), dots, istr(n)] arrow.long.squiggly^(ar) [c_1, dots, c_n] arrow.long.squiggly^(<>) n. $ Vorremmo anche ottenere la lista di istruzioni originale data la sua codifica, ovvero $ n arrow.long.squiggly^(<>) [c_1, dots, c_n] arrow.long.squiggly^(ar^(-1)) [istr(1), dots, istr(n)]. $
+Riassumendo quanto detto finora, abbiamo deciso di trasformare ogni lista di istruzioni in una lista di numeri e, successivamente, applicare la funzione coppia di Cantor, ovvero $ [istr(1), dots, istr(n)] arrow.long.squiggly^(ar) [c_1, dots, c_n] arrow.long.squiggly^(cantor()) n. $ Vorremmo anche ottenere la lista di istruzioni originale data la sua codifica, ovvero $ n arrow.long.squiggly^(cantor()) [c_1, dots, c_n] arrow.long.squiggly^(ar^(-1)) [istr(1), dots, istr(n)]. $
 
-La nostra funzione _"complessiva"_ è biunivoca se dimostriamo la biunivocità della funzione $ar$, avendo già dimostrato questa proprietà per $<>$. 
+La nostra funzione _"complessiva"_ è biunivoca se dimostriamo la biunivocità della funzione $ar$, avendo già dimostrato questa proprietà per $cantor()$. 
 
 Dobbiamo quindi trovare una funzione biunivoca $ar : istruzioni arrow.long NN$ con la sua funzione inversa $ar^(-1) : NN arrow.long istruzioni$ tali che $ ar(I) = n arrow.long.double.l.r ar^(-1)(n) = I. $
 
-Dovendo codificare tre istruzioni nel linguaggio RAM, definiamo la funzione $ar$ tale che: $ ar(I) = cases(3k & "se" I equiv inc(R_k), 3k + 1 & "se" I equiv subsus(R_k), 3 <k\,m> - 1 quad & "se" I equiv ifgoto(R_k, m)) quad . $
+Dovendo codificare tre istruzioni nel linguaggio RAM, definiamo la funzione $ar$ tale che: $ ar(I) = cases(3k & "se" I equiv inc(R_k), 3k + 1 & "se" I equiv subsus(R_k), 3 cantor(k,m) - 1 quad & "se" I equiv ifgoto(R_k, m)) quad . $
 
 Come è fatta l'inversa $ar^(-1)$? In base al modulo tra $n$ e $3$ ottengo una certa istruzione: $ ar^(-1)(n) = cases(inc(R_(n/3)) & "se" n mod 3 = 0, subsus(R_(frac(n-1,3))) & "se" n mod 3 = 1, "IF" R_(cantorsin(frac(n+1,3))) = 0 "THEN GOTO" cantordes(frac(n+1,3)) quad & "se" n mod 3 = 2) quad . $
 
-La codifica del programma $P$ è quindi $ cod(P) = <ar(istr(1)), dots, ar(istr(n))>. $ Per tornare indietro devo prima invertire la funzione coppia di Cantor e poi invertire la funzione $ar$.
+La codifica del programma $P$ è quindi $ cod(P) = cantor(ar(istr(1)), dots, ar(istr(n))). $ Per tornare indietro devo prima invertire la funzione coppia di Cantor e poi invertire la funzione $ar$.
 
 La lunghezza del programma $P$, indicata con $|P|$, si calcola come $listlength(cod(P))$.
 
