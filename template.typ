@@ -8,6 +8,9 @@
 
     set heading(numbering: "1.")
 
+    set list(indent: 1.2em)
+    set enum(indent: 1.2em)
+
     align(center)[
         #block(text(weight: 700, 1.75em, title))
     ]
