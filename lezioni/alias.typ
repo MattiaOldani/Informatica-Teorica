@@ -68,3 +68,6 @@
 #let min = $"MIN"$
 #let arresto(programma) = $"AR"_programma$
 #let ristretto = $overset(P,§)$
+
+// Validazione programmi
+#let PC = $"PC"$
