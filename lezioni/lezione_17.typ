@@ -35,6 +35,14 @@
   breakable: true
 )
 
+#set page(header: context {
+  if counter(page).get().first() > 1 [
+    #align(right)[
+      *Lezione 17*
+    ]
+  ]
+})
+
 #import "alias.typ": *
 
 // Appunti
