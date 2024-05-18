@@ -71,3 +71,6 @@
 
 // Validazione programmi
 #let PC = $"PC"$
+
+// DTM
+#let blank = "blank"
