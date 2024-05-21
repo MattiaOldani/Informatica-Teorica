@@ -74,3 +74,7 @@
 
 // DTM
 #let blank = "blank"
+
+// Classi di complessità
+#let dtime = "DTIME"
+#let ftime = "FTIME"
