@@ -11,7 +11,6 @@ Materiali e appunti del corso di Informatica teorica
 - Esercizi lezione 14 del 19/04/2024 [gigi]
 - Lezione 17 del 10/05/2024 [tia]
 - Lezione 19 del 17/05/2024 [tia]
-- Lezione 20 del 22/05/2024 [tia]
 
 ## Stile
 

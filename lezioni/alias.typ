@@ -78,3 +78,4 @@
 // Classi di complessità
 #let dtime = "DTIME"
 #let ftime = "FTIME"
+#let fp = $italic("FP")$
