@@ -81,3 +81,4 @@
 #let dspace = "DSPACE"
 #let fspace = "FSPACE"
 #let fp = $italic("FP")$
+#let fl = $italic("FL")$
