@@ -76,10 +76,11 @@
 #let blank = "blank"
 
 // Classi di complessità
-#let dtime = "DTIME"
-#let ftime = "FTIME"
-#let dspace = "DSPACE"
-#let fspace = "FSPACE"
+#let dtime = $italic("DTIME")$
+#let ftime = $italic("FTIME")$
+#let dspace = $italic("DSPACE")$
+#let fspace = $italic("FSPACE")$
 #let fp = $italic("FP")$
 #let fl = $italic("FL")$
+#let exptime = $italic("EXPTIME")$
 #let cent = $¢$
