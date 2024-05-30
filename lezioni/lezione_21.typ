@@ -50,18 +50,21 @@ Per avere complessità anche sublineari, potremmo modificare leggermente la macc
 - il *nastro di lettura* è read-only con testina two-way read-only;
 - il *nastro di lavoro* è invece read-write con testina read-write.
 
-// tia: in riferimento al tuo commento sotto, sì, metterei una foto anche se si capisce chiaramente, per avere tutto completo
+#v(12pt)
 
-// tia: che carattere mettiamo per la c strana?
-La stringa in input è delimitata dai caratteri $cancel(c)$ e $\$$ tali che $cancel(c),\$ in.not Sigma$.
+#figure(
+    image("../assets/dtm-doppio-nastro.svg", width: 65%)
+)
 
-La definizione formale di questa nuova macchina è $ M = (Q, Sigma union {cancel(c), \$}, Gamma, delta, q_0, F), $ in cui tutto è analogo alle macchine di Turing viste finora, tranne per la funzione di transizione $delta$, ora definita come $ delta : Q times (Sigma union {cancel(c), \$}) times Gamma arrow.long Q times (Gamma without {blank}) times {-1, 0, 1}^2 $ con la quale $M$:
+#v(12pt)
+
+La stringa in input è delimitata dai caratteri $cent$ e $\$$ tali che $cent,\$ in.not Sigma$.
+
+La definizione formale di questa nuova macchina è $ M = (Q, Sigma union {cent, \$}, Gamma, delta, q_0, F), $ in cui tutto è analogo alle macchine di Turing viste finora, tranne per la funzione di transizione $delta$, ora definita come $ delta : Q times (Sigma union {cent, \$}) times Gamma arrow.long Q times (Gamma without {blank}) times {-1, 0, 1}^2 $ con la quale $M$:
 + legge un simbolo sia dal nastro di input sia dal nastro di lavoro;
 + calcola lo stato prossimo dati i simboli letti e lo stato attuale;
 + modifica il nastro di lavoro;
 + comanda il moto delle due testine.
-
-// gigi: se vuoi mettere una foto di una dtm di questo tipo, scrivimi, per me non è necessaria e ora come aggiungerla lascerebbe un sacco di spazio bianco nella prima pagina
 
 Anche la definizione di configurazione va leggermente modificata: ora, infatti, una *configurazione* di $M$ è una quadrupla $ C = angle.l q, i, j, w angle.r $ in cui:
 - $q$ è lo stato corrente;
@@ -143,11 +146,9 @@ A dire il vero, non viene occupato spazio, in quanto tutto può essere fatto usa
 Consideriamo $L_"PAL" = {x in Sigma^* bar.v x = x^R}$ il linguaggio considerato la lezione precedente. Avevamo visto che una DTM $M$ per questo linguaggio è definita dal seguente programma.
 
 // tia: da sistemare, non l'ho sistemato perché dobbiamo decidere
-// tia: breakable mi fa schifo ma mettiamolo per ora, poi vediamo
 #algo(
   title: "Palindrome",
-  parameters: ("x",),
-  breakable: true
+  parameters: ("x",)
 )[
   i := 1; \
   j := n; \
@@ -196,63 +197,67 @@ Questo ci mostra come abbiamo avuto un gran miglioramento per la risorsa tempo, 
 
 Esistono quindi diversi algoritmi per un dato problema che ottimizzano solo una delle due risorse a disposizione. Per il linguaggio $L_"PAL"$ si dimostra che $ t(n) dot s(n) = Omega(n^2). $
 
-// tia: gigi controlla da qua, questa è la parte nuova
 === Efficienza in termini di spazio
 
-Definiamo $ L = dspace(log(n)) $ *classe dei linguaggi accettati in spazio deterministico* $O(log(n))$ e $ fl = fspace(log(n)) $ *classe delle funzioni calcolate in spazio deterministico* $O(log(n))$.
+Definiamo: 
+- $L = dspace(log(n)) arrow$ classe dei linguaggi accettati in spazio deterministico $O(log(n))$;
+- $fl = fspace(log(n)) arrow$ classe delle funzioni calcolate in spazio deterministico $O(log(n))$.
 
 L e FL sono universalmente considerati i *problemi risolti efficientemente in termini di spazio*.
 
-Abbiamo quindi stabilito due sinonimie:
-- _efficiente in tempo se e solo se il tempo è polinomiale_;
-- _efficiente in spazio se e solo se lo spazio è logaritmico_.
+Finora, abbiamo stabilito due sinonimie:
+- efficiente _in tempo_ se e solo se il _tempo è polinomiale_;
+- efficiente _in spazio_ se e solo se lo _spazio è logaritmico_.
 
-Le ragioni della prima sono di carattere pratico, composizionale e di robustezza, come visto nella lezione scorsa, ma le ragioni della seconda?
+Entrambe le affermazioni trovano ragioni di carattere pratico, composizionale e di robustezza, come visto nella lezione scorsa per la risorsa tempo.
 
-Abbiamo anche qui tre motivi:
-- *pratico*: operare in spazio logaritmico (_o sublineare_) vuol dire saper gestire grandi moli di dati senza doverle copiare totalmente in memoria centrale (_che potrebbe, tra l'altro, non contenerli tutti_) usando algoritmi sofisticati che si servono, ad esempio, di tecniche per fissare posizioni sull'input o contare parti dell'input;
-- *composizionale*: i programmi efficienti in spazio che richiamano routine efficienti in spazio rimangono efficienti in spazio;
-- *robustezza*: le classi L e FL rimangono invariate a prescindere dai molti modelli di calcolo utilizzati per caratterizzare i problemi efficientemente risolubili in termini di spazio, ad esempio DTM multi-nastro, RAM, WHILE, eccetera.
-
-=== Tesi di Church-Turing estesa per lo spazio
+Per lo spazio, le motivazioni sono le seguenti:
+- *pratico*: operare in spazio logaritmico (sublineare) significa saper gestire grandi moli di dati senza doverle copiare totalmente in memoria centrale (che potrebbe anche non riuscire a contenerli tutti) usando algoritmi sofisticati che si servono, ad esempio, di tecniche per fissare posizioni sull'input o contare parti dell'input (in generale procedure che siano logaritmiche in spazio).\
+  I dati diventano facilmente grandi e bisogna avere algoritmi che utilizzino poca memoria.
+- *composizionale*: i programmi efficienti in spazio che richiamano routine efficienti in spazio, rimangono efficienti in spazio;
+- *robustezza*: le classi L e FL rimangono invariate, a prescindere dai modelli di calcolo utilizzati, ad esempio DTM multi-nastro, RAM, WHILE, etc.
 
 // tia: formattare meglio
-La classe dei problemi efficientemente risolubili in spazio coincide con la classe dei problemi risolti in spazio logaritmico su DTM.
+*Tesi di Church-Turing estesa per lo spazio* : La classe dei problemi efficientemente risolubili in spazio coincide con la classe dei problemi risolti in spazio logaritmico su DTM.
 
-// tia: ci sarebbero degli esempi, li mettiamo?
-// tia: se sì, van messi anche per il tempo
+Vediamo alcuni esempi di problemi risolti efficientemente in spazio:
+- in L:
+  - testare la raggiungibilità tra due nodi di un grafo non diretto;
+  - parsing dei linguaggi regolari;
+  - ci si chiede se anche il parsing dei linguaggi context-free è efficiente. Attualmente $s(n) = O(log^2 n)$;
+- in FL:
+  - operazioni aritmetiche;
+  - permanenti di matrici booleane
+  - aritmetica modulare;
+// gigi: aggiungere esempi di questo tipo anche per il tempo
 
-Se un problema è in L o FL è anche efficientemente *parallelizzabile*.
-
-// tia: da mettere la seguente frase se mettiamo gli esempi
-// Al momento non esistono compilatori perfettamente parallelizzabili
+Se un problema è in L o FL è anche efficientemente *parallelizzabile*. Al momento non esistono compilatori perfettamente parallelizzabili.
 
 == Tempo vs spazio
 
-Spesso le due richieste sono contrastanti: _essere veloci_ vuol dire tipicamente _spendere tanto spazio_ e, viceversa, _occupare poco spazio_ vuol dire tipicamente _spendere tanto tempo_.
+Spesso promuovere l'ottimizzazione di una risorsa va a discapito dell'altra: _essere veloci_ vuol dire (tipicamente) _spendere tanto spazio_ e _occupare poco spazio_ vuol dire (tipicamente) _spendere tanto tempo_.
 
-Ci poniamo due domande:
+Viene naturale porsi due domande:
 - _i limiti in tempo implicano dei limiti in spazio?_
 - _i limiti in spazio implicano dei limiti in tempo?_
 
-Posso rispondere confrontando le classi $dtime(f(n))$ e $dspace(f(n))$.
+Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 
 #theorem(numbering: none)[
+  Tutti i linguaggi accettati in tempo deterministico, sono anche accettati in spazio deterministico. Formalmente:
   $ dtime(f(n)) subset.eq dspace(f(n)). $
 ]
 
 #proof[
   \ Se $L in dtime(f(n))$ allora esiste una DTM $M$ che riconosce $L$ in tempo $t(n) = O(f(n))$, quindi su input $x$ di lunghezza $n$ la macchina $M$ compie $O(f(n))$ passi.
   
-  _In tale computazione quante celle del nastro di lavoro posso occupare al massimo?_
-  
-  Ovviamente $O(f(n))$: una cella ad ogni passo. Quindi, $M$ ha complessità in spazio $s(n) = O(f(n))$, ma allora $L in dspace(f(n))$.
+  In tale computazione, _quante celle del nastro di lavoro posso occupare al massimo?_\
+  Ovviamente $O(f(n))$ (una cella ad ogni passo). Quindi, $M$ ha complessità in spazio $s(n) = O(f(n))$, ma allora $L in dspace(f(n))$.
 ]
 
 #theorem(numbering: none)[
+  Tutti le funzioni accettate in tempo deterministico, sono anche accettate in spazio deterministico. Formalmente:
   $ ftime(f(n)) subset.eq fspace(f(n)). $
 ]
 
-Studieremo nelle prossime lezioni le inclusioni opposte.
-
-Infine, notiamo come l'efficienza in tempo non porta immediatamente all'efficienza in spazio.
+Notiamo come l'efficienza in tempo non porta immediatamente all'efficienza in spazio.
