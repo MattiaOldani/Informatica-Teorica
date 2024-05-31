@@ -244,7 +244,7 @@ Viene naturale porsi due domande:
 Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 
 #theorem(numbering: none)[
-  Tutti i linguaggi accettati in tempo deterministico, sono anche accettati in spazio deterministico. Formalmente:
+  Tutti i linguaggi accettati in tempo $f(n)$, sono anche accettati in spazio $f(n)$. Formalmente:
   $ dtime(f(n)) subset.eq dspace(f(n)). $
 ]
 
@@ -256,7 +256,7 @@ Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 ]
 
 #theorem(numbering: none)[
-  Tutti le funzioni accettate in tempo deterministico, sono anche accettate in spazio deterministico. Formalmente:
+  Tutte le funzioni accettate in tempo $f(n)$, sono anche accettate in spazio $f(n)$. Formalmente:
   $ ftime(f(n)) subset.eq fspace(f(n)). $
 ]
 
