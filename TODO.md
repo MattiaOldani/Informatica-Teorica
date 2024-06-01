@@ -4,7 +4,7 @@ File in cui listeremo le attività da fare per completare la stesura degli appun
 
 ## Lezioni da scrivere
 
-- Lezione 22 del 29/05/2024 [gigi]
+- Lezione 23 del 31/05/2024 [gigi]
 
 ## Lezioni da revisionare
 
@@ -16,3 +16,4 @@ File in cui listeremo le attività da fare per completare la stesura degli appun
 - Header [gigi+tia]
 - Prima pagina [gigi+tia]
 - Indice [gigi+tia]
+- Programmi [gigi+tia]
