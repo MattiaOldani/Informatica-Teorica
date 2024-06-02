@@ -85,3 +85,5 @@
 // Classi di complessità non deterministiche
 #let ntime = $italic("NTIME")$
 #let NP = $italic("NP")$
+#let NPC = $italic("NPC")$
+#let PC = $italic("PC")$
