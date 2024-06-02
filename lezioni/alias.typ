@@ -81,3 +81,7 @@
 #let fl = $italic("FL")$
 #let exptime = $italic("EXPTIME")$
 #let cent = $¢$
+
+// Classi di complessità non deterministiche
+#let ntime = $italic("NTIME")$
+#let NP = $italic("NP")$
