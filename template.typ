@@ -2,7 +2,6 @@
     set document(title: title)
 
     set text(font: "Source Sans Pro", lang: "it")
-    set text(hyphenate: false)
 
     set par(justify: true)
 
@@ -11,7 +10,7 @@
     set list(indent: 1.2em)
     set enum(indent: 1.2em)
 
-    set page(numbering: "— 1 —")
+    set page(numbering: "1")
 
     align(center)[
         #block(text(weight: 700, 1.75em, title))
@@ -27,6 +26,8 @@
     }
 
     show link: underline
+
+    pagebreak()
 
     outline(indent: auto)
 
