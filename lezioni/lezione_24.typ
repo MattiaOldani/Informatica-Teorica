@@ -1,8 +1,6 @@
 // Setup
 
-#import "@preview/ouset:0.1.1": overset, underset
-
-#import "@preview/algo:0.3.3": code
+#import "@preview/ouset:0.1.1": overset
 
 #import "@preview/lemmify:0.1.5": *
 
@@ -21,13 +19,6 @@
   breakable: true
 )
 
-#show thm-selector("thm-group", subgroup: "corollary"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
@@ -39,177 +30,205 @@
 
 // Appunti
 
-// gigi: potrebbero essere da sistemare "P" e "NP" o simili che non capivo più se metterli fra $-$ o no (tipo: "$P$" piuttosto che "P").
-
 = Lezione 24
 
 == $NP subset.eq P$?
 
-Per mostrare che $NP subset.eq P$ potrei prendere ogni problema in $NP$ e trovare per esso un algoritmo di soluzione _polinomiale_. Ovviamente questo approccio è impraticabile dato che $NP$ contiene infiniti problemi del tutto eterogenei.\
-Potremmo ovviare a questo problema agendo solo su un sottoinsieme dei problemi in $NP$ piuttosto che su tutti quanti.
+Nella scorsa lezione abbiamo introdotto i problemi della classe _NP_, detti anche _problemi con botta di culo_ o _problemi con il fattore C_. Se per questi problemi non abbiamo ancora una soluzione efficiente vuol dire che non lo conosciamo ancora a fondo, o magari manca una solida base matematica che ci permetta di risolverli.
 
-Vediamo una strategia che permette di isolare un kernel di problemi in $NP$:
-+ stabiliamo una *relazione di difficoltà* tra problemi in $NP$ : dati $pi_1, pi_2 in NP$, allora scrivere $pi_1 lt.eq pi_2$ mi dice che se riesco a trovare una soluzione efficiente per $pi_2$, allora ho automaticamente una soluzione efficiente per $pi_1$ ($pi_1$ non è più difficile di $pi_2$);
-+ definita la relazione, troviamo l'insieme di problemi *più difficili* in $NP$, secondo la relazione definita: $pi$ è difficile in $NP$ se $pi in NP and forall overset(pi, tilde) in NP : overset(pi, tilde) lt.eq pi$;
-+ restringiamo la ricerca di algoritmi efficienti al kernel in $NP$ appena trovato: se possiamo risolvere questi in modo efficiente, allora possiamo trovare algoritmi efficienti per tutto $NP$.
+Per mostrare che $NP subset.eq P$ dovremmo prendere ogni problema in _NP_ e trovare per essi un algoritmo di soluzione _polinomiale_. Ovviamente questo approccio è impraticabile dato che _NP_ contiene infiniti problemi, del tutto eterogenei. Potremmo ovviare a questo problema agendo solo su un sottoinsieme dei problemi a nostra disposizione piuttosto che su tutti quanti.
+
+Vediamo una strategia che permette di isolare un kernel di problemi in _NP_ :
++ stabiliamo una *relazione di difficoltà* tra problemi in _NP_ : dati $pi_1, pi_2 in NP$ allora $pi_1 lt.eq pi_2$ indica che, se riesco a trovare una soluzione efficiente per $pi_2$, allora ho automaticamente una soluzione efficiente per $pi_1$. In poche parole, $pi_1$ non è più difficile di $pi_2$, se sono bravo su $pi_2$ sono bravo anche su $pi_1$;
++ definita tale relazione, utilizziamola per trovare l'insieme dei problemi *più difficili* di _NP_ : $pi$ è difficile in _NP_ se $ pi in NP and forall overset(pi, tilde) in NP quad overset(pi, tilde) lt.eq pi. $ Questi possiamo definirli i _problemi bad boys_ di _NP_;
++ restringiamo la ricerca di algoritmi efficienti al kernel in _NP_ appena trovato: se possiamo risolvere questi in modo efficiente, allora possiamo trovare algoritmi efficienti per tutto _NP_.
 
 === Riduzione polinomiale
 
-Iniziamo definendo formalmente una *relazione di difficoltà*, necessaria a identificare un sottoinsieme di $NP$.
+Iniziamo definendo formalmente una *relazione di difficoltà* necessaria a identificare un sottoinsieme di $NP$.
 
-// gigi: da sistemare il simbolo di "polinomialmente riducibile"
-*Definizione*: Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o dei problemi di decisione) diciamo che $L_1$ si *riduce polinomialmente* a $L_2$ (e scriviamo $L_1 lt.eq_P L_2$) sse esiste una funzione $f : Sigma^* arrow Sigma^*$ tale che:
-+ $f$ è calcolabile su DTM in *tempo polinomiale*;
-+ $forall x in Sigma^* : x in L_1 arrow.double.long.l.r f(x) in L_2$.
+Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o due problemi di decisione) diciamo che $L_1$ si *riduce polinomialmente* a $L_2$, e lo indichiamo con $L_1 lt.eq_P L_2$, se e solo se esiste una funzione $f : Sigma^* arrow.long Sigma^*$ tale che:
++ $f$ è calcolabile su DTM in *tempo polinomiale*, quindi $f in fp$ ;
++ $forall x in Sigma^* quad x in L_1 arrow.double.long.l.r f(x) in L_2$.
+
+Le funzioni di riduzione polinomiale sono anche dette *many-one-reduction* perché non sono per forza funzioni iniettive (e quindi biiettive).
 
 #theorem(numbering:none)[
-  Siano due linguaggi $A,B subset.eq Sigma^* : A lt.eq_P B$. Allora, $B in P arrow.double A in P$.
+  Siano due linguaggi $A,B subset.eq Sigma^* bar.v A lt.eq_P B$. Allora $ B in P arrow.long.double A in P . $
 ]
 
 #proof[
-  Siccome $A lt.eq_P B$, sia $f in fp$ la riduzione polinomiale. Consideriamo il seguente algoritmo: 
+  \ Siccome $A lt.eq_P B$, sia $f in fp$ la funzione di riduzione polinomiale. Sappiamo inoltre che $B in P$. Consideriamo il seguente algoritmo: 
   
-  // gigi: da rivedere come tutti gli altri
-  $ P equiv & "input"(x); \ & y arrow.l f(x); \ & "if"(y in B) \ & quad "return" 1; \ & "else" \ & quad "return" 0; $
+  $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 $
 
-  Questo algoritmo è sicuramente deterministico, perché tutte le procedure che lo compongono sono deterministiche.
-  
-  Inoltre, riconosce $A$, per via della seconda condizione della riducibilità: $ forall x in A arrow.double.long.l.r f(x) in B. $
+  // $ P equiv & "input"(x) \ & "return" f(x) in B $
 
-  La sua complessità in tempo, dato un input $x : |x| = n$, è: $ t(n) = t_f (n) + t_(y in B) (|y|) = p(n) + q(|y|) $
+  Questo algoritmo è sicuramente deterministico, perché tutte le procedure che lo compongono sono deterministiche. Inoltre, riconosce $A$, per via della seconda condizione della riducibilità.
 
-  Notiamo che $|y| lt.eq p(n)$, in quanto output di una procedura che impiega $p(n)$ passi. Quindi: $ t(n) = p(n) + q(p(n)) = "poly"(n), $ in quanto i polinomi sono chiusi per somme e composizione.
+  La sua complessità in tempo, dato un input $x$ di lunghezza $n$, è: $ t(n) = t_f (n) + t_(y in B) (|y|) = p(n) + q(|y|). $
 
-  In conclusione, l'algoritmo deterministico proposto riconosce $A$ in tempo polinomiale, quindi: $ A lt.eq B and B in P arrow.double A in P. $
+  Notiamo che $|y| lt.eq p(n)$, in quanto output di una procedura che impiega $p(n)$ passi per generare $y$, quindi: $ t(n) lt.eq p(n) + q(p(n)) = "poly"(n), $ in quanto i polinomi sono chiusi per somma e composizione.
+
+  In conclusione, l'algoritmo deterministico proposto riconosce $A$ in tempo polinomiale, quindi: $ A lt.eq_P B and B in P arrow.long.double A in P. $
 ]
 
-=== Problemi _NP-completi_
+Questo teorema è ottimo per la nostra _"missione"_: infatti, se trovo una soluzione efficiente per i _"problemi difficili"_ allora ce l'ho anche per i _"problemi meno difficili"_, visto che dovrei aggiungere solo la parte di riduzione polinomiale, che abbiamo mostrato essere efficiente.
 
-Possiamo identificare ora il sottoinsieme di problemi tali che sono alla destra della relazione di riducibilità polinomiale per almeno un altro problema.
+=== Problemi _NP_-completi
 
-*Definizione*: Un problema di decisione $Pi$ è $NP$-completo sse:
-  + $Pi in NP$;
-  + $forall overset(Pi, tilde) in NP arrow.double.long overset(Pi, tilde) lt.eq_P Pi$;
+Possiamo identificare ora il sottoinsieme di problemi che sono _alla destra_ della relazione di riducibilità polinomiale per almeno un altro problema, i problemi _cattivi_ e _difficili_.
 
-Sia $NPC$ la sottoclasse di $NP$ dei problemi $NP$-completi.\
-Per provare che $NP subset.eq P$ posso restringere la mia ricerca di algoritmi di soluzione efficiente ai soli membri di $NPC$ e ce lo conferma il seguente teorema.
+Un problema di decisione $Pi$ è *_NP_-completo* se e solo se:
++ $Pi in NP$ ;
++ $forall overset(Pi, tilde) in NP quad overset(Pi, tilde) lt.eq_P Pi$.
+
+Sia $NPC$ la sottoclasse di _NP_ dei problemi _NP_-completi. Per provare che $NP subset.eq P$ posso restringere la mia ricerca di algoritmi di soluzione efficiente ai soli membri di $NPC$ grazie al seguente teorema.
 
 #theorem(numbering:none)[
-  Sia $Pi in NPC$ e $Pi in P$. Allora, $NP subset.eq P$.
+  Sia $Pi in NPC$ e $Pi in P$. Allora, $NP subset.eq P$, e quindi $P = NP$.
 ]
 
 #proof[
-  Dato che $Pi in NPC$, vale che per ogni $overset(Pi, tilde) in NP, overset(Pi, tilde) lt.eq_P Pi$.\
-  Assumendo che $Pi in P$ e considerando il teorema $A lt.eq_P B and B in P arrow.double A in P$, otteniamo che per ogni problema $overset(Pi, tilde) in NP$ vale $overset(Pi, tilde) in P$ e quindi possiamo concludere che $NP subset.eq P$ e $P = NP$.\ 
+  \ Dato che $Pi in NPC$, vale $ forall overset(Pi, tilde) in NP quad overset(Pi, tilde) lt.eq_P Pi. $
+  
+  Visto che $Pi in P$, abbiamo dimostrato prima che $ overset(Pi, tilde) lt.eq_P Pi and Pi in P arrow.long.double overset(Pi, tilde) in P, $ otteniamo che ogni problema $overset(Pi, tilde) in NP$ appartiene anche a $P$, quindi $ NP subset.eq P $ e quindi anche che $ P = NP. $
 ]
 
-Ora, le domande che vengono spontanee sono: _esistono problemi in $NPC$?_ _Se sì, sono state trovate soluzioni efficienti?_
+Sorgono spontanee due domande:
+- _esistono problemi in NP-C?_
+- _se sì, sono state trovate soluzioni efficienti?_
 
-- Il primo problema NP-completo è stato _CNF-SAT_. Mostrare che sta in NP è banale, mentre la sua completezza è dimostrata nel teorema di Cooke-Levin del 1970.
+Alla prima domanda rispondiamo *SI*: il primo problema _NP_-completo è proprio _CNF-SAT_, dimostrato nel 1970 con il teorema di Cooke-Levin. L'appartenenza a _NP_ è banale, mentre la sua completezza è _noiosa da leggere_ (cit. Mereghetti).
 
-  Una variante interessante di questo problema è _K-CNF-SAT_, in cui si limita la cardinalità delle clausole a $k$ letterali. In questa variante, se $k lt.eq 2$, allora il problema ammette soluzioni efficienti; se $k gt.eq 3$, il problema diventa NP-completo.
+Una prima variante di questo problema è _K-CNF-SAT_: viene limitata la cardinalità delle clausole $C_i$, formate da _or_ e _not_, a $k$ letterali. Ad esempio, se $k = 4$ una clausola può essere $(a or overline(b) or c or d)$. Con questa variante:
+- se $k = 1$ il problema ammette soluzioni in tempo lineare;
+- se $k = 2$ il problema ammette soluzioni in tempo quadratico, dimostrato in un articolo del 1975;
+- se $k gt.eq 3$ il problema è _NP_-completo.
 
-  Un'altra variante è quella che considera solo le _CNF_ con clausole di Horn e in questo caso particolare il problema torna efficientemente risolubile.
-- Un altro problema NP-completo è _HC_ (_Hamiltonian Circuit_), allo stesso modo di altri migliaia di problemi interessanti sui grafi.
-- Migliaia di problemi in svariati ambiti sono NP-completi.
+Una seconda variante limita invece il soddisfacimento di _al massimo k clausole_.
 
-La comunità scientifica tende ormai a credere che $P eq.not NP$, di conseguenza dimostrare l'NP-completezza di un problema implica sancire l'inefficienza di qualunque algoritmo di soluzione.
+Infine, una terza variante è quella che considera le _CNF con clausole di Horn_, ovvero clausole in cui esiste al più un letterale negato. In questo caso particolare, il problema torna ad essere efficientemente risolubile.
 
-Dopo aver stabilito l'NP-completezza, l'indagine sui problemi non si ferma: si prova a inserire restrizioni, a trovare algoritmi probabilistici efficienti, si cercano euristiche veloci di soluzione, etc. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del miglior algoritmo che più si approssima a quella che consideriamo efficienza. 
+Come vediamo, quando ho un problema difficile cerco delle varianti interessanti con la speranza di gestire almeno questi sotto-problemi significativi.
 
-Vediamo ora una tecnica per mostrare che $Pi in NPC$:
-+ dimostrare che $Pi in NP$, solitamente è il punto più semplice;
-+ scegliere un problema $X$ notoriamente $in NPC$;
+Un altro problema _NP_-completo è _HC_ (_Hamiltonian Circuit_), allo stesso modo di altri migliaia di problemi interessanti sui grafi e altri di svariati ambiti.
+
+La comunità scientifica, dopo anni di tentativi e svariate ragioni, tende ormai a credere che $P eq.not NP$, di conseguenza dimostrare l'_NP_-completezza di un problema implica sancirne l'inefficienza di qualunque algoritmo di soluzione.
+
+Dopo aver stabilito l'NP-completezza, l'indagine sui problemi però non si ferma: si provano restrizioni, algoritmi probabilistici efficienti (con margine di errore), euristiche veloci di soluzione, eccetera. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del _miglior algoritmo che più si approssima a quella che consideriamo efficienza_. 
+
+=== Dimostrare la _NP_-completezza
+
+Vediamo ora una tecnica per mostrare che un problema $Pi$ è _NP_-completo:
++ dimostrare che $Pi in NP$, solitamente il punto più semplice;
++ scegliere un problema $X$ notoriamente _NP_-completo;
 + dimostrare che $X lt.eq_P Pi$;
-+ per la transitività di $lt.eq_P$, si ottiene che $Pi in NPC$.
++ per la transitività di $lt.eq_P$ si ottiene che $Pi in NPC$.
+
+Infatti:
++ $Pi in NP$ per il punto 1;
++ $forall overset(Pi,tilde) in NP$ abbiamo che $ overset(Pi,tilde) lt.eq_P^((2)) X lt.eq_P^((3)) Pi . $ Ma quindi per la transitività di $lt.eq_P$ del punto 4 abbiamo che $forall overset(Pi,tilde) in NP$ allora $overset(Pi,tilde) lt.eq Pi$, quindi $Pi$ è _NP_-completo.
 
 == $P subset.eq L$?
 
-C'è un'inclusione che abbiamo lasciato in sospeso, ed è proprio quella che coinvolge $L$ e $P$. Ricordiamo che $ L = dspace(log n), \ P = union.big_(k gt.eq 0) dtime( n^k). $
+C'è un'inclusione che abbiamo lasciato in sospeso, ed è proprio quella che coinvolge le classi $L$ e $P$. Ricordiamo che $ L = dspace(log(n)), \ P = union.big_(k gt.eq 0) dtime( n^k). $
 
 Abbiamo mostrato che $L subset.eq P$, _ma l'inclusione è propria? Oppure $P subset.eq L$?_
 
 Possiamo procedere in maniera simile a quanto fatto per $NP subset.eq P$:
-+ stabilire una relazione tra problemi $pi_1 lt.eq pi_2$ che voglia dire: se esiste una soluzione efficiente in spazio per $pi_2$, allora esiste automaticamente una soluzione efficiente per $pi_1$;
++ stabiliamo una *relazione di difficoltà* tra problemi $pi_1 lt.eq pi_2$ che voglia dire: _se esiste una soluzione efficiente in spazio per $pi_2$, allora esiste automaticamente una soluzione efficiente per $pi_1$_;
 + trovare i problemi *massimali* in $P$ secondo la relazione definita al punto precedente;
-+ restringere la ricerca di algoritmi efficienti in spazio a questi problemi massimali. Se la ricerca porta un successo su un problema massimale, allora $P subset.eq L$.
++ restringere la ricerca di algoritmi efficienti in spazio a questi problemi massimali. Se la ricerca porta un successo su un problema massimale, allora $P subset.eq L$ e quindi $P = L$.
 
 === Riduzione in spazio logaritmico
 
 Definiamo una riduzione utile al procedimento appena spiegato.
 
-// gigi: da sistemare il simbolo di log-space riduce nelle equazioni, come per la riducibilità polinomiale
-*Definizione*: Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o due problemi di decisione), diciamo che $L_1$ si *$bold(log)$-space riduce* a $L_2$ (e scriviamo $L_1 lt.eq_l L_2$) sse esiste una funzione $f : Sigma^* arrow Sigma^*$ tale che:
-+ $f$ è calcolabile su una DTM in *spazio logaritmico*;
-+ $forall x in Sigma^*, x in L_1 arrow.long.double.l.r f(x) in L_2$.
+Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o due problemi di decisione), diciamo che $L_1$ si *log-space riduce* a $L_2$, e lo indichiamo con $L_1 lt.eq_l L_2$, se e solo se esiste una funzione $f : Sigma^* arrow.long Sigma^*$ tale che:
++ $f$ è calcolabile su una DTM in *spazio logaritmico*, ovvero $f in fl$;
++ $forall x in Sigma^* quad x in L_1 arrow.long.double.l.r f(x) in L_2$.
 
 Similmente a quanto vista prima, esiste un teorema che dimostra una sorta di transitività per due linguaggi tra cui esiste una relazione di riducibilità.
 
 #theorem(numbering:none)[
-  Siano due linguaggi $A, B in Sigma^* : A lt.eq_l B$. Allora, $B in L arrow.double A in L$.
+  Siano due linguaggi $A, B in Sigma^* bar.v A lt.eq_l B$. Allora $ B in L arrow.long.double A in L . $
 ]
 
 #proof[
-  Siccome $A lt.eq_l B$, esiste $f in fl$ tale che è la $log$-space riduzione.
+  \ Sappiamo che $A lt.eq_l B$, quindi esiste $f in fl$ funzione di log-space riduzione. Consideriamo il seguente algoritmo: $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 . $
 
-  // gigi: da sistemare come tutti gli altri
-  Consideriamo il seguente algoritmo: $ P equiv & "input"(x); \ & y arrow.l f(x); \ & "if"(y in B) \ & quad "return" 1; \ & "else" \ & quad "return" 0; $
+  Questo è sicuramente un algoritmo deterministico, in quanto è composto da _"moduli"_ a loro volta deterministici. Inoltre, riconosce $A$ per via della seconda condizione della riducibilità.
 
-  Sicuramente è un algoritmo deterministico, in quanto è composto da "moduli" a loro volta deterministici.
+  La sua complessità in spazio, dati input $x$ di lunghezza $n$, è descritta dalla seguente complessità: $ s(n) = s_f (n) + s_(y in B) (|y|) = O(log(n)) + O(log(|y|)). $
 
-  Inoltre, riconosce A per via della seconda condizione della riducibilità.
+  _Quanto sarà la lunghezza di $y$?_ 
+  
+  Notiamo che $|y| lt.eq p(n)$, perché è output di una procedura che impiega spazio logaritmico e quindi un numero polinomiale di passi. Questo deriva dalla relazione $fl subset.eq fp$. Quindi: $ s(n) = O(log(n)) + O(log(p(n))) = O(log(n)). $
 
-  La sua complessità in spazio, dato input $x$ con $|x| = n$, è descritta dalla seguente: $ s(n) = s_f(n) + s_(y in B) (|y|) = O(log n) + O(log |y|). $
-
-  _Quanto sarà la lunghezza di $y$?_\
-  Notiamo che $|y| lt.eq p(n)$, perché è output di una procedura che impiega spazio logaritmico e quindi un numero polinomiale di passi (infatti $fl subset.eq fp$). Quindi: $ s(n) = O(log n) + O(log p(n)) = O(log n). $
-
-  In conclusione, l'algoritmo deterministico proposto riconosce $A$ in spazio logaritmico. Dunque: $ A lt.eq_l B and B in L arrow.double A in L. $
+  In conclusione, l'algoritmo deterministico proposto riconosce $A$ in spazio logaritmico, dunque: $ A lt.eq_l B and B in L arrow.long.double A in L. $
 ]
 
-=== Probelmi _P-completi_
+Prima di continuare dobbiamo fare attenzione ad un dettaglio: la generazione di $y$ è sì logaritmica in spazio ma serve comunque spazio per salvare il valore di questa variabile, che può essere polinomiale. Si utilizza allora la *computazione on demand*: viene generata $y$ bit per bit, non tutta insieme. Il dato che viene salvato è l'indice del bit richiesto dalla funzione che controlla l'appartenenza a $B$, ma l'indice è logaritmico se lo consideriamo in binario, quindi stiamo utilizzando spazio logaritmico.
 
-Abbiamo identificato il sottoinsieme di problemi che andremo ad analizzare.
+=== Problemi _P_-completi
 
-*Definizione*: Un problema di decisione $Pi$ è P-completo sse:
-  + $Pi in P$;
-  + $forall overset(Pi, tilde) in P, overset(Pi, tilde) lt.eq_l Pi$.
+Come prima, identifichiamo il sottoinsieme di problemi di $P$ che andremo a studiare.
 
-Chiamiamo $PC$ la sottoclasse di P dei problemi P-completi.
+Un problema di decisione $Pi$ è *_P_-completo* se e solo se:
++ $Pi in P$;
++ $forall overset(Pi, tilde) in P quad overset(Pi, tilde) lt.eq_l Pi$.
+
+Chiamiamo $PC$ la sottoclasse di _P_ dei problemi _P_-completi.
 
 #theorem(numbering:none)[
   Sia $Pi in PC$ e $Pi in L$. Allora $P subset.eq L$.
 ]
 
 #proof[
-  Poiché $Pi in PC$, abbiamo che per ogni problema $overset(Pi, tilde) in P$ vale $overset(Pi, tilde) lt.eq_l Pi$.\
-  Ma assumendo anche che $Pi in L$, otteniamo che per ogni $overset(Pi, tilde) in P$ vale anche $overset(Pi, tilde) in L$, quindi possiamo concludere che $P subset.eq L$ e, di conseguenza, $P = L$.
+  \ Sappiamo che $Pi in PC$, quindi $ forall overset(Pi, tilde) in P quad overset(Pi, tilde) lt.eq_l Pi . $
+
+  Se assumiamo che $Pi in L$ otteniamo che $ forall overset(Pi, tilde) in P quad overset(Pi, tilde) in L, $ quindi possiamo concludere che $P subset.eq L$ e, di conseguenza, $P = L$.
 ]
 
-- Un esempio di problema P-completo è quello che si chiede se una stringa x appartiene a una certa grammatica context-free:
-  - Nome: $"Context-free-membership"$;
-  - Istanza: Grammatica-context-free $G$, stringa $x$;
-  - Domanda: $x in L(G)$?
+Un esempio di problema _P_-completo è quello che si chiede se una stringa $x$ appartiene a una certa grammatica context-free.
 
-- Un altro problema P-completo è il seguente:
-  - Nome: $"Circuit value"$;
-  - Istanza: Circuito booleano $cal(C)(x_1, dots, x_n)$, valori in input $a_1, dots, a_n in {0,1}^*$;
-  - Domanda: $cal(C)(a_1, dots, a_n) = 1$?
+- Nome: context-free membership.
+- Istanza: grammatica-context-free $G$, stringa $x$.
+- Domanda: $x in L(G)$?
 
-Come per $P subset.eq NP$, è universale assumere che l'inclusione $L subset.eq P$ sia propria.\
-Come prima, stabilire questa assunzione non chiuse definitivamente lo studio di questi problemi, anzi: bisogna trovare comunque delle soluzioni efficienti in tempo, perché sono tutti problemi estremamente pratici e importanti.
+Questo problema viene risolto in tempo $t(n) = n^2 log(n)$ e in spazio $s(n) = O(log^2 (n))$.
 
-Si può anche dimostrare che i problemi P-completi non ammettono (quasi certamente) algoritmi paralleli efficienti.
+Un altro problema _P_-completo è il seguente.
 
-Una buona tecnica per mostrare che un problema $Pi$ è P-completo è la seguente:
+- Nome: circuit value (_circuito con porte logiche_).
+- Istanza: circuito booleano $cal(C)(x_1, dots, x_n)$, valori in input $a_1, dots, a_n in {0,1}^*$.
+- Domanda: $cal(C)(a_1, dots, a_n) = 1$?
+
+Anche in questo caso lo spazio utilizzato è $s(n) = log^2 (n)$.
+
+Come per $P subset.eq NP$, è universale assumere che l'inclusione $L subset.eq P$ sia propria, ma questo non frena gli studi su questi problemi, che sono attuali e molto utili. Si può anche dimostrare che i problemi _P_-completi non ammettono (_quasi certamente_) algoritmi paralleli efficienti.
+
+=== Dimostrare la _P_-completezza
+
+Infine, vediamo anche per questi problemi una tecnica per mostrare che un problema $Pi$ è _P_-completo:
 + dimostrare che $Pi in P$;
-+ scegliere un problema $X$ notoriamente P-completo;
++ scegliere un problema $X$ notoriamente _P_-completo;
 + dimostrare che $X lt.eq_l Pi$;
-+ per la transitività di $lt.eq_l$, si ottiene che qualunque problema $overset(Pi, tilde) in P$ sia $log$-space riducibile a Pi;
-+ per (1) e (4) si conclude che $Pi in PC$.
++ per la transitività di $lt.eq_l$ si ottiene che $Pi in PC$.
 
-// gigi: da levare quando si uniranno le lezioni
-#pagebreak()
+== Problemi _NP_-hard
+
+_Ma i problemi *NP-hard*? Cosa sono e dove si posizionano?_
+
+Un problema $Pi$ _NP_-completo è tale che:
+- $Pi in NP$;
+- se $Pi in P$ allora $P = NP$.
+
+Se invece $Pi$ è _NP_-hard vale solo che:
+- se $Pi in P$ allora $P = NP$.
+
+Sono problemi che _creano il collasso_ di _P_ e _NP_ ma non sono per forza problemi di decisione: ad esempio, _NP_-hard contiene tutti i *problemi di ottimizzazione* (_number-CNF-SAT_, quanti assegnamenti sono soddisfatti) oppure i *problemi enumerativi*.
 
 == Situazione finale
 
@@ -218,11 +237,11 @@ Dopo tutto ciò che è stato visto in queste dispense, ecco un'illustrazione che
 #v(12pt)
 
 #figure(
-    image("../assets/situazione-finale.svg", width: 90%)
+  image("../assets/situazione-finale.svg", width: 100%)
 )
 
 #v(12pt)
 
-- $"NC" =$ classe di problemi risolti da *algoritmi paralleli efficienti*.
+_NC_ è la classe di problemi risolti da *algoritmi paralleli efficienti*, ovvero algoritmi che hanno tempo parallelo _o piccolo_ del tempo sequenziale e un buon numero di processori.
 
-L'unica inclusione propria dimostrata e nota è $P subset.eq exptime$, in tutti gli altri casi è universalmente accettato (anche se non dimostrato) che le inclusioni siano proprie.
+L'unica inclusione propria dimostrata e nota è $P subset.neq exptime$, grazie al problema di decidere se una DTM si arresta entro $n$ passi. In tutti gli altri casi è universalmente accettato (_ma non dimostrato_) che le inclusioni siano proprie.
