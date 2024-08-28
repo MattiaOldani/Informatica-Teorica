@@ -4,9 +4,6 @@
 
 // Alias
 
-// Spazi
-#let quarter = $space.quarter$
-
 // Matematica
 #let dominio(funzione) = $op("Dom")_funzione$
 #let immagine(funzione) = $op("Im")_(funzione)$
