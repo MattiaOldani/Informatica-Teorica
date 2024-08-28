@@ -34,9 +34,9 @@ Due insiemi $A$ e $B$ sono *isomorfi* (_equinumerosi_) se esiste una biiezione t
 Detto $cal(U)$ l'insieme di tutti gli insiemi, la relazione $tilde$ è sottoinsieme di $cal(U)^2$.
 
 Dimostriamo che $tilde$ è una relazione di equivalenza:
-- _riflessività_: $A tilde A$, usiamo come biiezione la funzione identità $i_A$;
-- _simmetria_: $A tilde B arrow.long.double B tilde A$, usiamo come biiezione la funzione inversa;
-- _transitività_: $A tilde B and B tilde C arrow.long.double A tilde C$, usiamo come biiezione la composizione della funzione usata per $A tilde B$ con la funzione usata per $B tilde C$.
+- *riflessività*: $A tilde A$, usiamo come biiezione la funzione identità $i_A$;
+- *simmetria*: $A tilde B arrow.long.double B tilde A$, usiamo come biiezione la funzione inversa;
+- *transitività*: $A tilde B and B tilde C arrow.long.double A tilde C$, usiamo come biiezione la composizione della funzione usata per $A tilde B$ con la funzione usata per $B tilde C$.
 
 Dato che $tilde$ è una relazione di equivalenza, ci permette di partizionare l'insieme $cal(U)$. La partizione che ne risulta è formata da classi di equivalenza che contengono insiemi isomorfi, ossia con la stessa cardinalità.
 
@@ -56,9 +56,7 @@ La classe di equivalenza $[J_n]_tilde$ identifica tutti gli insiemi di $cal(U)$ 
 
 == Cardinalità infinita
 
-L'altra classe di cardinalità è quella delle *cardinalità infinite*, ovvero gli insiemi non in relazione con $J_n$.
-
-Questi insiemi sono divisibili in:
+L'altra classe di cardinalità è quella delle *cardinalità infinite*, ovvero gli insiemi non in relazione con $J_n$. Questi insiemi sono divisibili in:
 - insiemi *numerabili*;
 - insiemi *non numerabili*.
 
@@ -79,9 +77,7 @@ Gli insiemi numerabili hanno cardinalità $aleph_0$ (si legge _"aleph zero"_).
 
 === Insiemi non numerabili
 
-Gli *insiemi non numerabili* sono insiemi a cardinalità infinita, che non sono listabili come gli insiemi numerabili: sono "più fitti" di $NN$.
-
-Questo significa che ogni lista generata mancherebbe di qualche elemento e, quindi, non sarebbe esaustiva di tutti gli elementi dell'insieme.
+Gli *insiemi non numerabili* sono insiemi a cardinalità infinita ma che non sono listabili come gli insiemi numerabili: sono "più fitti" di $NN$. Questo significa che ogni lista generata mancherebbe di qualche elemento e, quindi, non sarebbe esaustiva di tutti gli elementi dell'insieme.
 
 Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
@@ -98,7 +94,7 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
   [1] Partiamo con il dimostrare che $RR tilde (0,1)$: serve trovare una biiezione tra $RR$ e $(0,1)$. Usiamo una rappresentazione grafica, costruita in questo modo:
   - disegnare la circonferenza di raggio $1/2$ centrata in $1/2$;
   - disegnare la perpendicolare al punto da mappare che interseca la circonferenza;
-  - disegnare la retta passante per il centro $C$ e l'intersezione precedente.
+  - disegnare la semiretta passante per il centro $C$ e l'intersezione precedente.
 
   L'intersezione tra l'asse reale e la retta finale è il punto mappato.
 
@@ -115,12 +111,13 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
   [2] Continuiamo dimostrando che $NN tilde.not (0,1)$: serve dimostrare che l'intervallo $(0,1)$ non è listabile, quindi che ogni lista che scrivo manca di almeno un elemento e per farlo proveremo a "costruire" proprio questo elemento.\ Per assurdo, sia $NN tilde (0,1)$. Allora, possiamo listare gli elementi di $(0,1)$ esaustivamente come: $ 0.& space a_(00) space a_(01) space a_(02) space dots \ 0.& space a_(10) space a_(11) space a_(12) space dots \ 0.& space a_(20) space a_(21) space a_(22) space dots \ 0.& space dots quad , $ dove con $a_(i j)$ indichiamo la cifra di posto $j$ dell'$i$-esimo elemento della lista.
 
-  Costruiamo il numero $c = 0.c_0 c_1 c_2 dots$ tale che $ c_i = cases(2 "se" a_(i i) eq.not 2, 3 "se" a_(i i) = 2) quad . $
+  Costruiamo il numero $c = 0.c_0 c_1 c_2 dots$ tale che $ c_i = cases(2 quad & "se" a_(i i) eq.not 2, 3 & "se" a_(i i) = 2) quad . $
   In altre parole, questo numero viene costruito "guardando" le cifre sulla diagonale principale.
 
   Questo numero appartiene a $(0,1)$, ma non appare nella lista scritta sopra: ogni cifra $c_i$ del numero costruito differisce per almeno una posizione (quella sulla diagonale principale) da qualunque numero nella lista. Questo è assurdo, visto che avevamo assunto $(0,1)$ numerabile $arrow.long.double NN tilde.not (0,1)$.
 
-  [3] Terminiamo dimostrando che $RR tilde.not NN$ per transitività.\
+  [3] Terminiamo dimostrando che $RR tilde.not NN$ per transitività.
+  
   Più in generale, non si riesce a listare nessun segmento di lunghezza maggiore di 0.
 ]
 
@@ -135,7 +132,7 @@ Vediamo due insiemi continui che saranno importanti successivamente.
 
 === Insieme delle parti
 
-Il primo insieme che vediamo è l'*insieme delle parti* di $NN$, detto anche _power set_, così definito: $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. $
+Il primo insieme che vediamo è l'*insieme delle parti* di $NN$, detto anche _power set_, ed è così definito: $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. $
 
 #theorem(numbering: none)[
   $P(NN) tilde.not NN$.
@@ -154,14 +151,14 @@ Il primo insieme che vediamo è l'*insieme delle parti* di $NN$, detto anche _po
 
   Questo vettore appartiene a $P(NN)$ (perché rappresenta sicuramente un suo sottoinsieme), ma non è presente nella lista precedente perché è diverso da ogni elemento in almeno una cifra, quella sulla diagonale principale.
 
-  Questo è assurdo perché abbiamo assunto che $P(NN)$ fosse numerabile\ $arrow.long.double P(NN) tilde.not NN$.
+  Questo è assurdo perché abbiamo assunto che $P(NN)$ fosse numerabile, quindi $P(NN) tilde.not NN$.
 ]
 
 Visto questo teorema possiamo concludere che: $ P(NN) tilde [0,1] tilde overset(RR, .). $
 
 === Insieme delle funzioni
 
-Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$, così definito: $ NN_bot^NN = {f: NN arrow.long NN}. $
+Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$ così definito: $ NN_bot^NN = {f: NN arrow.long NN}. $
 
 #theorem(numbering: none)[
   $NN_bot^NN tilde.not NN$.
@@ -183,6 +180,7 @@ Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$, co
       [$f_0$], [$f_0 (0)$], [$f_0 (1)$], [$f_0 (2)$], [$f_0 (3)$], [$dots$], [$dots$],
       [$f_1$], [$f_1 (0)$], [$f_1 (1)$], [$f_1 (2)$], [$f_1 (3)$], [$dots$], [$dots$],
       [$f_2$], [$f_2 (0)$], [$f_2 (1)$], [$f_2 (2)$], [$f_2 (3)$], [$dots$], [$dots$],
+      [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], 
     )
   ]
 
@@ -192,5 +190,5 @@ Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$, co
 
   Questa funzione è una funzione che appartiene a $NN_bot^NN$, ma non è presente nella lista precedente. Infatti, $forall k in NN$ otteniamo $ phi(k) = cases(1 eq.not f_k (k) = bot & "se" f_k (k) = bot, f_k (k) + 1 eq.not f_k (k) quad & "se" f_k (k) arrow.b) quad . $
   
-  Questo è assurdo, perché abbiamo assunto $P(NN)$ numerabile\ $arrow.double.long P(NN) tilde.not NN$.
+  Questo è assurdo, perché abbiamo assunto $P(NN)$ numerabile, quindi $P(NN) tilde.not NN$.
 ]
