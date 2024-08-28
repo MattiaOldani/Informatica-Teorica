@@ -16,7 +16,7 @@
 // Teoria della calcolabilità
 #align(center + horizon)[
   #set heading(numbering: none)
-  #set text(size: 28pt)
+  //#set text(size: 28pt)
   = Teoria della calcolabilità
 ]
 
@@ -24,6 +24,7 @@
 
 
 // Capitoli di teoria della calcolabilità
+
 #include "capitoli/calcolabilità/01_richiami_matematici.typ"
 #pagebreak()
 
@@ -64,7 +65,7 @@
 // Teoria della complessità
 #align(center + horizon)[
   #set heading(numbering: none)
-  #set text(size: 28pt)
+  //#set text(size: 28pt)
   = Teoria della complessità
 ]
 
