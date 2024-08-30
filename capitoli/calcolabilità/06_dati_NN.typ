@@ -2,11 +2,10 @@
 
 #import "@preview/lemmify:0.1.5": *
 
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
+#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
+  "thm-group",
+  lang: "it",
+)
 
 #show: thm-rules
 
@@ -14,18 +13,18 @@
   it,
   stroke: red + 1pt,
   inset: 1em,
-  breakable: true
+  breakable: true,
 )
 
 #show thm-selector("thm-group", subgroup: "proof"): it => block(
   it,
   stroke: green + 1pt,
   inset: 1em,
-  breakable: true
+  breakable: true,
 )
 
 
-= $bold(dati tilde NN)$
+= $dati tilde NN$
 
 Ci serve trovare una legge che:
 + associ biunivocamente dati a numeri e viceversa;
@@ -34,19 +33,19 @@ Ci serve trovare una legge che:
 
 == Funzione coppia di Cantor
 
-La *funzione coppia di Cantor* è la funzione $ cantor() : NN times NN arrow.long NN^+. $ Questa funzione sfrutta due "sotto-funzioni", $cantorsin: NN^+ arrow.long NN$ e $cantordes: NN^+ arrow.long NN$, tali che: $ cantor(x,y) & = n, \ cantorsin (n) & = x, \ cantordes (n) & = y. $
+La *funzione coppia di Cantor* è la funzione $ cantor() : NN times NN arrow.long NN^+. $ Questa funzione sfrutta due "sotto-funzioni" $ cantorsin: NN^+ arrow.long NN, quad cantordes: NN^+ arrow.long NN $ tali che: $ cantor(x,y) = n, \ cantorsin (n) = x, \ cantordes (n) = y. $
 
 Vediamo una rappresentazione grafica della funzione di Cantor.
 
 #v(12pt)
 
 #figure(
-  image("assets/cantor-01.svg", width: 50%)
+  image("assets/cantor-01.svg", width: 50%),
 )
 
 #v(12pt)
 
-$cantor(x,y)$ rappresenta il valore all'incrocio tra la $x$-esima riga e la $y$-esima colonna.
+Come vediamo, $cantor(x,y)$ rappresenta il valore all'incrocio tra la $x$-esima riga e la $y$-esima colonna.
 
 La tabella viene riempita _diagonale per diagonale_ (non principale). Il procedimento è il seguente:
 + sia $x=0$;
@@ -66,7 +65,7 @@ Cerchiamo di formalizzare la costruzione di questi numeri, dato che non è molto
 #v(12pt)
 
 #figure(
-  image("assets/cantor-02.svg", width: 40%)
+  image("assets/cantor-02.svg", width: 40%),
 )
 
 #v(12pt)
@@ -78,7 +77,7 @@ Chiamiamo $x+ y = z$ e con la prossima immagine osserviamo un'altra proprietà.
 #v(12pt)
 
 #figure(
-  image("assets/cantor-03.svg", width: 15%)
+  image("assets/cantor-03.svg", width: 15%),
 )
 
 #v(12pt)
@@ -93,9 +92,9 @@ Mettiamo insieme le due proprietà per ottenere la formula analitica della funzi
 
 Vogliamo fare lo stesso per $cantorsin$ e $cantordes$, per poter computare l'inversa della funzione di Cantor dato $n$.
 
-Grazie alle osservazioni precedenti, sappiamo che: $ n = y + cantor(gamma,0) space &arrow.long.double space y = n - cantor(gamma,0), \ gamma = x + y space & arrow.long.double space x = gamma - y. $
+Grazie alle osservazioni precedenti, sappiamo che: $ n = y + cantor(gamma,0) space & arrow.long.double space y = n - cantor(gamma,0), \ gamma = x + y space & arrow.long.double space x = gamma - y. $
 
-Trovando il valore di gamma, possiamo anche trovare i valori di $x$ e $y$.
+Trovando il valore $gamma$ possiamo anche trovare i valori di $x$ e $y$.
 
 Notiamo come $gamma$ sia il "punto di attacco" della diagonale che contiene $n$, quindi: $ gamma = max{z in NN bar.v cantor(z,0) lt.eq n}, $ perché tra tutti i punti di attacco $cantor(z,0)$ voglio esattamente la diagonale che contiene $n$.
 
@@ -105,7 +104,7 @@ Come valore di $gamma$ scegliamo $ gamma = floor(frac(-1 + sqrt(8n - 7), 2)). $
 
 Ora che abbiamo $gamma$, possiamo definire le funzioni $cantorsin$ e $cantordes$ in questo modo: $ cantordes(n) = y = n - cantor(gamma,0) = n - frac(gamma (gamma + 1), 2) - 1, \ cantorsin(n) = x = gamma - y. $
 
-=== $bold(NN times NN tilde NN)$
+=== $NN times NN tilde NN$
 
 Grazie alla funzione coppia di Cantor, possiamo dimostrare un risultato importante.
 
@@ -125,13 +124,13 @@ Estendiamo adesso il risultato all'interno insieme $NN$, ovvero:
 
 #proof[
   \ Definiamo la funzione $ [,]: NN times NN arrow.long NN $ tale che $ [x,y] = cantor(x,y) - 1. $
-  
+
   Questa funzione è anch'essa biiettiva, quindi i due insiemi sono isomorfi.
 ]
 
 Grazie a questi risultati si può dimostrare anche che $QQ tilde NN$, infatti i numeri razionali li possiamo rappresentare come coppie $("num", "den")$ e, in generale, tutte le tuple sono isomorfe a $NN$, basta iterare in qualche modo la funzione coppia di Cantor.
 
-== Dimostrazione $bold(dati tilde NN)$
+== Dimostrazione $dati tilde NN$
 
 È intuibile come i risultati ottenuti fino a questo punto ci permettono di dire che ogni dato è trasformabile in un numero, che può essere soggetto a trasformazioni e manipolazioni matematiche.
 
@@ -182,7 +181,7 @@ Possiamo anche pensare delle implementazioni di queste funzioni. Assumiamo che:
           break
       return numbers
     ```
-  ]
+  ],
 )
 
 #v(12pt)
@@ -209,49 +208,50 @@ e la sua implementazione:
       if t == 1:
         return sin(n)
       else:
-        return proj(t - 1, des(n))
+        return proj(t-1, des(n))
   ```
 ]
 
-Per gli *array* il discorso è più semplice, in quanto la dimensione è nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array ${x_1, dots, x_n}$ viene codificato con: $ [x_1, dots, x_n] = [x_1, dots [x_(n-1), x_n] dots ]. $
+Per gli *array* il discorso è più semplice, in quanto la dimensione è nota a priori. Di conseguenza, non necessitiamo di un carattere di fine sequenza. Dunque avremo che l'array ${x_1, dots, x_n}$ viene codificato con: $ {x_1, dots, x_n} = cantor(x_1, cantor(dots, cantor(x_(n-1), x_n)) dots ). $
 
 Per quanto riguarda *matrici* l'approccio utilizzato codifica singolarmente le righe e successivamente codifica i risultati ottenuti come se fossero un array di dimensione uguale al numero di righe.
 
 #set math.mat(delim: "[")
 
-Ad esempio, la matrice: $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) $ viene codificata in: $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) = [[x_11, x_12, x_13], [x_21, x_22, x_23], [x_31, x_32, x_33]]. $
+Ad esempio, la matrice: $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) $ viene codificata in: $ mat(x_11, x_12, x_13; x_21, x_22, x_23; x_31, x_32, x_33) = cantor(cantor(x_11, x_12, x_13), cantor(x_21, x_22, x_23), cantor(x_31, x_32, x_33)). $
 
 Consideriamo il seguente grafo.
 
 #v(12pt)
 
 #figure(
-  image("assets/grafo.svg", width: 25%)
+  image("assets/grafo.svg", width: 25%),
 )
 
 #v(12pt)
 
 I *grafi* sono rappresentati principalmente in due modi:
-- *liste di adiacenza dei vertici*: per ogni vertice si ha una lista che contiene gli identificatori dei vertici collegati direttamente con esso. Il grafo precedente ha $ {1:[2,3,4], 2:[1,3], 3:[1,2,4], 4:[1,3]} $ come lista di adiacenza, e la sua codifica si calcola come: $ [cantor(2,3,4),cantor(1,2),cantor(1,2,4),cantor(1,3)]. $ Questa soluzione esegue prima la codifica di ogni lista di adiacenza e poi la codifica dei risultati del passo precedente.
+- *liste di adiacenza dei vertici*: per ogni vertice si ha una lista che contiene gli identificatori dei vertici collegati direttamente con esso. Il grafo precedente ha $ {1:[2,3,4], 2:[1,3], 3:[1,2,4], 4:[1,3]} $ come lista di adiacenza, e la sua codifica si calcola come: $ cantor(cantor(2,3,4),cantor(1,3),cantor(1,2,4),cantor(1,3)). $ Questa soluzione esegue prima la codifica di ogni lista di adiacenza e poi la codifica dei risultati del passo precedente.
 - *matrice di adiacenza*: per ogni cella $m_(i j)$ della matrice $|V| times |V|$, dove $V$ è l'insieme dei vertici, si ha: $ m_(i,j) = cases(1 & quad "se esiste un arco dal vertice " i " al vertice " j, 0 & quad "altrimenti"). $
   Essendo questa una matrice, la andiamo a codificare come già descritto.
 
-== Applicazione alle strutture dati
+== Applicazione ai dati reali
 
-Una volta visto come codificare le principali strutture dati, è facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi:
-- Dato un *testo*, possiamo ottenere la sua codifica nel seguente modo:
-  + trasformiamo il testo in una lista di numeri tramite la codifica ASCII dei singoli caratteri;
-  + sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
+Una volta visto come codificare le principali strutture dati, è facile trovare delle vie per codificare qualsiasi tipo di dato in un numero. Vediamo alcuni esempi.
 
-  Per esempio: $ "ciao" = [99, 105, 97, 111] = cantor(99, cantor(105, cantor(97, cantor(111, 0)))). $
+Dato un *testo*, possiamo ottenere la sua codifica nel seguente modo:
++ trasformiamo il testo in una lista di numeri tramite la codifica ASCII dei singoli caratteri;
++ sfruttiamo l'idea dietro la codifica delle liste per codificare quanto ottenuto.
 
-  Potremmo chiederci:
-  - _Il codificatore proposto è un buon compressore?_ \ No, si vede facilmente che il numero ottenuto tramite la funzione coppia (o la sua concatenazione) sia generalmente molto grande, e che i bit necessari a rappresentarlo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un *pessimo modo per comprimere messaggi*.
-  - _Il codificatore proposto è un buon sistema crittografico?_ \ La natura stessa del processo garantisce la possibilità di trovare un modo per decifrare in modo analitico, di conseguenza chiunque potrebbe, in poco tempo, decifrare il mio messaggio. Inoltre, questo metodo è molto sensibile agli errori.
+Per esempio: $ "ciao" = [99, 105, 97, 111] = cantor(99, cantor(105, cantor(97, cantor(111, 0)))). $
 
-- Dato un *suono*, possiamo _campionare_ il suo segnale elettrico a intervalli di tempo regolari e codificare la sequenza dei valori campionati tramite liste o array.
+Potremmo chiederci:
+- _Il codificatore proposto è un buon compressore?_ \ No, si vede facilmente che il numero ottenuto tramite la funzione coppia (o la sua concatenazione) sia generalmente molto grande, e che i bit necessari a rappresentarlo crescano esponenzialmente sulla lunghezza dell'input. Ne segue che questo è un *pessimo modo per comprimere messaggi*.
+- _Il codificatore proposto è un buon sistema crittografico?_ \ La natura stessa del processo garantisce la possibilità di trovare un modo per decifrare in modo analitico, di conseguenza chiunque potrebbe, in poco tempo, decifrare il mio messaggio. Inoltre, questo metodo è molto sensibile agli errori.
 
-- Per codificare le *immagini* esistono diverse tecniche, ma la più usata è la *bitmap*: ogni pixel contiene la codifica numerica di un colore, quindi posso codificare separatamente ogni pixel e poi codificare i singoli risultati insieme tramite liste o array.
+Dato un *suono*, possiamo _campionare_ il suo segnale elettrico a intervalli di tempo regolari e codificare la sequenza dei valori campionati tramite liste o array.
+
+Per codificare le *immagini* esistono diverse tecniche, ma la più usata è la *bitmap*: ogni pixel contiene la codifica numerica di un colore, quindi posso codificare separatamente ogni pixel e poi codificare i singoli risultati insieme tramite liste o array.
 
 Abbiamo mostrato come i dati possano essere sostituiti da delle codifiche numeriche ad essi associate.\
 Di conseguenza, possiamo sostituire tutte le funzioni $f: dati arrow.long dati_bot$ con delle funzioni $f': NN arrow NN_bot$. In altre parole, l'universo dei problemi per i quali cerchiamo una soluzione automatica è rappresentabile dall'insieme $NN_bot^NN.$
