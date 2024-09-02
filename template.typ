@@ -33,3 +33,17 @@
 
     body
 }
+
+#let parte(it) = {
+    set page(
+        footer: {
+        set text(weight: "regular", size: 11pt)
+        counter(page).display()
+        }
+    )
+    //#set text(size: 28pt)
+    align(
+        center + horizon,
+        heading(numbering: none, level: 1, it)
+    )
+}

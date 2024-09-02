@@ -1,5 +1,5 @@
 // Titolo e indice
-#import "template.typ": project
+#import "template.typ": *
 
 #show: project.with(
   title: "Informatica teorica"
@@ -14,14 +14,9 @@
 
 
 // Teoria della calcolabilità
-#align(center + horizon)[
-  #set heading(numbering: none)
-  //#set text(size: 28pt)
-  = Teoria della calcolabilità
-]
+#parte("Teoria della calcolabilità")
 
 #pagebreak()
-
 
 // Capitoli di teoria della calcolabilità
 
@@ -63,11 +58,7 @@
 
 
 // Teoria della complessità
-#align(center + horizon)[
-  #set heading(numbering: none)
-  //#set text(size: 28pt)
-  = Teoria della complessità
-]
+#parte("Teorema della complessità")
 
 #pagebreak()
 
