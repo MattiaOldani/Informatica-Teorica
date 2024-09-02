@@ -18,6 +18,46 @@
 
     v(1.75em)
 
+    // tutte le #parte avranno la seguente formattazione
+    show figure.where(kind: "parte"): it => {
+        counter(heading).update(0)
+        set page(
+            footer: {
+            set text(weight: "regular", size: 11pt)
+            counter(page).display()
+            }
+        )
+        if it.numbering != none {
+            set text(size: 20pt)
+            align(center + horizon, 
+            strong(it.supplement + [ ] + it.counter.display(it.numbering)) + [ --- ] + strong(it.body)
+            )
+        }
+    }
+
+    // ridefinisco l'indice per la nuova indentazione
+    show outline.entry: it => {
+        if it.element.func() == figure {
+            // magie copiate da https://github.com/typst/typst/issues/2461
+            let res = link(it.element.location(), 
+                if it.element.numbering != none {
+                    it.element.supplement + [ ] 
+                    numbering(it.element.numbering, ..it.element.counter.at(it.element.location()))
+                } + [ --- ] + it.element.body
+            )
+            
+            // niente puntini
+            res += h(1fr)
+
+            res += link(it.element.location(), it.page)
+            v(2.3em, weak: true)
+            strong(text(size: 13pt, res))
+        } else {
+            // indentazione per livello
+            h(1em * it.level) + it
+        }
+    }
+
     show outline.entry.where(
         level: 1
     ): it => {
@@ -25,11 +65,24 @@
         strong(it)
     }
 
-    show link: underline
+    let chapters-and-headings = figure.where(kind: "parte", outlined: true).or(heading.where(outlined: true))
 
     pagebreak()
 
-    outline(indent: auto)
+    outline(indent: auto, target: chapters-and-headings)
+    
+    show link: underline
 
     body
 }
+
+// creo la figure "Parte", come fosse un teorema
+#let parte = figure.with(
+  kind: "parte",
+  numbering: none,
+  // quando si fanno riferimenti con @
+  supplement: "Parte",
+  caption: [],
+)
+
+#let parte = parte.with(numbering: "I")
