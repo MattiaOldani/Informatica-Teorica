@@ -30,8 +30,8 @@
 = Calcolabilità
 
 Seguiremo la seguente roadmap:
-+ *ELEM*: definiamo un insieme di tre funzioni che *qualunque* idea di calcolabile si voglia proporre deve considerare calcolabili. ELEM non può esaurire il concetto di calcolabilità, quindi lo espanderemo con altre funzioni;
-+ $bold(Omega)$: definiamo insieme di operazioni su funzioni che costruiscono nuove funzioni. Le operazioni in $Omega$ sono banalmente implementabili e, applicandole a funzioni calcolabili, riesco a generare nuove funzioni calcolabili.
++ *ELEM*: definiamo un insieme di tre funzioni che _qualunque_ idea di calcolabile si voglia proporre deve considerare calcolabili. ELEM non può esaurire il concetto di calcolabilità, quindi lo espanderemo con altre funzioni;
++ $bold(Omega)$: definiamo insieme di operazioni su funzioni che _costruiscono nuove funzioni_. Le operazioni in $Omega$ sono banalmente implementabili e, applicandole a funzioni calcolabili, riesco a generare nuove funzioni calcolabili.
 + $bold(elem^Omega = cal(P))$: definiamo la classe delle *funzioni ricorsive parziali*. Questa sarà la nostra idea astratta della classe delle funzioni calcolabili secondo Kleene.
 
 Quello che faremo dopo la definizione di $cal(P)$ sarà chiederci se questa idea di calcolabile che abbiamo _"catturato"_ coincida o meno con le funzioni presenti in $F(ram) = F(mwhile)$.
@@ -40,9 +40,7 @@ Quello che faremo dopo la definizione di $cal(P)$ sarà chiederci se questa idea
 
 Definiamo l'insieme ELEM con le seguenti funzioni: $ elem = {"successore" &: s(x) = x + 1 bar.v x in NN, \ "zero" &: 0^n (x_1, dots, x_n) = 0 bar.v x_i in NN, \ "proiettori" &: "pro"_k^n (x_1, dots, x_n) = x_k bar.v x_i in NN} quad . $
 
-Questo insieme è un _onesto punto di partenza_: sono funzioni basilari che qualsiasi idea data teoricamente non può non considerare come calcolabile.
-
-Ovviamente, ELEM non può essere considerato come l'idea teorica di _TUTTO_ ciò che è calcolabile: infatti, la funzione $f(x) = x + 2$ non appartiene a ELEM ma è sicuramente calcolabile.
+Questo insieme è un _onesto punto di partenza_: sono funzioni basilari che qualsiasi idea data teoricamente non può non considerare come calcolabile. Ovviamente, ELEM non può essere considerato come l'idea teorica di _TUTTO_ ciò che è calcolabile: infatti, la funzione $f(x) = x + 2$ non appartiene a ELEM ma è sicuramente calcolabile.
 
 Quindi, ELEM è troppo povero e deve essere ampliato.
 
@@ -52,9 +50,7 @@ Definiamo ora un insieme $Omega$ di operazioni che amplino le funzioni di ELEM p
 
 === Composizione
 
-Il primo operatore che ci viene in mente di utilizzare è quello di *composizione*.
-
- Siano:
+Il primo operatore che ci viene in mente di utilizzare è quello di *composizione*. Siano:
 - $h : NN^k arrow.long NN$ *funzione di composizione*,
 - $g_1, dots, g_k : NN^n arrow.long NN$ _"funzioni intermedie"_ e
 - $wstato(x) in NN^n$ input.
@@ -71,13 +67,11 @@ Allora definiamo $ comp(h, g_1, dots, g_k) : NN^n arrow.long NN $ la funzione ta
 
 COMP è una funzione _intuitivamente calcolabile_ se parto da funzioni calcolabili: infatti, prima eseguo le singole funzioni $g_1, dots, g_k$ e poi applico la funzione $h$ sui risultati delle funzioni $g_i$.
 
-Calcoliamo ora la chiusura di ELEM rispetto a COMP, ovvero l'insieme $elem^comp$.
+Calcoliamo ora la *chiusura* di ELEM rispetto a COMP, ovvero l'insieme $elem^comp$.
 
 Vediamo subito come la funzione $f(x) = x + 2$ appartenga a questo insieme perché $ comp(s,s)(x) = s(s(x)) = (x+1)+1 = x + 2. $
 
-_Che altre funzioni ci sono in questo insieme?_ Sicuramente tutte le funzioni lineari del tipo $f(x) = x + k$, _ma la somma?_
-
-La funzione $ "somma"(x,y) = x + y $ non appartiene a questo insieme perché il valore $y$ non è prefissato e non abbiamo ancora definito il concetto di iterazione di una funzione (in questo caso la funzione successore).
+_Che altre funzioni ci sono in questo insieme?_ Sicuramente tutte le funzioni lineari del tipo $f(x) = x + k$, _ma la somma?_ La funzione $ "somma"(x,y) = x + y $ non appartiene a questo insieme perché il valore $y$ non è prefissato e non abbiamo ancora definito il concetto di iterazione di una funzione (in questo caso, la funzione successore).
 
 Dobbiamo ampliare ancora $elem^comp$ con altre operazioni.
 
@@ -87,12 +81,12 @@ Definiamo un'operazione che ci permetta di *iterare* sull'operatore di composizi
 
 Siano:
 - $g: NN^n arrow.long NN$ *funzione caso base*,
-- $h: NN^(n+2) arrow.long NN$ *funzione passo ricorsivo*
+- $h: NN^(n+2) arrow.long NN$ *funzione passo ricorsivo* e
 - $wstato(x) in NN^n$ input.
 
 Definiamo $ rp(h,g) = f(wstato(x),y) = cases(g(wstato(x)) & "se" y = 0, h(f(wstato(x),y-1), y-1, wstato(x)) quad & "se" y > 0) quad $ funzione che generalizza la definizione ricorsiva di funzioni.
 
-Come prima, chiudiamo $elem^comp$ rispetto a RP, ovvero calcoliamo l'insieme $elem^({comp,rp})$. Chiamiamo $ ricprim = elem^({comp, rp}) $ l'insieme ottenuto dalla chiusura, cioè l'insieme delle *funzioni ricorsive primitive*.
+Come prima, *chiudiamo* $elem^comp$ rispetto a RP, ovvero calcoliamo l'insieme $elem^({comp,rp})$. Chiamiamo $ ricprim = elem^({comp, rp}) $ l'insieme ottenuto dalla chiusura, cioè l'insieme delle *funzioni ricorsive primitive*.
 
 In questo insieme abbiamo la somma: infatti, $ "somma"(x,y) = cases(x = "Pro"^2_1 (x,y) & "se" y = 0, s("somma"(x,y-1)) quad & "se" y > 0) quad . $
 
@@ -142,9 +136,8 @@ Vediamo come è definita RICPRIM:
 
   Quindi abbiamo $Psi_w (wstato(x)) = comp(h,g_1, dots, g_k)(wstato(x))$.
 
-  Per RP, assumiamo che $h, g in ricprim$ siano while programmabili, allora esistono $H,G in wprogrammi$ tali che $Psi_H = h$ e $Psi_G = g$. Le funzioni ricorsive primitive le possiamo vedere come delle iterazioni che, partendo dal caso base $G$, mano a mano compongono con $H$ fino a quando non si raggiunge $y$ (escluso). Mostriamo un programma WHILE che calcola $ rp(h,g) = f(wstato(x),y) = cases(g(wstato(x) & "se " y=0 \ h(f(wstato(x), y-1), y-1), wstato(x)) & "se " y>0) $
+  Per RP, assumiamo che $h, g in ricprim$ siano while programmabili, allora esistono $H,G in wprogrammi$ tali che $Psi_H = h$ e $Psi_G = g$. Le funzioni ricorsive primitive le possiamo vedere come delle iterazioni che, partendo dal caso base $G$, mano a mano compongono con $H$ fino a quando non si raggiunge $y$ (escluso). Mostriamo un programma WHILE che calcola $ rp(h,g) = f(wstato(x),y) = cases(g(wstato(x)) & "se" y=0 \ h(f(wstato(x), y-1), y-1, wstato(x)) quad & "se" y>0) quad . $
 
-  // La x va sottolineata
   #code(
     fill: luma(240),
     indent-guides: 0.2pt + red,
@@ -173,13 +166,9 @@ Vediamo come è definita RICPRIM:
 
 Abbiamo quindi dimostrato che $ricprim subset.eq F(mwhile)$, _ma questa inclusione è propria?_
 
-Notiamo subito che nel linguaggio WHILE posso fare dei cicli infiniti, mentre in RICPRIM no: RICPRIM contiene solo funzioni totali (si dimostra per induzione strutturale) mentre WHILE contiene anche delle funzioni parziali.
+Notiamo subito che nel linguaggio WHILE posso fare dei cicli infiniti, mentre in RICPRIM no: RICPRIM contiene solo funzioni totali (_si dimostra per induzione strutturale_) mentre WHILE contiene anche delle funzioni parziali. Di conseguenza $ ricprim subset.neq F(mwhile). $
 
-Di conseguenza $ ricprim subset.neq F(mwhile). $
-
-Per poter raggiungere $F(mwhile)$ dovremo ampliare nuovamente RICPRIM.
-
-Visto che le funzioni in RICPRIM sono tutte totali, possiamo dire che ogni ciclo in RICPRIM ha un inizio e una fine ben definiti: il costrutto utilizzato per dimostrare che $rp in F(mwhile)$ nella dimostrazione precedente, ci permette di definire un nuovo tipo di ciclo, il *ciclo FOR*.
+Per poter raggiungere $F(mwhile)$ dovremo ampliare nuovamente RICPRIM. Visto che le funzioni in RICPRIM sono tutte totali, possiamo dire che ogni ciclo in RICPRIM ha un inizio e una fine ben definiti: il costrutto utilizzato per dimostrare che $rp in F(mwhile)$ nella dimostrazione precedente, ci permette di definire un nuovo tipo di ciclo, il *ciclo FOR*.
 
 #code(
   fill: luma(240),
@@ -202,19 +191,13 @@ Visto che le funzioni in RICPRIM sono tutte totali, possiamo dire che ogni ciclo
 
 Il FOR che viene utilizzato è quello _originale_, cioè quel costrutto che si serve di una *variabile di controllo* che parte da un preciso valore e arriva ad un valore limite, senza che la variabile di controllo venga toccata. In Pascal veniva implementato mettendo la variabile di controllo in un registro particolare, per non permettere la sua scrittura.
 
-Il FOR language è quindi un linguaggio WHILE dove l'istruzione di loop è un FOR.
-
-Possiamo quindi dire che $lfor = ricprim$, e quindi che $F(lfor) subset F(mwhile)$.
+Il FOR language è quindi un linguaggio WHILE dove l'istruzione di loop è un FOR. Possiamo quindi dire che $lfor = ricprim$, e quindi che $F(lfor) subset F(mwhile)$.
 
 Dato che WHILE vince su RICPRIM solo per i loop infiniti, restringiamo WHILE imponendo dei loop finiti. Creiamo l'insieme $ overset(F,tilde)(mwhile) = {Psi_W : W in wprogrammi and Psi_W "totale"}. $
 
 _Dove si posizione questo insieme rispetto a RICPRIM? L'inclusione è propria?_
 
-Anche in questo caso, "vince" ancora WHILE, perché ci sono funzioni in $overset(F,tilde)(mwhile)$ che non sono scrivibili come funzioni in RICPRIM. Ad esempio, la funzione di Ackermann (1928), definita come $ cal(A)(m,n) = cases(n+1 & "se" m = 0, cal(A)(m-1, 1) & "se" m > 0 and n = 0, cal(A)(m-1, cal(A)(m, n-1)) quad & "se" m > 0 and n > 0) $ è una funzione che non appartiene a RICPRIM, perché a causa della doppia ricorsione cresce troppo in fretta.
-
-Di conseguenza, vogliamo ampliare anche RICPRIM.
-
-Vogliamo una definizione di calcolabilità che non coinvolga i linguaggi, in modo da renderla il più generale possibile.
+Anche in questo caso, "vince" ancora WHILE, perché ci sono funzioni in $overset(F,tilde)(mwhile)$ che non sono scrivibili come funzioni in RICPRIM. Ad esempio, la funzione di Ackermann (1928), definita come $ cal(A)(m,n) = cases(n+1 & "se" m = 0, cal(A)(m-1, 1) & "se" m > 0 and n = 0, cal(A)(m-1, cal(A)(m, n-1)) quad & "se" m > 0 and n > 0) $ è una funzione che non appartiene a RICPRIM, perché a causa della doppia ricorsione cresce troppo in fretta. Di conseguenza, vogliamo ampliare anche RICPRIM.
 
 #v(12pt)
 
@@ -224,21 +207,16 @@ Vogliamo una definizione di calcolabilità che non coinvolga i linguaggi, in mod
 
 #v(12pt)
 
-Siamo nella direzione giusta: non abbiamo catturato _"cose strane"_ che non avrei catturato in $F(ram)$, ma questo non basta. Infatti, dobbiamo ampliare ancora RICPRIM perché non abbiamo ancora catturato le funzioni parziali.
+Siamo nella direzione giusta: non abbiamo catturato _"cose strane"_ che non avrei catturato in $F(ram)$, ma questo non basta: non abbiamo ancora catturato le funzioni parziali.
 
 === Minimalizzazione
 
-Introduciamo quindi un nuovo operatore per permettere la presenza di funzioni parziali.
-
-L'operatore scelto è l'operatore di *minimalizzazione* di funzione.
-
-Sia $f: NN^(n+1) arrow.long NN$ con $f(wstato(x), y)$ e $wstato(x) in NN^n$, allora: $ min(f)(wstato(x)) = g(wstato(x)) = cases(y & "se" f(wstato(x), y) = 0 and (forall y' < y quad f(wstato(x),y') arrow.b and f(wstato(x),y') eq.not 0), bot quad & "altrimenti") quad . $ 
+Introduciamo quindi un ultimo operatore per permettere la presenza di funzioni parziali. L'operatore scelto è l'operatore di *minimalizzazione* di funzione. Sia $f: NN^(n+1) arrow.long NN$ con $f(wstato(x), y)$ e $wstato(x) in NN^n$, allora: $ min(f)(wstato(x)) = g(wstato(x)) = cases(y & "se" f(wstato(x), y) = 0 and (forall y' < y quad f(wstato(x),y') arrow.b and f(wstato(x),y') eq.not 0), bot quad & "altrimenti") quad . $ 
 
 Un'altra definizione di MIN è $ mu_y (f(wstato(x),y)=0). $
 
-Più informalmente, questa funzione restituisce il più piccolo valore di $y$ che azzera $f(underline(x), y)$ ovunque precedentemente definita su $y'$.
+Più informalmente, questa funzione restituisce il più piccolo valore di $y$ che azzera $f(underline(x), y)$, ovunque precedentemente definita su $y'$.
 
-// Li teniamo?
 Vediamo alcuni esempi con $f: NN^2 arrow NN$.
 
 #align(center)[
@@ -262,7 +240,7 @@ Vediamo alcuni esempi con $f: NN^2 arrow NN$.
 Ampliamo RICPRIM chiudendolo con la nuova operazione MIN:
 $ elem^({comp,rp,min}) = cal(P) = {"Funzioni Ricorsive Parziali"}. $
 
-Espandi un poco.
+Abbiamo ottenuto la classe delle *funzioni ricorsive parziali*. Vediamo qualche confronto con le classi che abbiamo già definito in precedenza.
 
 === $cal(P)$ vs WHILE
 
@@ -360,8 +338,8 @@ Abbiamo ottenuto che la classe delle funzioni ricorsive parziali, che dà un'ide
 === Tesi di Church-Turing
 
 Il risultato principale di questo studio è aver trovato due classi di funzioni molto importanti:
-- $cal(P)$ insieme delle funzioni ricorsive parziali;
-- $cal(T)$ insieme delle funzioni ricorsive totali.
+- $cal(P)$ insieme delle *funzioni ricorsive parziali*;
+- $cal(T)$ insieme delle *funzioni ricorsive totali*.
 
 Il secondo insieme presentato contiene tutte le funzioni di $cal(P)$ che sono totali, ma allora $ cal(T) subset cal(P). $ Inoltre vale $ ricprim subset cal(T) $ perché, ad esempio, la funzione di Ackermann $cal(A)(m,n)$ non sta in RICPRIM (già dimostrato) ma è sicuramente calcolabile e totale.
 
@@ -369,7 +347,6 @@ L'insieme $cal(P)$ cattura tutti i sistemi di calcolo esistenti: WHILE, RAM, Mac
 
 Infatti, dal 1930 in poi sono stati proposti un sacco di modelli di calcolo che volevano catturare ciò che è calcolabile, ma tutti questi modelli individuavano sempre la classe delle funzioni ricorsive parziali. Visti questi risultati, negli anni 1930/1940 *Church* e *Turing* decidono di enunciare un risultato molto importante.
 
-// Sistemare lo stile
 #rect(
   stroke: red
 )[
