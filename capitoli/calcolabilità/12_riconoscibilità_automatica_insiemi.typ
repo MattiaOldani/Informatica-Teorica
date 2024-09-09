@@ -57,8 +57,8 @@ Equivalentemente, ricordando che la funzione caratteristica di $A subset.eq NN$ 
 Che $chi_A$ sia totale è banale, perché tutte le funzioni caratteristiche devono essere definite su tutto $NN$. Il problema risiede nella calcolabilità di queste funzioni.
 
 Le due definizioni date sono equivalenti:
-- il programma $P_A$ implementa $chi_A arrow.double chi_A in cal(T)$ perché esiste un programma che la calcola;
-- $chi_A in cal(T) arrow.double$ esiste un programma $P_A$ che la implementa e che soddisfa la definizione data sopra.
+- il programma $P_A$ implementa $chi_A$, quindi $chi_A in cal(T)$ perché esiste un programma che la calcola;
+- $chi_A in cal(T)$ quindi esiste un programma $P_A$ che la implementa e che soddisfa la definizione data sopra.
 
 === Ricorsivo vs Decidibile
 
@@ -70,8 +70,7 @@ Spesso, si dice che _un insieme ricorsivo è un insieme decidibile_, ma è solo 
 
 La sua funzione soluzione $ Phi_("RIC"_A) : NN arrow.long {0,1} $ è tale che $ Phi_("RIC"_A) (x) = cases(1 & "se" x in A, 0 quad & "se" x in.not A) quad . $
 
-Notiamo che la semantica del problema è proprio la funzione caratteristica $arrow.double Phi_("RIC"_A) = chi_A$.
-Quindi, se $A$ è ricorsivo, allora la sua funzione caratteristica è ricorsiva totale, ma lo sarà anche la funzione soluzione $Phi$ e, di conseguenza, $"RIC"_A$ è decidibile. In altre parole $ Phi_("RIC"_A) = chi_A in cal(T) arrow.double Phi_("RIC"_A) in cal(T) arrow.double "RIC"_A "è decidibile". $
+Notiamo che la semantica del problema è proprio la funzione caratteristica, quindi $Phi_("RIC"_A) = chi_A$. Se $A$ è ricorsivo, allora la sua funzione caratteristica è ricorsiva totale, ma lo sarà anche la funzione soluzione $Phi$ e, di conseguenza, $"RIC"_A$ è decidibile.
 
 === Decidibile vs Ricorsivo
 
@@ -81,15 +80,11 @@ Dato il problema
 - Nome: $Pi$.
 - Istanza: $x in D$.
 - Domanda: $p(x)$?
-definiamo $ A_Pi = {x in D bar.v Phi_Pi (x) = 1} "con" Phi_Pi (x) = 1 equiv p(x) $ insieme delle istanze a risposta positiva di $Pi$.
-
-Notiamo che, se $Pi$ è decidibile allora $Phi_Pi in cal(T)$, quindi esiste un programma che calcola questa funzione. La funzione in questione è quella che riconosce automaticamente l'insieme $A_Pi$, quindi $A_Pi$ è ricorsivo.
+definiamo $ A_Pi = {x in D bar.v Phi_Pi (x) = 1} "con" Phi_Pi (x) = 1 equiv p(x) $ insieme delle istanze a risposta positiva di $Pi$. Notiamo che, se $Pi$ è decidibile allora $Phi_Pi in cal(T)$, quindi esiste un programma che calcola questa funzione. La funzione in questione è quella che riconosce automaticamente l'insieme $A_Pi$, quindi $A_Pi$ è ricorsivo.
 
 == Insiemi non ricorsivi
 
-Per trovare degli insiemi non ricorsivi cerco nei problemi di decisione non decidibili.
-
-L'unico problema di decisione non decidibile che abbiamo visto è il *problema dell'arresto ristretto* $arresto(ristretto)$.
+Per trovare degli insiemi non ricorsivi cerco nei problemi di decisione non decidibili. L'unico problema di decisione non decidibile che abbiamo visto è il *problema dell'arresto ristretto* $arresto(ristretto)$.
 
 - Nome: $arresto(ristretto)$.
 - Istanza: $x in NN$.
@@ -105,9 +100,7 @@ $R subset.eq NN times NN$ è una *relazione ricorsiva* se e solo se l'insieme $R
 
 Un'importante relazione ricorsiva è la relazione $ R_P = {(x,y) in NN^2 bar.v P "su input" x "termina in" y "passi"} . $
 
-È molto simile al problema dell'arresto, ma non chiedo se $P$ termina in generale, chiedo se termina in $y$ passi.
-
-Questa relazione è ricorsiva e per dimostrarlo costruiamo un programma che classifica $R_P$ usando:
+È molto simile al problema dell'arresto, ma non chiedo se $P$ termina in generale, chiedo se termina in $y$ passi. Questa relazione è ricorsiva e per dimostrarlo costruiamo un programma che classifica $R_P$ usando:
 - $U$ interprete universale;
 - *clock* per contare i passi di interpretazione;
 - *check del clock* per controllare l'arrivo alla quota $y$.
@@ -130,11 +123,9 @@ Un insieme $A subset.eq NN$ è *ricorsivamente numerabile* se è *automaticament
 
 Il programma che lista gli elementi di $A$ è: $ P equiv & i := 0; \ & "while" (1 > 0) space { \ & quad "output"(F(i)) \ & quad i := i + 1; \ & } $
 
-Per alcuni insiemi non è possibile ricoscere tutti gli elementi che gli appartengono, ma può essere che si conosca un modo per elencarli. Alcuni insiemi invece non hanno nemmeno questa proprietà.
+Per alcuni insiemi non è possibile riconoscere tutti gli elementi che gli appartengono, ma può essere che si conosca un modo per elencarli. Alcuni insiemi invece non hanno nemmeno questa proprietà.
 
-Se il meglio che posso fare per avere l'insieme A è listarlo con P, _come posso scrivere un algoritmo che "tenta di riconoscere" A?_
-
-Questo algoritmo deve listare tutti gli elementi senza un clock di timeout: se inserissi un clock avrei un insieme ricorsivo per la relazione $R_P$ mostrata in precedenza.
+Se il meglio che posso fare per avere l'insieme A è listarlo con P, _come posso scrivere un algoritmo che "tenta di riconoscere" A?_ Questo algoritmo deve listare tutti gli elementi senza un clock di timeout: se inserissi un clock avrei un insieme ricorsivo per la relazione $R_P$ mostrata in precedenza.
 
 Vediamo il programma di *massimo riconoscimento*: $ P equiv & "input"(x) \ & i := 0; \ & "while" (F(i) eq.not x) \ & quad i := i + 1; \ & "output"(1) quad . $
 
@@ -148,7 +139,7 @@ Se avessi indicazioni sulla monotonia della routine $F$ allora avrei sicuramente
 
 L'insieme $A subset.eq NN$ è *ricorsivamente numerabile* se e solo se:
 - $A = emptyset.rev$ oppure
-- $A = immagine(f)$, con $f : NN arrow.long NN in cal(T) quad (A = {f(0), f(1), f(2), dots})$.
+- $A = immagine(f)$, con $f : NN arrow.long NN in cal(T)$, ovvero $A = {f(0), f(1), f(2), dots}$.
 
 Visto che $f$ è ricorsiva totale esiste un/a programma/routine $F$ che la implementa e che usiamo per il parziale riconoscimento di $A$: questo programma, se $x in A$, prima o poi mi restituisce 1, altrimenti entra in loop.
 
@@ -231,7 +222,7 @@ Di conseguenza $ phi_P (x) = cases(1 & "se" phi_U (x,x) = phi_x (x) arrow.b, bot
 
 Dato che $A = dominio(phi_P in cal(P))$ posso applicare la seconda caratterizzazione data nella lezione precedente per dimostrare che l'insieme $A$ è un insieme ricorsivamente numerabile.
 
-Alternativamente, possiamo dire che $ A = {x in NN bar.v phi_x (x) arrow.b} = {x in NN bar.v exists y in NN bar,v (x,y) in R_ristretto}, $ con $ R_ristretto = {(x,y) bar.v ristretto "su input" x "termina entro" y "passi"} $ relazione ricorsiva. Qui possiamo sfruttare la terza caratterizzazione degli insiemi ricorsivamente numerabili.
+Alternativamente, possiamo dire che $ A = {x in NN bar.v phi_x (x) arrow.b} = {x in NN bar.v exists y in NN bar.v (x,y) in R_ristretto}, $ con $ R_ristretto = {(x,y) bar.v ristretto "su input" x "termina entro" y "passi"} $ relazione ricorsiva. Qui possiamo sfruttare la terza caratterizzazione degli insiemi ricorsivamente numerabili.
 
 Come sono messi i due insiemi?
 
@@ -266,9 +257,8 @@ Cerchiamo di sfruttare l'operazione di complemento di insiemi sui ricorsivamente
 #proof[
   \ Siano $A,B$ due insiemi ricorsivi. Allora esistono dei programmi $P_A, P_B$ che li riconoscono o, equivalentemente, esistono $chi_A, chi_B in cal(T)$.
 
-  È facile dimostrare che le operazioni di unione, intersezione e complemento sono facilmente implementabili da programmi che terminano sempre. Di conseguenza, $ A union B, A sect B, A^C $ sono ricorsive .
+  È facile dimostrare che le operazioni di unione, intersezione e complemento sono facilmente implementabili da programmi che terminano sempre. Di conseguenza, $ A union B, A sect B, A^C $ sono ricorsive.
 
-  // Da sistemare
   Vediamo questi tre programmi:
   - *complemento* $ P_(A^C) equiv & "input"(x) \ & "output"(1 overset(-, .) P_A (x)) . $
   - *intersezione* $ P_(A sect B) equiv & "input"(x) \ & "output"(min(P_A (x), P_B (x))) . $
@@ -305,7 +295,7 @@ _L'insieme $A^C$ Potrebbe essere ricorsivamente numerabile?_
 #proof[\
   \ *INFORMALE*
 
-  Essendo $A, A^C$ ricorsivamente numerabili, esistono due libri con infinite pagine su ognuna delle quali compare un elemento di $A$ (primo libro) e un elemento di $A^C$ (secondo libro).
+  Essendo $A$ e $A^C$ ricorsivamente numerabili, esistono due libri con infinite pagine su ognuna delle quali compare un elemento di $A$ (_primo libro_) e un elemento di $A^C$ (_secondo libro_).
 
   Per decidere l'appartenenza di $x$ ad $A$, possiamo utilizzare il seguente procedimento:
   + $"input"(x)$;
@@ -320,8 +310,7 @@ _L'insieme $A^C$ Potrebbe essere ricorsivamente numerabile?_
 
   *FORMALE*
 
-  // da aggiungere commenti
-  Essendo $A, A^C$ ricorsivamente numerabili, esistono $f,g in cal(T)$ tali che $A = immagine(f) and A^C = immagine(g)$. Sia $f$ implementata dal programma $F$ e $g$ dal programma $G$. Il seguente programma riconosce $A$: $ P equiv & "input"(x) \ & i:= 0; \ & "while"("true") \ & quad quad "if" (F(i)=x) "output"(1); \ & quad quad "if" (G(i)=x) "output"(0); \ & quad quad i := i + 1; $
+  Essendo $A$ e $A^C$ ricorsivamente numerabili, esistono $f,g in cal(T)$ tali che $A = immagine(f) and A^C = immagine(g)$. Sia $f$ implementata dal programma $F$ e $g$ dal programma $G$. Il seguente programma riconosce $A$: $ P equiv & "input"(x) \ & i:= 0; \ & "while"("true") \ & quad quad "if" (F(i)=x) "output"(1); \ & quad quad "if" (G(i)=x) "output"(0); \ & quad quad i := i + 1; $
 
   Questo algoritmo termina per ogni input, in quanto $x in A$ o $x in A^C$. Possiamo concludere che l'insieme $A$ è ricorsivo.
 ]
@@ -400,9 +389,7 @@ Il *teorema di Rice* è un potente strumento per mostrare che gli insiemi appart
 
 Sia ${phi_i}$ un SPA. Un insieme (_di programmi_) $I subset.eq NN$ è un *insieme che rispetta le funzioni* se e solo se $ (a in I and phi_a = phi_b) arrow.long.double b in I . $
 
-In sostanza, $I$ rispetta le funzioni se e solo se, data una funzione calcolata da un programma in $I$, allora $I$ contiene tutti i programmi che calcolano quella funzione.
-
-Questi insiemi sono detti anche *chiusi per semantica*.
+In sostanza, $I$ rispetta le funzioni se e solo se, data una funzione calcolata da un programma in $I$, allora $I$ contiene tutti i programmi che calcolano quella funzione. Questi insiemi sono detti anche *chiusi per semantica*.
 
 Per esempio, l'insieme $I = {x in NN bar.v phi_x (3) = 5}$ rispetta le funzioni. Infatti, $ underbracket(a in I, phi_a (3) = 5) and underbracket(phi_a = phi_b, phi_b (3) = 5) arrow.double b in I . $
 
