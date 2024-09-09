@@ -64,3 +64,35 @@
 
 
 // Capitoli di teoria della complessità
+
+#include "capitoli/complessità/13_richiami_matematici.typ"
+#pagebreak()
+
+#include "capitoli/complessità/14_dtm.typ"
+#pagebreak()
+
+#include "capitoli/complessità/15_utilizzare_le_dtm.typ"
+#pagebreak()
+
+#include "capitoli/complessità/16_richiami_matematici.typ"
+#pagebreak()
+
+#include "capitoli/complessità/17_risorsa_tempo.typ"
+#pagebreak()
+
+#include "capitoli/complessità/18_risorsa_spazio.typ"
+#pagebreak()
+
+#include "capitoli/complessità/19_tempo_vs_spazio.typ"
+#pagebreak()
+
+#include "capitoli/complessità/20_zona_grigia.typ"
+#pagebreak()
+
+#include "capitoli/complessità/21_ndtm.typ"
+#pagebreak()
+
+#include "capitoli/complessità/22_p_vs_np.typ"
+#pagebreak()
+
+#include "capitoli/complessità/23_situazione_finale.typ"

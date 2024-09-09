@@ -1,36 +1,5 @@
-// Setup
-
+#import "../alias.typ": *
 #import "@preview/algo:0.3.3": algo, i, d
-
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#import "alias.typ": *
-
-// Appunti
-
-= Lezione 21
 
 == Spazio di memoria
 
@@ -40,7 +9,7 @@ Veniamo ora alla formalizzazione dell'altra importante risorsa di calcolo, ovver
 
 Data la DTM $M = (Q, Sigma, Gamma, delta, q_0, F)$ ed una stringa $x in Sigma^*$, chiamiamo $S(x)$ il numero di celle del nastro occupate (visitate, _sporcate_) durante la computazione di $M$ su $x$. Questo numero potrebbe anche essere _infinito_.
 
-La *complessità in spazio* di $M$ (worst case) è la funzione $s : NN arrow.long NN$ definita come $ s(n) = max{S(x) bar.v x in Sigma^* and |x| = n}. $
+La *complessità in spazio* di $M$ (_worst case_) è la funzione $s : NN arrow.long NN$ definita come $ s(n) = max{S(x) bar.v x in Sigma^* and |x| = n}. $
 
 Da questa definizione è chiaro che, in ogni MDT, $s(n) gt.eq n$ in quanto dovrò sempre occupare almeno spazio $n$ lineare per mantenere l'input sul nastro, ma è molto probabile che le celle effettive che _sporco_ sono molte meno delle celle occupate dall'input.
 
@@ -53,7 +22,7 @@ Per avere complessità anche sublineari, potremmo modificare leggermente la macc
 #v(12pt)
 
 #figure(
-    image("../assets/dtm-doppio-nastro.svg", width: 65%)
+  image("assets/dtm-doppio-nastro.svg", width: 65%)
 )
 
 #v(12pt)
@@ -232,32 +201,3 @@ Vediamo alcuni esempi di problemi risolti efficientemente in spazio:
 // gigi: aggiungere esempi di questo tipo anche per il tempo
 
 Se un problema è in L o FL è anche efficientemente *parallelizzabile*. Al momento non esistono compilatori perfettamente parallelizzabili.
-
-== Tempo vs spazio
-
-Spesso promuovere l'ottimizzazione di una risorsa va a discapito dell'altra: _essere veloci_ vuol dire (tipicamente) _spendere tanto spazio_ e _occupare poco spazio_ vuol dire (tipicamente) _spendere tanto tempo_.
-
-Viene naturale porsi due domande:
-- _i limiti in tempo implicano dei limiti in spazio?_
-- _i limiti in spazio implicano dei limiti in tempo?_
-
-Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
-
-#theorem(numbering: none)[
-  Tutti i linguaggi accettati in tempo $f(n)$, sono anche accettati in spazio $f(n)$. Formalmente:
-  $ dtime(f(n)) subset.eq dspace(f(n)). $
-]
-
-#proof[
-  \ Se $L in dtime(f(n))$ allora esiste una DTM $M$ che riconosce $L$ in tempo $t(n) = O(f(n))$, quindi su input $x$ di lunghezza $n$ la macchina $M$ compie $O(f(n))$ passi.
-  
-  In tale computazione, _quante celle del nastro di lavoro posso occupare al massimo?_\
-  Ovviamente $O(f(n))$ (una cella ad ogni passo). Quindi, $M$ ha complessità in spazio $s(n) = O(f(n))$, ma allora $L in dspace(f(n))$.
-]
-
-#theorem(numbering: none)[
-  Tutte le funzioni accettate in tempo $f(n)$, sono anche accettate in spazio $f(n)$. Formalmente:
-  $ ftime(f(n)) subset.eq fspace(f(n)). $
-]
-
-Notiamo come l'efficienza in tempo non porta immediatamente all'efficienza in spazio.

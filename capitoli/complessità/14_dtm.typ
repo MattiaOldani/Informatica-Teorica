@@ -1,80 +1,8 @@
-// Setup
+#import "../alias.typ": *
 
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#import "alias.typ": *
+#import "@preview/algo:0.3.3": algo, i, d, code
 
 // Appunti
-
-= Lezione 18
-
-== Teoria della complessità
-
-=== Complessità vs calcolabilità
-
-Dato un problema $P$, finora ci siamo chiesti _"*esiste* un programma per la sua soluzione automatica?"_\
-Tramite questa domanda abbiamo potuto indagare la *teoria della calcolabilità*, il cui oggetto di studio è l'esistenza (o meno) di un programma per un dato problema.
-
-In questa parte del corso, studieremo la *teoria della complessità*, in cui entra in gioco una seconda investigazione: _"*come* funzionano i programmi per P?"_\
-Per rispondere a questa domanda, vogliamo sapere quante *risorse computazionali* utilizziamo durante la sua esecuzione.
-
-Definiamo _risorse computazionali_ qualsiasi risorsa venga utilizzata durante il processo di calcolo, ad esempio:
-- elettricità;
-- numero di processori in un sistema parallelo;
-- numero di entanglement in un sistema quantistico.
-
-Le risorse principali che consideriamo per un sistema di calcolo mono-processore sono  *tempo* e *spazio di memoria*.
-
-=== Domande Teoria della Complessità
-
-Vediamo alcune domande a cui la teoria della complessità cerca di rispondere:
-- dato un programma per il problema $P$, quanto tempo impiega il programma nella sua soluzione? Quanto spazio di memoria occupa?
-- dato un problema $P$, qual è il minimo tempo impiegato dai programmi per $P$? Quanto spazio in memoria al minimo posso occupare per programmi per $P$?
-- in che senso possiamo dire che un programma è *efficiente* in termini di tempo e/o spazio?
-- quali problemi possono essere efficientemente risolti per via automatica? $arrow$ _versione quantitativa_ della tesi di Church-Turing.
-
-=== Risorse computazionali
-
-Il punto di partenza dello studio della teoria della complessità è la definizione rigorosa delle risorse di calcolo e di come possono essere misurate.
-
-Il modello di calcolo che useremo nel nostro studio è la *Macchina di Turing*, ideata da Alan Turing nel 1936.\
-Essa è un modello *teorico* di calcolatore che consente di definire rigorosamente:
-- i passi di computazione e la computazione stessa;
-- tempo e spazio di calcolo dei programmi;
-
-Di conseguenza, ci fornisce strumenti matematici per:
-- misurare tempo e spazio di calcolo;
-- definire il concetto di _efficiente in tempo e/o spazio_;
-- caratterizzare i problemi che hanno soluzione automatica efficiente, quindi vedere quali problemi aderiscono alla *tesi di Church-Turing ristretta*.
-
-== Richiami di teoria dei linguaggi formali
-
-Prima di iniziare il nostro studio, richiamiamo alcuni concetti della teoria dei linguaggi formali.
-
-Un *alfabeto* è un insieme finito di simboli $Sigma = {sigma_1, dots, sigma_k}$. Un alfabeto binario è un qualsiasi alfabeto composto da due soli simboli.
-
-Una *stringa* su $Sigma$ è una sequenza di simboli di $Sigma$ nella forma $x = x_1 space dots space x_n$, con $x_i in Sigma$.\
-La *lunghezza* di una stringa $x$ indica il numero di simboli che la costituiscono e si indica con $|x|$.\
-Una stringa particolare è la *stringa nulla*, che si indica con $epsilon$ ed è tale che $|epsilon| = 0$.
-
-Indichiamo con $Sigma^*$ l'insieme delle stringhe che si possono costruire sull'alfabeto $Sigma$, compresa la stringa nulla. L'insieme delle stringhe formate da almeno un carattere è definito da $Sigma^+ = Sigma^* \/ {epsilon}$.
-
-Un *linguaggio* $L$ su un alfabeto $Sigma$ è un sottoinsieme $L subset.eq Sigma^*$, che può essere finito o infinito.
 
 == Macchina di Turing determinista (DTM)
 
@@ -187,47 +115,36 @@ Infine, nelle *macchine di Turing quantistiche* QTM, data una configurazione $C_
 - hanno probabilità $|alpha_i|^2$;
 - le probabilità sommano a $1$.
 
-=== Funzionalità di una DTM
+=== Semplificare le DTM
 
-- La principale funzionalità di una DTM è *riconoscere linguaggi*.\
-  Un linguaggio $L subset.eq Sigma^*$ è *riconoscibile* da una DTM se e solo se esiste una DTM $M$ tale che $L = L_M$.
+Esibire, progettare e comprendere una DTM è difficile anche in casi molto semplici, perché dobbiamo dettagliare stati, alfabeti, transizioni, eccetera. Solitamente, nel descrivere una DTM, si utilizza uno _pseudocodice_ che ne chiarisce la dinamica.
 
-  Grazie alla possibilità di riconoscere linguaggi, una DTM può riconoscere anche gli insiemi: dato $A subset.eq NN$, _come lo riconosco con una DTM?_\
-  L'idea che viene in mente è di codificare ogni elemento $a in A$ in un elemento di $Sigma^*$, per poter passare dal riconoscimento di un insieme al riconoscimento di un linguaggio.
+Esistono una serie di teoremi che dimostrano che qualsiasi frammento di programma strutturato può essere tradotto in una DTM formale e viceversa.
 
-  #align(
-    center + horizon
-  )[
-    $A arrow.long.squiggly #square(cod) arrow.long.squiggly L_A = {cod(a) : a in A}$
-  ]
+=== Applicazione all'esempio precedente
 
+Nel caso della DTM $M$ che abbiamo progettato per $L_"PARI" = {1 {0,1}^* 0} union {0}$ al punto precedente possiamo utilizzare questo pseudo-codice:
 
-  Un insieme $A$ è riconoscibile da una DTM sse esiste una DTM $M$ tale che $L_A = L_M$.
+#algo(
+  title: "Parità",
+  parameters: ("n",)
+)[
+  i := 1; \
+  f := false; \
+  switch(x[i]) { #i \
+    case 0: #i \
+      i++; \
+      f := (x[i] == blank); \
+      break; #d \
+    case 1: #i \
+      do { #i \
+        f := (x[i] == 0); \
+        i++; #d \
+      } while (x[i] != blank); #d #d \
+  } \
+  return f;
+]
 
-  Quando facciamo riconoscere un insieme $A$ a una DTM $M$, possiamo trovarci in due situazioni, in funzione dell'input (codificato):
-  + se l'input appartiene ad $A$, allora $M$ si arresta;
-  + se l'input _non_ appartiene ad $A$, allora $M$ può:
-    - arrestarsi rifiutando l'input, ovvero finisce in uno stato $q in.not F arrow.double A$ è ricorsivo;
-    - andare in loop $arrow.double A$ è ricorsivamente numerabile.
-
-  #theorem(
-    numbering: none
-  )[
-    La classe degli insiemi riconosciuti da DTM coincide con la classe degli insiemi ricorsivamente numerabili.
-  ]
-
-  Un *algoritmo deterministico* per il riconoscimento di un insieme $A subset.eq NN$ è una DTM $M$ tale che $L_A = L_M$ e tale che $M$ si arresta su ogni input.
-
-  #theorem(
-    numbering: none
-  )[
-    La classe degli insiemi riconosciuti da algoritmi deterministici coincide con la classe degli insiemi ricorsivi.
-  ]
-
-- Una seconda funzionalità delle DTM è che possono risolvere dei *problemi di decisione*. Vediamo il procedimento per farlo.
-
-  Dato problema $Pi$, con istanza $x in D$ e domanda $p(x)$, andiamo a codificare gli elementi di $D$ in elementi di $Sigma^*$, ottenendo $L_Pi = {cod(x) bar.v x in D and p(x)}$ *insieme delle istanze a risposta positiva* di $Pi$.
-
-  La DTM risolve $Pi$ sse $M$ è un algoritmo deterministico per $L_Pi$, ovvero:
-  - se vale $p(x)$, allora $M$ accetta la codifica di $x$;
-  - se non vale $p(x)$, allora $M$ si arresta senza accettare.
+Alla fine della sua esecuzione avremo:
+- se $x in L_"PARI"$ allora #text(green)[True] ;
+- se $x in.not L_"PARI"$ allora #text(red)[False] .

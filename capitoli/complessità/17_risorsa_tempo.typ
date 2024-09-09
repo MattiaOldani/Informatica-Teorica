@@ -1,5 +1,5 @@
-// Setup
-
+#import "../alias.typ": *
+#import "@preview/algo:0.3.3": algo, i, d, code
 #import "@preview/lemmify:0.1.5": *
 
 #let (
@@ -24,79 +24,92 @@
   breakable: true
 )
 
-#import "alias.typ": *
-
-// Appunti
-
-= Lezione 20
-
-== Crescita asintotica
+== Definizione della risorsa tempo
 
 === Introduzione
 
-Quello che facciamo nella teoria della complessità è chiederci _"quanto costa questo programma?"_
+Come mai utilizziamo una DTM e non una macchina RAM per dare una definizione rigorosa di tempo? La risposta sta nella *semplicità*: le macchine RAM, per quanto semplici, lavorano con banchi di memoria che possono contenere dati di grandezza arbitraria ai quali accediamo con tempo $O(1)$, cosa che invece non possiamo fare con le DTM perché il nastro contiene l'input diviso su più celle.
 
-Considerando il tempo, abbiamo due diversi tipi di costo: _"poco"_ oppure _"troppo"_. Capiremo durante la lezione il perché delle virgolette.
+=== Definizione
 
-Stiamo valutando $t(n)$, ovvero $ t(n) = max{T(x) bar.v x in Sigma^* and |x| = n} $ il massimo numero di iterazioni di una DTM nell'eseguire input di grandezza $n$.
+Consideriamo la DTM $M = (Q, Sigma, Gamma, delta, q_0, F)$ e definiamo:
+- $T(x)$ il *tempo di calcolo* di $M$ su input $x in Sigma^*$ come il valore
+$ T(x) = \# "mosse della computazione di" M "su input" x "(anche" infinity")"; $
+- $t(n)$ la *complessità in tempo* di $M$ (_worst case_) come la funzione
+$ t : NN arrow.long NN bar.v t(n) = max{T(x) bar.v x in Sigma^* and abs(x) = n} . $
 
-Nel fare il confronto tra due algoritmi per uno stesso problema, bisogna tenere in considerazione che a fare la differenza (in termini di prestazioni) sono gli input di dimensione "ragionevolmente grande", dove con questa espressione intendiamo una dimensione significativa nel contesto d'applicazione del problema.
+L'attributo *worst case* indica il fatto che $t(n)$ rappresenta il tempo _peggiore_ di calcolo su tutti gli input di lunghezza $n$. È la metrica più utilizzata anche perché è la più "manovrabile matematicamente", cioè ci permette di utilizzare delle funzioni più facilmente trattabili dal punto di vista algebrico. Ad esempio, nella situazione *average case* avremo una stima probabilmente migliore ma ci servirebbe anche una distribuzione di probabilità, che non è molto facile da ottenere.
 
-Siano ad esempio $t_1,t_2$ le due potenze computazionali tali che $ t_1 (n) = 2n quad bar.v quad t_2 (n) = 1/100 n^2 + 1/2 n + 1 . $
+=== Esempio: parità
 
-Quale delle due è migliore? La risposta è _dipende_: se considero $n$ abbastanza piccoli allora $t_2$ è migliore perché i coefficienti ammortizzano il valore di $n^2$, mentre se considero $n$ sufficientemente grandi è migliore $t_1$.
+Facendo riferimento allo pseudocodice scritto precedentemente per il problema _parità_, facciamo un'analisi temporale dell'algoritmo.
 
-Date due complessità, non le devo valutare per precisi valori di $n$, ma devo valutare il loro *andamento asintotico*, ovvero quando $n$ tende a $+infinity$.
+// tia: secondo me t(n) = n
+Dato l'input $x$ di lunghezza $n$, il nostro algoritmo non fa altro che consumare tutti i simboli dell'input fino a quando a non arriva al primo blank dopo l'input, quindi $t(n) = n + 1$.
 
-=== Simboli di Landau
+In realtà questo che abbiamo appena mostrato è il _caso peggiore_. Ci sono delle istanze $n_z$ per cui il problema impiega $t(n_z) = 2$. Infatti, se ci sono almeno due zeri in testa al numero, ovvero siamo di fronte a istanze nella forma $ n_z = O^n bar.v n > 1 $ allora abbiamo $t(n_z) = 2$ poiché la DTM si arresta subito.
 
-Riprendiamo i simboli matematici che abbiamo già visto in molti altri corsi che ci permettono di stabilire degli *ordini di grandezza* fra le funzioni, in modo da poterle paragonare.
+=== Linguaggio riconosciuto in tempo deterministico
 
-Questi simboli si chiamano *simboli di Landau*, e i più utilizzati sono i seguenti tre:
-+ $O$: letto _"O grande"_, date due funzioni $f,g : NN arrow.long NN$ diciamo che $ f(n) = O(g(n)) $ se e solo se $ exists c > 0 quad exists n_0 in NN bar.v forall n gt.eq n_0 quad f(n) lt.eq c dot g(n) . $ Questo simbolo dà un *upper bound* alla funzione $f$.
-+ $Omega$: letto _"Omega grande"_, date due funzioni $f,g : NN arrow.long NN$ diciamo che $ f(n) = Omega(g(n)) $ se e solo se $ exists c > 0 quad exists n_0 in NN bar.v forall n gt.eq n_0 quad f(n) gt.eq c dot g(n). $ Questo simbolo dà un *lower bound* alla funzione $f$.
-+ $Theta$: letto _"teta grande"_, date due funzioni $f,g : NN arrow.long NN$ diciamo che $ f(n) = Theta(g(n)) $ se e solo se $exists c_1, c_2 > 0 quad exists n_0 in NN bar.v forall n gt.eq n_0 quad c_1 dot g(n) lt.eq f(n) lt.eq c_2 dot g(n). $
+Diciamo che il linguaggio $L subset.eq Sigma^*$ è riconoscibile in *tempo deterministico* $f(n)$ se e solo se esiste una DTM $M$ tale che:
++ $L = L_M$;
++ $t(n) lt.eq f(n)$.
 
-// tia: mettiamo un disegno? l'ha fatto a lezione
+L'ultima condizione indica che a noi _"basta"_ $f(n)$ ma che possiamo accettare situazioni migliori.
 
-Si può notare facilmente che valgono la proprietà $ f(n) = O(g(n)) arrow.l.r.long.double g(n) = Omega(f(n)) $ e la proprietà $ f(n) = Theta(g(n)) arrow.l.r.long.double f(n) = O(g(n)) and f(n) = Omega(g(n)) . $
+// tia: che palle non è centrato
+Possiamo estendere questa definizione anche agli insiemi o ai problemi di decisione:
+- l'*insieme* $A subset.eq NN$ è riconosciuto in tempo $f(n)$ se e solo se lo è il linguaggio $ L_A = {cod(A) bar.v a in A} ; $
+- il *problema di decisione* $Pi$ è risolto in tempo $f(n)$ se e solo lo è il linguaggio $ L_Pi = {cod(x) bar.v p(x)} . $
 
-Noi useremo spesso $O$ perché ci permette di definire il _worst case_.
+Da qui in avanti, quando parleremo di *linguaggi* intenderemo indirettamente *insiemi* o *problemi di decisione*, vista la stretta analogia tra questi concetti.
 
-== Classificazione di funzioni
+=== Esempio: parità
 
-=== Introduzione
+Tornando all'esempio del problema _parità_, abbiamo mostrato una DTM che riconosce il linguaggio $ L_"PARI" = {1 {0,1}^* 0} union {0} $ con complessità in tempo $t(n) = n + 1$. Ma allora abbiamo che:
+- il linguaggio $L_"PARI"$ è riconoscibile in tempo $n + 1$;
+- l'insieme dei numeri pari è riconoscibile in tempo $n + 1$;
+- il problema di decisione _parità_ è risolubile in tempo $n + 1$.
 
-Con l'uso di questa notazione è possibile classificare le funzioni in una serie di classi in base a come è fatta la loro funzione soluzione $t(n)$.
+=== Esempio: palindrome
 
-Data una funzione $t : NN arrow.long NN$, possiamo avere:
+- Nome: palindrome.
+- Istanza: $x in Sigma^*$.
+- Domanda: $x$ palindroma?
 
-#align(center)[
-  #table(
-    columns: (30%, 40%, 30%),
-    inset: 10pt,
-    align: horizon,
-    
-    [*Tempo*], [*Definizione formale*], [*Esempio*],
+// tia: sistemare
+In questo problema, data la stringa $ x = x_1 x_2 dots x_n in Sigma^* $ definiamo la stringa $ x^R = x_n dots x_2 x_1 in Sigma^* $ tale che $ L_"PAL" = {x in Sigma^* bar.v x = x^R} . $
 
-    [*Costante*], [$t(n) = O(1)$], [Segno di un numero in binario],
-    [*Logaritmica*], [$f(n) = O(log(n))$], [Difficile fare esempi per questo perché quasi mai riusciamo a dare una risposta leggendo $log(n)$ input dal nastro],
-    [*Lineare*], [$f(n) = O(n)$], [Parità di un numero in binario],
-    [*Quadratica*], [$f(n) = O(n^2)$], [Stringa palindroma],
-    [*Polinomiale*], [$f(n) = O(n^k)$], [Qualsiasi funzione polinomiale],
-    [*Esponenziale*], [$f(n)$ non polinomiale ma super polinomiale], [Alcune funzioni super polinomiali sono $ e^n bar.v n! bar.v n^(log n) $]
-  )
+Una DTM $M$ per _palindrome_ e che riconosce $L_"PAL"$ è la seguente:
+
+#algo(
+  title: "Palindrome",
+  parameters: ("x",)
+)[
+  i := 1; \
+  j := n; \
+  f := true; \
+  while (i < j && f) { #i \
+    if (x[i] != x[j]) #i \
+      f := false; #d \
+    i++; \
+    j--; #d \
+  } \
+  return f;
 ]
 
-L'ultima classe rappresenta il _"troppo"_ che abbiamo definito prima: infatti, nel _"troppo"_ ci va tutto il calderone delle funzioni super polinomiali. Un algoritmo in questa classe si definisce *inefficiente*.
+// tia: wtf devo mettere uno spazio sennò non va
+Ovviamente vale che:
+- se $x in L_"PAL"$ allora viene restituito #text(green)[True] ;
+- se $x in.not L_"PAL"$ allora viene restituito #text(red)[False].
 
-Altrimenti, convenzionalmente, un algoritmo si dice *efficiente* se la sua complessità temporale è *polinomiale*.
+Notiamo una cosa importante: il worst case *NON* è $ t(n) = n/2 . $
 
-=== Classi di complessità
+Infatti, in una macchina di Turing se voglio confrontare la posizione $i$-esima con quella $j$-esima devo spostare la testina $j-i$ volte, dalla posizione $i$ alla posizione $j$. Il tempo reale è $ t(n) = sum_(k=0)^(n-1) k approx n^2 . $
 
-Vogliamo utilizzare il concetto di _classi di equivalenza_ per definire delle classi che racchiudano tutti i problemi che hanno bisogno della stessa quantità di risorse computazionali per essere risolti correttamente.
+Quando valutiamo il tempo dobbiamo stare bene attenti di considerare anche i tempi di spostamento della DTM. Bisogna sempre tenere a mente l'architettura su cui implementiamo un certo algoritmo.
 
-Una *classe di complessità* è un insieme dei problemi che vengono risolti entro gli stessi limiti di risorse computazionali.
+== Classi di complessità
 
 Proviamo a definire alcune classi di complessità in funzione della risorsa tempo.
 
@@ -199,3 +212,4 @@ Infine, parliamo di costanti nei simboli di Landau: con costanti molto grandi ri
 Esistono moltissimi problemi pratici e importanti per i quali ancora non sono stati trovati algoritmi efficienti e non è nemmeno stato provato che tali algoritmi non possano per natura esistere. 
 
 In altre parole, non sappiamo se tutti i problemi sono in realtà efficientemente risolubili o se ne esistono alcuni il cui miglior algoritmo di risoluzione abbia una complessità esponenziale.
+

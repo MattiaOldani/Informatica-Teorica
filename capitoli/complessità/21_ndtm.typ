@@ -1,45 +1,4 @@
-// Setup
-
-#import "@preview/ouset:0.1.1": overset
-
-#import "@preview/algo:0.3.3": code
-
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "corollary"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#import "alias.typ": *
-
-// Appunti
-
-= Lezione 23
+#import "../alias.typ": *
 
 == Algoritmi non deterministici
 
@@ -67,10 +26,13 @@ Dato un problema $Pi$, un'istanza $x in D$ e una proprietà $p(x)$, un algoritmo
 
 ==== _CNF-SAT_
 
-Vediamo un algoritmo non deterministico per la soluzione di _CNF-SAT_: 
+Vediamo un algoritmo non deterministico per la soluzione di _CNF-SAT_:
 
-// gigi: da rivedere come tutti i programmi
-$ P equiv & "input"(phi(x_1, dots, x_n)); \ & "genera ass." x in {0,1}^n; \ & "if" (phi(x_1, dots, x_n) == 1) \ & quad "return" 1; \ & "return 0"; $
+$
+  P equiv & "input"(phi(x_1, dots, x_n)); \ & "genera ass." x in {0,1}^n; \ & "if" (
+    phi(x_1, dots, x_n) == 1
+  ) \ & quad "return" 1; \ & "return 0";
+$
 
 Ammettendo un modello di calcolo come quello descritto, questo è a tutti gli effetti un algoritmo non deterministico, formato da fase congetturale e fase di verifica.
 
@@ -79,7 +41,11 @@ Ammettendo un modello di calcolo come quello descritto, questo è a tutti gli ef
 Vediamo ora un algoritmo non deterministico per trovare, se esiste, un circuito hamiltoniano in un grafo $G$.
 
 // gigi: da rivedere come tutti i programmi
-$ P equiv & "input"(G=(V,E)); \ & "genera perm." pi(v_1, dots, v_n); \ & "if" (pi(v_1, dots, v_n) "è un circuito in" G) \ & quad "return" 1; \ & "return 0"; $
+$
+  P equiv & "input"(G=(V,E)); \ & "genera perm." pi(v_1, dots, v_n); \ & "if" (
+    pi(v_1, dots, v_n) "è un circuito in" G
+  ) \ & quad "return" 1; \ & "return 0";
+$
 
 Si vede chiaramente come sia simile a quello precedente, mostrando che la struttura di questi algoritmi e pressoché la stessa.
 
@@ -136,63 +102,3 @@ In questo modo abbiamo mappato tutti i concetti chiave visti nelle macchine di T
 Caratterizziamo il concetto di "efficienza" anche per il non determinismo.\
 Efficiente risolubilità: $ P = union.big_(k gt.eq 0) dtime(n^k). $
 Efficiente verificabilità: $ "NP" = union.big_(k gt.eq 0) ntime(n^k), $ che corrisponde all'insieme dei problemi di decisione che ammettono algoritmi non deterministici polinomiali.
-
-*The Millennium Prize Problem*: _Che relazione c'è tra le classi P e NP?_ $arrow.long$ È una questione ancora aperta, la quale farebbe guadagnare un milione di dollari a colui che troverà una risposta.
-
-=== $P subset.eq NP$
-
-Possiamo solo dimostrare una banale relazione.
-
-#theorem(numbering:none)[
-  $P subset.eq NP$
-]
-
-#proof[
-  È facile dimostrare che $dtime(f(n)) subset.eq ntime(f(n))$.
-
-  Dato $L in dtime(f(n))$, esiste una DTM $M$ che lo riconosce in $t(n) = O(f(n)). quad (*)$\
-  Chiaramente $M$ può essere vista come una NDTM che ignora il modulo congetturale. La NDTM così ottenuta ripropone la stessa computazione di $M$ su ogni congettura generata inutilmente. È chiaro che questa NDTM accetta $L$ in tempo $t(n) = O(f(n)) arrow.double L in ntime(f(n))$.\
-  Quindi vale: $ P = union.big_(k gt.eq 0) dtime(n^k) overset(subset.eq, (*)) union.big_(k gt.eq 0) ntime(n^k) = NP. $
-]
-
-=== $NP subset.eq P$
-
-_Cosa possiamo dire sulla relazione inversa?_\
-È chiaro che il punto cruciale del Millennium Problem è proprio la relazione $NP subset.eq P$, che in realtà si può tradurre in $P = NP$ vista la relazione appena dimostrata.
-
-Detto in altre parole, ci chiediamo se da un algoritmo non deterministico efficiente è possibile ottenere un algoritmo _reale_ efficiente.
-
-Similmente a quanto fatto nella dimostrazione di $P subset.eq NP$, proviamo ad analizzare questo problema $ ntime(f(n)) subset.eq dtime(?), $ che quantifica quanto costa togliere il fattore di non determinismo (che è un concetto non naturale) della fase congetturale.
-
-Supponiamo di avere $L in ntime(f(n))$. Questo implica che esiste una NDTM $M$ tale che $M$ accetta $L$ con $t(n) = O(f(n))$. _Come possiamo simulare la dinamica di $M$ con una DTM $overset(M, tilde)$?_
-
-Il funzionamento di $overset(M, tilde)$ può essere qualcosa di questo tipo:
-+ prendiamo in input $x in Sigma^*$, con $|x| = n$;
-+ genera tutte le strutture $gamma in Gamma^*$ delle fasi di verifica;
-+ per ognuna di esse, calcola *deterministicamente* se $(gamma, x)$ viene accettata con $M$;
-+ se in una delle computazioni al punto 3 la risposta è positiva, allora accetta $x$, altrimenti $overset(M, tilde)$ rifiuta (la gestione dei loop può essere fatta tramite la tecnica del count-down).
-
-Il problema qui è che di stringhe $gamma in Gamma^*$ ne esistono infinite!
-
-_Ma ci servono proprio tutte?_\
-Rivediamo lo pseudo-codice dell'algoritmo che stiamo progettando:
-
-/// gigi: da rivedere come tutti i programmi
-$ "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" gamma in Gamma^*: \ & quad "if"(M "accetta" (gamma, x) "in" t(n) "passi") \ & quad quad "return" 1; \ & "return" 0; $
-
-Per evitare di considerare tutte le stringhe $gamma$, possiamo considerare solo quelle che non sono più lunghe di $t(n)$, perché altrimenti non potrei finire la computazione in $t(n)$ passi.
-
-L'algoritmo diventa:
-// gigi: da rivedere come tutti i programmi
-$ "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" (gamma in Gamma^* and |gamma| = O(f(n))): \ & quad "if"(M "accetta" (gamma, x) "in" t(n) "passi") \ & quad quad "return" 1; \ & "return" 0; $
-
-Studiamo quanto tempo impiega $ t(n) = |Gamma|^(O(f(n))) dot.op O(f(n)) = O(f(n) dot.op 2^(O(f(n)))), $
-di conseguenza avremo che $ ntime(f(n)) subset.eq dtime(f(n) dot.op 2^(O(f(n)))). $
-
-Come ci si poteva aspettare, togliere il non determinismo purtroppo costa parecchio, tanto da rendere l'algoritmo esponenziale e quindi inefficiente.
-
-$ NP subset.eq dtime(2^(n^(O(1)))) = exptime. $
-
-L'unica cosa che attualmente sappiamo dire è che tutti i problemi in $NP$ hanno sicuramente algoritmi di soluzione con tempo esponenziale, ma ancora non possiamo escludere che $NP subset.eq P$.
-
-*Attenzione*: $NP$ non sta per "Non Polinomiale" e quindi esponenziale. $NP$ sta per polinomiale in un architettura non deterministica. Dire che $NP$ contiene problemi con algoritmi di soluzione esponenziale è #text(red)[FALSO]. Tali problemi potrebbero anche avere soluzioni efficienti (anche se nessuno lo crede).
