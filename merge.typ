@@ -58,7 +58,7 @@
 
 
 // Teoria della complessità
-#parte("Teorema della complessità")
+#parte("Teoria della complessità")
 
 #pagebreak()
 

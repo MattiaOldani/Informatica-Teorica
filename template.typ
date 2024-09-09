@@ -18,7 +18,6 @@
 
     v(1.75em)
 
-    // tutte le #parte avranno la seguente formattazione
     show figure.where(kind: "parte"): it => {
         counter(heading).update(0)
         set page(
@@ -35,10 +34,9 @@
         }
     }
 
-    // ridefinisco l'indice per la nuova indentazione
     show outline.entry: it => {
         if it.element.func() == figure {
-            // magie copiate da https://github.com/typst/typst/issues/2461
+            // https://github.com/typst/typst/issues/2461
             let res = link(it.element.location(), 
                 if it.element.numbering != none {
                     it.element.supplement + [ ] 
@@ -46,15 +44,13 @@
                 } + [ --- ] + it.element.body
             )
             
-            // niente puntini
             res += h(1fr)
 
             res += link(it.element.location(), it.page)
             v(2.3em, weak: true)
             strong(text(size: 13pt, res))
         } else {
-            // indentazione per livello
-            h(1em * it.level) + it
+            h(1em * (it.level - 1)) + it
         }
     }
 
@@ -76,11 +72,9 @@
     body
 }
 
-// creo la figure "Parte", come fosse un teorema
 #let parte = figure.with(
   kind: "parte",
   numbering: none,
-  // quando si fanno riferimenti con @
   supplement: "Parte",
   caption: [],
 )
