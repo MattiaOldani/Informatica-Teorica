@@ -24,7 +24,8 @@
 
 #import "../alias.typ": *
 
-== Tempo vs spazio
+
+= Tempo vs spazio
 
 Spesso promuovere l'ottimizzazione di una risorsa va a discapito dell'altra: _essere veloci_ vuol dire (tipicamente) _spendere tanto spazio_ e _occupare poco spazio_ vuol dire (tipicamente) _spendere tanto tempo_.
 
@@ -32,7 +33,9 @@ Viene naturale porsi due domande:
 - _i limiti in tempo implicano dei limiti in spazio?_
 - _i limiti in spazio implicano dei limiti in tempo?_
 
-Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
+== $dtime$ VS $dspace$
+
+Per rispondere a queste domande confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 
 #theorem(numbering: none)[
   Tutti i linguaggi accettati in tempo $f(n)$, sono anche accettati in spazio $f(n)$. Formalmente:
@@ -52,8 +55,6 @@ Per rispondere confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 ]
 
 Notiamo come l'efficienza in tempo non porta immediatamente all'efficienza in spazio.
-
-== Relazione tempo-spazio
 
 Abbiamo visto che un limite in tempo implica, in qualche modo, un limite in spazio, _ma vale anche il contrario? È possibile dimostrare che $dspace(f(n)) subset.eq dtime(f(n))$?_
 
@@ -100,7 +101,7 @@ Come per il tempo, il teorema dimostrato vale anche per gli insiemi $fspace$ e $
   Tutti le funzioni calcolate in spazio $f(n)$ vengono calcolate in tempo $n dot.op alpha^(O(f(n)))$. $ fspace(f(n)) subset.eq ftime(n dot.op alpha^(O(f(n)))). $
 ]
 
-=== Relazione delle classi L e P
+== $P$ vs $L$ (primo round)
 
 Ottenuti questi risultati, vogliamo studiare le relazioni tra efficienza in termini di spazio (classe $L$) e l'efficienza in termini di tempo (classe $P$).
 
@@ -109,17 +110,11 @@ Ottenuti questi risultati, vogliamo studiare le relazioni tra efficienza in term
 ]
 
 #proof[
-  $
-    L = dspace(log(n)) & subset.eq dtime(n dot.op alpha^(O(log(n)))) = \ & = dtime(n dot.op alpha^(frac(log_alpha (n), log_alpha(2)))) = \ & = dtime(n dot.op (alpha^(log_alpha (n)))^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^beta) = dtime(n^(beta+1)) = dtime(n^k) = P
-  $
+  $ L = dspace(log(n)) & subset.eq dtime(n dot.op alpha^(O(log(n)))) = \ & = dtime(n dot.op alpha^(frac(log_alpha (n), log_alpha(2)))) = \ & = dtime(n dot.op (alpha^(log_alpha (n)))^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^beta) = dtime(n^(beta+1)) = dtime(n^k) = P $
 
   Allo stesso modo è ottenibile l'inclusione per $fl$ e $fp$.
 ]
 
 Grazie a questo teorema sappiamo che:
-- *in teoria*, algoritmi efficienti in spazio portano immediatamente ad algoritmi efficienti in tempo. Non è detto il contrario: la domanda _"esiste un problema in P che non sta il L?"_ ancora oggi non ha una risposta, è un problema aperto;
+- *in teoria*, algoritmi efficienti in spazio portano immediatamente ad algoritmi efficienti in tempo. Non è detto il contrario: la domanda _"esiste un problema in P che non sta in L?"_ ancora oggi non ha una risposta, è un problema aperto;
 - *in pratica*, il grado del polinomio ottenuto da algoritmi efficienti in spazio è molto alto, e solitamente gli algoritmi efficienti in tempo vengono progettati separatamente.
-
-== Classe EXPTIME
-
-Definiamo ora la classe $ exptime = union.big_(k gt.eq 0) dtime(2^n^k) $ dei problemi con complessità temporale *esponenziale*. Ovviamente vale $ P subset.eq exptime, $ perché ogni polinomio è "_maggiorabile_" da un esponenziale. Per diagonalizzazione si è dimostrato in realtà che $ P subset exptime $ sfruttando una *NDTM* (_Non-Deterministic Turing Machine_) con timeout.
