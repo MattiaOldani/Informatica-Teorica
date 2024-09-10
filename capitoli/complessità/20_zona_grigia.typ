@@ -14,20 +14,16 @@
   breakable: true,
 )
 
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
 #import "../alias.typ": *
 
-== La "zona grigia"
+
+= La "zona grigia"
 
 Chiamiamo *zona grigia* quella _nuvola_ di problemi di decisione importanti e con molte applicazioni per i quali non si conoscono ancora algoritmi efficienti in tempo, _ma_ per i quali nessuno ha mai dimostrato che tali algoritmi non possano esistere. Infatti, dato un problema $Pi$, se mi viene detto che ad oggi non esiste un algoritmo efficiente per la sua soluzione, questo non implica che allora lo sia veramente: è molto difficile come dimostrazione.
 
 I problemi di decisione in questa zona hanno una particolarità: sono *efficientemente verificabili*. Data un'istanza particolare, è facile capire se per quel problema e quell'istanza bisogna rispondere #text(green)[SI] o #text(red)[NO].
+
+== Esempi
 
 === _CNF-SAT_
 
@@ -67,3 +63,7 @@ Ricordiamo che un circuito euleriano è un circuito in cui tutti gli archi di $G
 ]
 
 Grazie a questo teorema è possibile risolvere il problema in tempo lineare, quindi efficiente. Purtroppo non esiste un teorema simile per i circuiti hamiltoniani.
+
+== Classe EXPTIME
+
+Definiamo ora la classe $ exptime = union.big_(k gt.eq 0) dtime(2^n^k) $ dei problemi con complessità temporale *esponenziale*. Ovviamente vale $ P subset.eq exptime, $ perché ogni polinomio è "_maggiorabile_" da un esponenziale. Per diagonalizzazione si è dimostrato in realtà che $ P subset exptime $ sfruttando una *NDTM* (_Non-Deterministic Turing Machine_) con timeout.
