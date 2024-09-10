@@ -30,36 +30,33 @@
 
 #import "../alias.typ": *
 
-= Lezione 23
 
-*The Millennium Prize Problem*: _Che relazione c'è tra le classi P e NP?_ $arrow.long$ È una questione ancora aperta, la quale farebbe guadagnare un milione di dollari a colui che troverà una risposta.
+= $P$ VS $NP$
 
-=== $P subset.eq NP$
+*The Millennium Prize Problem*: _che relazione c'è tra le classi P e NP?_
 
-Possiamo solo dimostrare una banale relazione.
+È una questione ancora aperta, la quale farebbe guadagnare un milione di dollari a colui che troverà una risposta (Mr.Krab moment).
+
+== Prima analisi
 
 #theorem(numbering: none)[
   $P subset.eq NP$
 ]
 
 #proof[
-  È facile dimostrare che $dtime(f(n)) subset.eq ntime(f(n))$.
+  \ È facile dimostrare che $dtime(f(n)) subset.eq ntime(f(n))$.
 
-  Dato $L in dtime(f(n))$, esiste una DTM $M$ che lo riconosce in $t(n) = O(f(n)). quad (*)$\
-  Chiaramente $M$ può essere vista come una NDTM che ignora il modulo congetturale. La NDTM così ottenuta ripropone la stessa computazione di $M$ su ogni congettura generata inutilmente. È chiaro che questa NDTM accetta $L$ in tempo $t(n) = O(f(n)) arrow.double L in ntime(f(n))$.\
+  Dato $L in dtime(f(n))$, esiste una DTM $M$ che lo riconosce in $t(n) = O(f(n)). quad (*)$
+  
+  Chiaramente $M$ può essere vista come una NDTM che ignora il modulo congetturale. La NDTM così ottenuta ripropone la stessa computazione di $M$ su ogni congettura generata inutilmente. È chiaro che questa NDTM accetta $L$ in tempo $t(n) = O(f(n))$, quindi $L in ntime(f(n))$.\
   Quindi vale: $ P = union.big_(k gt.eq 0) dtime(n^k) overset(subset.eq, (*)) union.big_(k gt.eq 0) ntime(n^k) = NP. $
 ]
 
-=== $NP subset.eq P$
+_Cosa possiamo dire sulla relazione inversa?_
 
-_Cosa possiamo dire sulla relazione inversa?_\
-È chiaro che il punto cruciale del Millennium Problem è proprio la relazione $NP subset.eq P$, che in realtà si può tradurre in $P = NP$ vista la relazione appena dimostrata.
+È chiaro che il punto cruciale del Millennium Problem è proprio la relazione $NP subset.eq P$, che in realtà si può tradurre in $P = NP$ vista la relazione appena dimostrata. Detto in altre parole, ci chiediamo se da un algoritmo non deterministico efficiente è possibile ottenere un algoritmo _reale_ efficiente.
 
-Detto in altre parole, ci chiediamo se da un algoritmo non deterministico efficiente è possibile ottenere un algoritmo _reale_ efficiente.
-
-Similmente a quanto fatto nella dimostrazione di $P subset.eq NP$, proviamo ad analizzare questo problema $ ntime(f(n)) subset.eq dtime(?), $ che quantifica quanto costa togliere il fattore di non determinismo (che è un concetto non naturale) della fase congetturale.
-
-Supponiamo di avere $L in ntime(f(n))$. Questo implica che esiste una NDTM $M$ tale che $M$ accetta $L$ con $t(n) = O(f(n))$. _Come possiamo simulare la dinamica di $M$ con una DTM $overset(M, tilde)$?_
+Similmente a quanto fatto nella dimostrazione di $P subset.eq NP$, proviamo ad analizzare questo problema $ ntime(f(n)) subset.eq dtime(?), $ che quantifica quanto costa togliere il fattore di non determinismo (che è un concetto non naturale) della fase congetturale. Supponiamo di avere $L in ntime(f(n))$. Questo implica che esiste una NDTM $M$ tale che $M$ accetta $L$ con $t(n) = O(f(n))$. _Come possiamo simulare la dinamica di $M$ con una DTM $overset(M, tilde)$?_
 
 Il funzionamento di $overset(M, tilde)$ può essere qualcosa di questo tipo:
 + prendiamo in input $x in Sigma^*$, con $|x| = n$;
@@ -67,25 +64,13 @@ Il funzionamento di $overset(M, tilde)$ può essere qualcosa di questo tipo:
 + per ognuna di esse, calcola *deterministicamente* se $(gamma, x)$ viene accettata con $M$;
 + se in una delle computazioni al punto 3 la risposta è positiva, allora accetta $x$, altrimenti $overset(M, tilde)$ rifiuta (la gestione dei loop può essere fatta tramite la tecnica del count-down).
 
-Il problema qui è che di stringhe $gamma in Gamma^*$ ne esistono infinite!
+Il problema qui è che di stringhe $gamma in Gamma^*$ ne esistono infinite! _Ma ci servono proprio tutte?_
 
-_Ma ci servono proprio tutte?_\
-Rivediamo lo pseudo-codice dell'algoritmo che stiamo progettando:
-
-$
-  "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" gamma in Gamma^*: \ & quad "if"(
-    M "accetta" (gamma, x) "in" t(n) "passi"
-  ) \ & quad quad "return" 1; \ & "return" 0;
-$
+Rivediamo lo pseudo-codice dell'algoritmo che stiamo progettando: $ "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" gamma in Gamma^*: \ & quad "if"(M "accetta" (gamma, x) "in" t(n) "passi") \ & quad quad "return" 1; \ & "return" 0; $
 
 Per evitare di considerare tutte le stringhe $gamma$, possiamo considerare solo quelle che non sono più lunghe di $t(n)$, perché altrimenti non potrei finire la computazione in $t(n)$ passi.
 
-L'algoritmo diventa:
-$
-  "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" (gamma in Gamma^* and |gamma| = O(f(n))): \ & quad "if"(
-    M "accetta" (gamma, x) "in" t(n) "passi"
-  ) \ & quad quad "return" 1; \ & "return" 0;
-$
+L'algoritmo diventa: $ "DTM" overset(M, tilde) equiv & "input"(x) \ & "for each" (gamma in Gamma^* and |gamma| = O(f(n))): \ & quad "if"(M "accetta" (gamma, x) "in" t(n) "passi") \ & quad quad "return" 1; \ & "return" 0; $
 
 Studiamo quanto tempo impiega $ t(n) = |Gamma|^(O(f(n))) dot.op O(f(n)) = O(f(n) dot.op 2^(O(f(n)))), $
 di conseguenza avremo che $ ntime(f(n)) subset.eq dtime(f(n) dot.op 2^(O(f(n)))). $
@@ -98,9 +83,9 @@ L'unica cosa che attualmente sappiamo dire è che tutti i problemi in $NP$ hanno
 
 *Attenzione*: $NP$ non sta per "Non Polinomiale" e quindi esponenziale. $NP$ sta per polinomiale in un architettura non deterministica. Dire che $NP$ contiene problemi con algoritmi di soluzione esponenziale è #text(red)[FALSO]. Tali problemi potrebbero anche avere soluzioni efficienti (anche se nessuno lo crede).
 
-== $NP subset.eq P$?
+== Come affrontare $P$ VS $NP$
 
-Nella scorsa lezione abbiamo introdotto i problemi della classe _NP_, detti anche _problemi con botta di culo_ o _problemi con il fattore C_. Se per questi problemi non abbiamo ancora una soluzione efficiente vuol dire che non lo conosciamo ancora a fondo, o magari manca una solida base matematica che ci permetta di risolverli.
+Per i problemi della classe _NP_, detti anche _problemi con botta di culo_ o _problemi con il fattore C_, non abbiamo ancora una soluzione efficiente, ma questo vuol dire che non lo conosciamo ancora a fondo, o magari manca una solida base matematica che ci permetta di risolverli.
 
 Per mostrare che $NP subset.eq P$ dovremmo prendere ogni problema in _NP_ e trovare per essi un algoritmo di soluzione _polinomiale_. Ovviamente questo approccio è impraticabile dato che _NP_ contiene infiniti problemi, del tutto eterogenei. Potremmo ovviare a questo problema agendo solo su un sottoinsieme dei problemi a nostra disposizione piuttosto che su tutti quanti.
 
@@ -109,7 +94,7 @@ Vediamo una strategia che permette di isolare un kernel di problemi in _NP_ :
 + definita tale relazione, utilizziamola per trovare l'insieme dei problemi *più difficili* di _NP_ : $pi$ è difficile in _NP_ se $ pi in NP and forall overset(pi, tilde) in NP quad overset(pi, tilde) lt.eq pi. $ Questi possiamo definirli i _problemi bad boys_ di _NP_;
 + restringiamo la ricerca di algoritmi efficienti al kernel in _NP_ appena trovato: se possiamo risolvere questi in modo efficiente, allora possiamo trovare algoritmi efficienti per tutto _NP_.
 
-=== Riduzione polinomiale
+=== Riduzione in tempo polinomiale
 
 Iniziamo definendo formalmente una *relazione di difficoltà* necessaria a identificare un sottoinsieme di $NP$.
 
@@ -127,8 +112,6 @@ Le funzioni di riduzione polinomiale sono anche dette *many-one-reduction* perch
   \ Siccome $A lt.eq_P B$, sia $f in fp$ la funzione di riduzione polinomiale. Sappiamo inoltre che $B in P$. Consideriamo il seguente algoritmo: 
   
   $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 $
-
-  // $ P equiv & "input"(x) \ & "return" f(x) in B $
 
   Questo algoritmo è sicuramente deterministico, perché tutte le procedure che lo compongono sono deterministiche. Inoltre, riconosce $A$, per via della seconda condizione della riducibilità.
 
@@ -162,7 +145,7 @@ Sia $NPC$ la sottoclasse di _NP_ dei problemi _NP_-completi. Per provare che $NP
 ]
 
 Sorgono spontanee due domande:
-- _esistono problemi in NP-C?_
+- _esistono problemi in NPC?_
 - _se sì, sono state trovate soluzioni efficienti?_
 
 Alla prima domanda rispondiamo *SI*: il primo problema _NP_-completo è proprio _CNF-SAT_, dimostrato nel 1970 con il teorema di Cooke-Levin. L'appartenenza a _NP_ è banale, mentre la sua completezza è _noiosa da leggere_ (cit. Mereghetti).
@@ -182,9 +165,7 @@ Un altro problema _NP_-completo è _HC_ (_Hamiltonian Circuit_), allo stesso mod
 
 La comunità scientifica, dopo anni di tentativi e svariate ragioni, tende ormai a credere che $P eq.not NP$, di conseguenza dimostrare l'_NP_-completezza di un problema implica sancirne l'inefficienza di qualunque algoritmo di soluzione.
 
-Dopo aver stabilito l'NP-completezza, l'indagine sui problemi però non si ferma: si provano restrizioni, algoritmi probabilistici efficienti (con margine di errore), euristiche veloci di soluzione, eccetera. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del _miglior algoritmo che più si approssima a quella che consideriamo efficienza_. 
-
-=== Dimostrare la _NP_-completezza
+Dopo aver stabilito l'NP-completezza, l'indagine sui problemi però non si ferma: si provano restrizioni, algoritmi probabilistici efficienti (_con margine di errore_), euristiche veloci di soluzione, eccetera. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del _miglior algoritmo che più si approssima a quella che consideriamo efficienza_. 
 
 Vediamo ora una tecnica per mostrare che un problema $Pi$ è _NP_-completo:
 + dimostrare che $Pi in NP$, solitamente il punto più semplice;
@@ -196,7 +177,7 @@ Infatti:
 + $Pi in NP$ per il punto 1;
 + $forall overset(Pi,tilde) in NP$ abbiamo che $ overset(Pi,tilde) lt.eq_P^((2)) X lt.eq_P^((3)) Pi . $ Ma quindi per la transitività di $lt.eq_P$ del punto 4 abbiamo che $forall overset(Pi,tilde) in NP$ allora $overset(Pi,tilde) lt.eq Pi$, quindi $Pi$ è _NP_-completo.
 
-== $P subset.eq L$?
+== $P$ VS $L$ (secondo round)
 
 C'è un'inclusione che abbiamo lasciato in sospeso, ed è proprio quella che coinvolge le classi $L$ e $P$. Ricordiamo che $ L = dspace(log(n)), \ P = union.big_(k gt.eq 0) dtime( n^k). $
 
@@ -274,8 +255,6 @@ Un altro problema _P_-completo è il seguente.
 Anche in questo caso lo spazio utilizzato è $s(n) = log^2 (n)$.
 
 Come per $P subset.eq NP$, è universale assumere che l'inclusione $L subset.eq P$ sia propria, ma questo non frena gli studi su questi problemi, che sono attuali e molto utili. Si può anche dimostrare che i problemi _P_-completi non ammettono (_quasi certamente_) algoritmi paralleli efficienti.
-
-=== Dimostrare la _P_-completezza
 
 Infine, vediamo anche per questi problemi una tecnica per mostrare che un problema $Pi$ è _P_-completo:
 + dimostrare che $Pi in P$;
