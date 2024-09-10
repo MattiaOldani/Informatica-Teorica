@@ -1,5 +1,5 @@
-#import "../alias.typ": *
 #import "@preview/algo:0.3.3": algo, i, d, code
+
 #import "@preview/lemmify:0.1.5": *
 
 #let (
@@ -24,13 +24,16 @@
   breakable: true
 )
 
-== Definizione della risorsa tempo
+#import "../alias.typ": *
 
-=== Introduzione
 
-Come mai utilizziamo una DTM e non una macchina RAM per dare una definizione rigorosa di tempo? La risposta sta nella *semplicità*: le macchine RAM, per quanto semplici, lavorano con banchi di memoria che possono contenere dati di grandezza arbitraria ai quali accediamo con tempo $O(1)$, cosa che invece non possiamo fare con le DTM perché il nastro contiene l'input diviso su più celle.
+= Definizione della risorsa tempo
 
-=== Definizione
+_Come mai utilizziamo una DTM e non una macchina RAM per dare una definizione rigorosa di tempo?_
+
+La risposta sta nella *semplicità*: le macchine RAM, per quanto semplici, lavorano con banchi di memoria che possono contenere dati di grandezza arbitraria ai quali accediamo con tempo $O(1)$, cosa che invece non possiamo fare con le DTM perché il nastro contiene l'input diviso su più celle.
+
+== Definizione
 
 Consideriamo la DTM $M = (Q, Sigma, Gamma, delta, q_0, F)$ e definiamo:
 - $T(x)$ il *tempo di calcolo* di $M$ su input $x in Sigma^*$ come il valore
@@ -40,76 +43,54 @@ $ t : NN arrow.long NN bar.v t(n) = max{T(x) bar.v x in Sigma^* and abs(x) = n} 
 
 L'attributo *worst case* indica il fatto che $t(n)$ rappresenta il tempo _peggiore_ di calcolo su tutti gli input di lunghezza $n$. È la metrica più utilizzata anche perché è la più "manovrabile matematicamente", cioè ci permette di utilizzare delle funzioni più facilmente trattabili dal punto di vista algebrico. Ad esempio, nella situazione *average case* avremo una stima probabilmente migliore ma ci servirebbe anche una distribuzione di probabilità, che non è molto facile da ottenere.
 
-=== Esempio: parità
-
-Facendo riferimento allo pseudocodice scritto precedentemente per il problema _parità_, facciamo un'analisi temporale dell'algoritmo.
-
-// tia: secondo me t(n) = n
-Dato l'input $x$ di lunghezza $n$, il nostro algoritmo non fa altro che consumare tutti i simboli dell'input fino a quando a non arriva al primo blank dopo l'input, quindi $t(n) = n + 1$.
-
-In realtà questo che abbiamo appena mostrato è il _caso peggiore_. Ci sono delle istanze $n_z$ per cui il problema impiega $t(n_z) = 2$. Infatti, se ci sono almeno due zeri in testa al numero, ovvero siamo di fronte a istanze nella forma $ n_z = O^n bar.v n > 1 $ allora abbiamo $t(n_z) = 2$ poiché la DTM si arresta subito.
-
-=== Linguaggio riconosciuto in tempo deterministico
-
 Diciamo che il linguaggio $L subset.eq Sigma^*$ è riconoscibile in *tempo deterministico* $f(n)$ se e solo se esiste una DTM $M$ tale che:
 + $L = L_M$;
 + $t(n) lt.eq f(n)$.
 
 L'ultima condizione indica che a noi _"basta"_ $f(n)$ ma che possiamo accettare situazioni migliori.
 
-// tia: che palle non è centrato
 Possiamo estendere questa definizione anche agli insiemi o ai problemi di decisione:
 - l'*insieme* $A subset.eq NN$ è riconosciuto in tempo $f(n)$ se e solo se lo è il linguaggio $ L_A = {cod(A) bar.v a in A} ; $
 - il *problema di decisione* $Pi$ è risolto in tempo $f(n)$ se e solo lo è il linguaggio $ L_Pi = {cod(x) bar.v p(x)} . $
 
 Da qui in avanti, quando parleremo di *linguaggi* intenderemo indirettamente *insiemi* o *problemi di decisione*, vista la stretta analogia tra questi concetti.
 
-=== Esempio: parità
+== Classi di complessità
 
-Tornando all'esempio del problema _parità_, abbiamo mostrato una DTM che riconosce il linguaggio $ L_"PARI" = {1 {0,1}^* 0} union {0} $ con complessità in tempo $t(n) = n + 1$. Ma allora abbiamo che:
-- il linguaggio $L_"PARI"$ è riconoscibile in tempo $n + 1$;
-- l'insieme dei numeri pari è riconoscibile in tempo $n + 1$;
-- il problema di decisione _parità_ è risolubile in tempo $n + 1$.
+=== Classificazione di funzioni
 
-=== Esempio: palindrome
+Tramite i simboli di Landau è possibile classificare le funzioni in una serie di classi.
 
-- Nome: palindrome.
-- Istanza: $x in Sigma^*$.
-- Domanda: $x$ palindroma?
+Per quanto riguarda il tempo, data una funzione $t : NN arrow.long NN$ possiamo avere:
 
-// tia: sistemare
-In questo problema, data la stringa $ x = x_1 x_2 dots x_n in Sigma^* $ definiamo la stringa $ x^R = x_n dots x_2 x_1 in Sigma^* $ tale che $ L_"PAL" = {x in Sigma^* bar.v x = x^R} . $
+#align(center)[
+  #table(
+    columns: (30%, 40%, 30%),
+    inset: 10pt,
+    align: horizon,
+    
+    [*Funzione*], [*Definizione formale*], [*Esempio*],
 
-Una DTM $M$ per _palindrome_ e che riconosce $L_"PAL"$ è la seguente:
-
-#algo(
-  title: "Palindrome",
-  parameters: ("x",)
-)[
-  i := 1; \
-  j := n; \
-  f := true; \
-  while (i < j && f) { #i \
-    if (x[i] != x[j]) #i \
-      f := false; #d \
-    i++; \
-    j--; #d \
-  } \
-  return f;
+    [*Costante*], [$t(n) = O(1)$], [Segno di un numero in binario],
+    [*Logaritmica*], [$f(n) = O(log(n))$], [Difficile fare esempi per questo perché quasi mai riusciamo a dare una risposta leggendo $log(n)$ input dal nastro],
+    [*Lineare*], [$f(n) = O(n)$], [Parità di un numero in binario],
+    [*Quadratica*], [$f(n) = O(n^2)$], [Stringa palindroma],
+    [*Polinomiale*], [$f(n) = O(n^k)$], [Qualsiasi funzione polinomiale],
+    [*Esponenziale*], [$f(n)$ non polinomiale ma super polinomiale], [Alcune funzioni super polinomiali sono $ e^n bar.v n! bar.v n^(log n) $]
+  )
 ]
 
-// tia: wtf devo mettere uno spazio sennò non va
-Ovviamente vale che:
-- se $x in L_"PAL"$ allora viene restituito #text(green)[True] ;
-- se $x in.not L_"PAL"$ allora viene restituito #text(red)[False].
+L'ultima classe rappresenta una classe che costo _"troppo"_ elevato, ovvero una classe nella quale non vorremmo mai capitare. Qua dentro ci va tutto il calderone delle funzioni super polinomiali, che sono dette anche *inefficienti*.
 
-Notiamo una cosa importante: il worst case *NON* è $ t(n) = n/2 . $
+Altrimenti, convenzionalmente, un algoritmo si dice *efficiente* se la sua complessità temporale è *polinomiale*.
 
-Infatti, in una macchina di Turing se voglio confrontare la posizione $i$-esima con quella $j$-esima devo spostare la testina $j-i$ volte, dalla posizione $i$ alla posizione $j$. Il tempo reale è $ t(n) = sum_(k=0)^(n-1) k approx n^2 . $
+=== Definizione di classi di complessità
 
-Quando valutiamo il tempo dobbiamo stare bene attenti di considerare anche i tempi di spostamento della DTM. Bisogna sempre tenere a mente l'architettura su cui implementiamo un certo algoritmo.
+Vogliamo utilizzare il concetto di _classi di equivalenza_ per definire delle classi che racchiudano tutti i problemi che hanno bisogno della stessa quantità di risorse computazionali per essere risolti correttamente.
 
-== Classi di complessità
+Una *classe di complessità* è un insieme dei problemi che vengono risolti entro gli stessi limiti di risorse computazionali.
+
+=== Classi di complessità principali
 
 Proviamo a definire alcune classi di complessità in funzione della risorsa tempo.
 
@@ -123,7 +104,7 @@ La funzione $f : Sigma^* arrow.long Gamma^*$ è calcolata con *complessità in t
 
 Detto ciò, introduciamo la classe $ ftime(f(n)) $ definita come l'insieme delle funzioni risolte da una DTM in tempo deterministico $t(n) = O(f(n))$.
 
-Grazie a quanto detto finora, possiamo definire due classi di complessità storicamente importanti: $ P = union.big_(k gt.eq 0) dtime(n^k) $ *classe dei problemi* (_linguaggi_) *risolti da una DTM in tempo polinomiale* e $ fp = union.big_(k gt.eq 0) ftime(n^k) $ *classe delle funzioni calcolate da una DTM in tempo polinomiale*.
+Grazie a quanto detto finora, possiamo definire due classi di complessità storicamente importanti: $ P = union.big_(k gt.eq 0) dtime(n^k) $ *classe dei problemi risolti da una DTM in tempo polinomiale* e $ fp = union.big_(k gt.eq 0) ftime(n^k) $ *classe delle funzioni calcolate da una DTM in tempo polinomiale*.
 
 Questi sono universalmente riconosciuti come i problemi efficientemente risolubili in tempo.
 
@@ -135,55 +116,6 @@ Possiamo dare tre motivazioni:
 - *"robustezza"*: le classi $P$ e $fp$ rimangono invariate a prescindere dai molti modelli di calcolo utilizzati per circoscrivere i problemi efficientemente risolti.
 
 Per l'ultimo motivo, infatti, si può dimostrare che $P$ e $fp$ non dipendono dal modello scelto, che sia RAM, WHILE, DTM, eccetera.
-
-=== Tesi di Church-Turing estesa
-
-// Formattare meglio
-
-*Tesi di Church-Turing estesa*: la classe dei problemi *efficientemente risolubili in tempo* coincide con la classe dei problemi risolti in _tempo polinomiale_ su DTM.
-
-// gigi: non so se mettere gli esempi dei problemi efficientemente risolubili
-// tia: si mettili che io non li so
-
-=== Chiusura di $P$
-
-#theorem(numbering: none)[
-  La classe $P$ è un'algebra di Boole, ovvero è chiusa rispetto alle operazioni di unione, intersezione e complemento.
-]
-
-#proof[
-  #block(
-    fill: rgb("#9FFFFF"),
-    inset: 8pt,
-    radius: 4pt,
-    
-    [UNIONE] 
-  )
-
-  Date due istanze $A,B in P$ e siano $M_A,M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$, allora il seguente programma (ad alto livello) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y or z) $ permette il calcolo dell'unione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
-
-  #block(
-    fill: rgb("#9FFFFF"),
-    inset: 8pt,
-    radius: 4pt,
-    
-    [INTERSEZIONE] 
-  )
-
-  Date due istanze $A,B in P$ e siano $M_A,M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$, allora il seguente programma (ad alto livello) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y and z) $ permette il calcolo dell'intersezione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
-
-  #block(
-    fill: rgb("#9FFFFF"),
-    inset: 8pt,
-    radius: 4pt,
-    
-    [COMPLEMENTO] 
-  )
-
-  Data l'istanza $A in P$ e sia $M_A$ una DTM con tempo $p(n)$, allora il seguente programma (ad alto livello) $ P equiv & "input"(n) \ & y := M_A (x); \ & "output"(not y) $ permette il calcolo del complemento di $A$ in tempo $t(n) = p(n)$.
-]
-
-La classe $P$, inoltre, è anche chiusa rispetto all'operazione di *composizione*: infatti, posso comporre tra loro le macchine di Turing come se fossero procedure black box. Facendo l'esempio con due DTM, otteniamo $ x arrow.long.squiggly M_1 arrow.long.squiggly x' arrow.long.squiggly M_2 arrow.long.squiggly y. $ Supponiamo che le macchine $M_1,M_2$ abbiano tempo rispettivamente $p(n)$ e $q(n)$, allora il tempo totale è $ t(n) lt.eq p(n) + q(p(n)) . $ Usiamo $q(p(n))$ perché eseguendo $M_1$ in $p(n)$ passi il massimo output che scrivo è grande $p(n)$.
 
 === Esempio
 
@@ -200,16 +132,61 @@ La seguente tabella mostra i tempi approssimati di alcune funzioni su input di g
     [*Funzione* $t(n)$], [*Tempo di esecuzione*],
     [$n$], [$approx  mu s$],
     [$n^2$], [$approx m s$], 
-    [$n^3$], [$approx s \/ a$],
+    [$n^3$], [$approx s slash a$],
     [$2^n$], [$1$ gogol, ovvero $10^100$ secondi, più dell'età dell'universo]
   )
 ]
 
 Infine, parliamo di costanti nei simboli di Landau: con costanti molto grandi riesco a inserire algoritmi inefficienti negli efficienti e viceversa. Ad esempio, l'algoritmo del _quicksort_ è più lento nel _worst case_ dell'algoritmo del _mergesort_, però la costante del mergesort è più grande di quella del quicksort.
 
-=== Problemi difficili
+== Tesi di Church-Turing estesa
+
+La *tesi di Church-Turing estesa* afferma che la classe dei problemi *efficientemente risolubili in tempo* coincide con la classe dei problemi risolti in _tempo polinomiale_ su DTM.
+
+La possiamo vedere come la _versione quantitativa_ della tesi di Church-Turing.
+
+== Chiusura di $P$
+
+#theorem(numbering: none)[
+  La classe $P$ è un'algebra di Boole, ovvero è chiusa rispetto alle operazioni di unione, intersezione e complemento.
+]
+
+#proof[
+  #block(
+    fill: rgb("#9FFFFF"),
+    inset: 8pt,
+    radius: 4pt,
+    
+    [UNIONE] 
+  )
+
+  Date due istanze $A,B in P$, siano $M_A$ e $M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y or z) $ permette il calcolo dell'unione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
+
+  #block(
+    fill: rgb("#9FFFFF"),
+    inset: 8pt,
+    radius: 4pt,
+    
+    [INTERSEZIONE] 
+  )
+
+  Date due istanze $A,B in P$, siano $M_A$ e $M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y and z) $ permette il calcolo dell'intersezione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
+
+  #block(
+    fill: rgb("#9FFFFF"),
+    inset: 8pt,
+    radius: 4pt,
+    
+    [COMPLEMENTO] 
+  )
+
+  Data l'istanza $A in P$, sia $M_A$ una DTM con tempo $p(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & "output"(not y) $ permette il calcolo del complemento di $A$ in tempo $t(n) = p(n)$.
+]
+
+La classe $P$, inoltre, è anche chiusa rispetto all'operazione di *composizione*: infatti, posso comporre tra loro le macchine di Turing come se fossero procedure black box. Facendo l'esempio con due DTM, otteniamo $ x arrow.long.squiggly M_1 arrow.long.squiggly x' arrow.long.squiggly M_2 arrow.long.squiggly y. $ Supponiamo che le macchine $M_1$ e $M_2$ abbiano tempo rispettivamente $p(n)$ e $q(n)$, allora il tempo totale è $ t(n) lt.eq p(n) + q(p(n)) . $ Usiamo $q(p(n))$ perché eseguendo $M_1$ in $p(n)$ passi il massimo output che scrivo è grande $p(n)$.
+
+== Problemi difficili
 
 Esistono moltissimi problemi pratici e importanti per i quali ancora non sono stati trovati algoritmi efficienti e non è nemmeno stato provato che tali algoritmi non possano per natura esistere. 
 
 In altre parole, non sappiamo se tutti i problemi sono in realtà efficientemente risolubili o se ne esistono alcuni il cui miglior algoritmo di risoluzione abbia una complessità esponenziale.
-
