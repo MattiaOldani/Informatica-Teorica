@@ -26,7 +26,7 @@
 )
 
 
-= $programmi tilde NN$
+= $bold(programmi tilde NN)$
 
 La relazione interviene nella parte che afferma che $ F(cal(C)) tilde programmi tilde NN. $
 
@@ -81,8 +81,8 @@ L'esecuzione di un programma su una macchina RAM segue i seguenti passi:
   + nel registro $R_1$ viene caricato l'input;
   + ogni altro registro è azzerato.
 + *Esecuzione*: si eseguono tutte le istruzioni _una dopo l'altra_, ovvero ad ogni iterazione passo da $L$ a $L+1$, a meno di istruzioni di salto. Essendo il linguaggio RAM _non strutturato_ il PC è necessario per indicare ogni volta l'istruzione da eseguire al passo successivo. Un linguaggio strutturato, invece, sa sempre quale istruzione eseguire dopo quella corrente, infatti non è dotato di PC;
-+ *Terminazione*: per convenzione si mette $L = 0$ per indicare che l'esecuzione del programma è finita oppure è andata in loop. Questo segnale, nel caso il programma termini, è detto *segnale di halt* e arresta la macchina;
-+ *Output*: il contenuto di $R_0$, se vado in halt, contiene il risultato dell'esecuzione del programma $P$. Indichiamo con $phi_P (n)$ il contenuto del registro $R_0$ (in caso di halt) oppure $bot$ (in caso di loop), allora: $ phi_P (n) = cases(op("contenuto")(R_0) quad & "se halt", bot & "se loop") quad . $
++ *Terminazione*: per convenzione si mette $L = 0$ per indicare che l'esecuzione del programma è finita oppure è andata in loop. Questo segnale, nel caso il programma termini, è detto *segnale di $halt$* e arresta la macchina;
++ *Output*: il contenuto di $R_0$, se vado in $halt$, contiene il risultato dell'esecuzione del programma $P$. Indichiamo con $phi_P (n)$ il contenuto del registro $R_0$ (in caso di $halt$) oppure $bot$ (in caso di loop), allora: $ phi_P (n) = cases(op("contenuto")(R_0) quad & "se " halt, bot & "se loop") quad . $
 
 Con $phi_P: NN arrow.long NN_bot$ indichiamo la *semantica* del programma $P$.
 
@@ -113,7 +113,7 @@ Definiamo ora come passiamo da uno stato all'altro. Per far ciò, definiamo:
 Ci manca da definire la _parte dinamica_ del programma, ovvero l'*esecuzione*. Definiamo la *funzione di stato prossimo* $ delta: stati times programmi arrow.long stati_bot $ tale che $ delta(S, P) = S', $ dove $S$ rappresenta lo stato attuale e $S'$ rappresenta lo stato prossimo dopo l'esecuzione di un'istruzione di $P$.
 
 La funzione $delta(S,P) = S'$ è tale che:
-- se $S(L) = 0$ ho halt, ovvero deve terminare la computazione. Poniamo lo stato come indefinito, quindi $S' = bot$;
+- se $S(L) = 0$ ho $halt$, ovvero deve terminare la computazione. Poniamo lo stato come indefinito, quindi $S' = bot$;
 - se $S(L) > |P|$ vuol dire che $P$ non contiene istruzioni che bloccano esplicitamente l'esecuzione del programma. Lo stato $S'$ è tale che: $ S'(R) = cases(0 & "se" R = L, S(R_i) quad & "se" R = R_i space forall i) quad ; $
 - se $1 lt.eq S(L) lt.eq |P|$ considero l'istruzione $S(L)$-esima:
   - se ho incremento/decremento sul registro $R_k$ definisco $S'$ tale che $ cases(S'(L) = S(L) + 1, S'(R_k) = S(R_k) plus.minus 1, S'(R_i) = S(R_i) "per" i eq.not k) quad ; $
@@ -121,7 +121,7 @@ La funzione $delta(S,P) = S'$ è tale che:
 
 L'esecuzione di un programma $P in programmi$ su input $n in NN$ genera una sequenza di stati $ S_0, S_1, dots, S_i, S_(i+1), dots $ tali che $ S_0 = inizializzazione(n) \ forall i quad S_(i+1) = delta(S_i, P). $
 
-La sequenza è infinita quando $P$ va in loop, mentre se termina raggiunge uno stato $S_m$ tale che $S_m (L) = 0$, ovvero ha ricevuto il segnale di halt.
+La sequenza è infinita quando $P$ va in loop, mentre se termina raggiunge uno stato $S_m$ tale che $S_m (L) = 0$, ovvero ha ricevuto il segnale di $halt$.
 
 La semantica di $P$ è $ phi_P (n) = cases(y quad & "se" P "termina in" S_m", con" S_m (L) = 0 " e " S_m (R_0) = y, bot & "se" P "va in loop") quad . $
 
@@ -200,7 +200,7 @@ L'esecuzione di un programma while $W$ è composta dalle seguenti fasi:
 + *terminazione*: l'esecuzione di $W$ può:
   - _arrestarsi_, se sono arrivato al termine delle istruzioni;
   - _non arrestarsi_, se si è entrati in un loop;
-+ *output*: se il programma va in halt, l'output è contenuto nel registro $x_0$. Possiamo scrivere $ Psi_W (n) = cases(op("contenuto")(x_0) quad & "se halt", bot & "se loop") quad . $
++ *output*: se il programma va in $halt$, l'output è contenuto nel registro $x_0$. Possiamo scrivere $ Psi_W (n) = cases(op("contenuto")(x_0) quad & "se " halt, bot & "se loop") quad . $
 
 La funzione $Psi_W : NN arrow.long NN_bot$ indica la *semantica* del programma $W$.
 
@@ -256,8 +256,8 @@ Dati $C_1$ e $C_2$ due sistemi di calcolo, definiamo *traduzione* da $C_1$ a $C_
   \ Se $f in F(C_1)$ allora esiste un programma $P_1 in c1programmi$ tale che $Psi_P_1 = f$.
 
   A questo programma $P_1$ applico $T$, ottenendo $T(P_1) = P_2 in c2programmi$ (per _completezza_) tale che $phi_P_2 = Psi_P_1 = f$ (per _correttezza_).
-
-  Ho trovato un programma $P_2 in c2programmi$ la cui semantica è $f$, allora $F(C_1) subset.eq F(C_2)$.
+  
+  Ho trovato un programma $P_2 in c2programmi$ la cui semantica è $f$, allora $f in F(C_2)$\ $arrow.double.long F(C_1) subset.eq F(C_2)$.
 ]
 
 Mostreremo che $F(mwhile) subset.eq F(ram)$, ovvero il sistema $mwhile$ non è più potente del sistema $ram$. Quello che faremo sarà costruire un compilatore $ op("Comp") : wprogrammi arrow.long programmi $ che rispetti le caratteristiche di programmabilità, completezza e correttezza.
@@ -271,7 +271,7 @@ Questa aggiunta non aumenta la potenza espressiva del linguaggio, essendo pura s
 Essendo $wprogrammi$ un insieme definito induttivamente, possiamo definire anche il compilatore induttivamente:
 - *passo base*: mostro come compilare gli assegnamenti;
 - *passo induttivo*:
-  + per ipotesi induttiva, assumo di sapere $compilatore(C_1), dots, compilatore(C_m)$ e mostro come compilare il comando composto $composto$;
+  + per ipotesi induttiva, assumo di sapere $compilatore(C_1), dots, compilatore(C_n)$ e mostro come compilare il comando composto $composto$;
   + per ipotesi induttiva, assumo di sapere $compilatore(C)$ e mostro come compilare il comando while $comandowhile$.
 
 Nelle traduzioni andremo a mappare la variabile WHILE $x_k$ nel registro $ram R_k$. Questo non mi crea problemi o conflitti, perché sto mappando un numero finito di registri ($21$) in un insieme infinito.
@@ -320,7 +320,7 @@ Abbiamo due problemi principali:
 
 La semantica di $I_W$ diventa $ forall x,n in NN quad Psi_I_W (cantor(x,n)) = phi_n (x) = phi_P (x). $
 
-Come prima, per comodità di scrittura useremo un altro linguaggio, il *macro-WHILE*. Questo include alcune macro che saranno molto comode nella scrittura di $I_W$. Visto che viene modificata solo la sintassi, la potenza del linguaggio non $mwhile$ non aumenta.
+Come prima, per comodità di scrittura useremo un altro linguaggio, il *macro-$mwhile$*. Questo include alcune macro che saranno molto comode nella scrittura di $I_W$. Visto che viene modificata solo la sintassi, la potenza del linguaggio $mwhile$ non aumenta.
 
 Le macro utilizzate sono:
 - $x_k := x_j + x_s$;

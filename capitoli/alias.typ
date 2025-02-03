@@ -25,6 +25,7 @@
 // Sistemi di calcolo
 #let ram = $"RAM"$
 #let mwhile = $"WHILE"$
+#let halt = $mono("halt")$
 
 // Sistema ram
 #let inc(reg) = $reg arrow.long.l reg + 1$
