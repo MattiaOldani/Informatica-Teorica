@@ -1,7 +1,9 @@
-#import "@preview/algo:0.3.3": algo, i, d
+// Setup
 
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Spazio di memoria
 
@@ -22,9 +24,7 @@ Per avere complessità anche sublineari, potremmo modificare leggermente la macc
 #v(12pt)
 
 // Da sistemare
-#figure(
-  image("assets/dtm-doppio-nastro.svg", width: 65%)
-)
+#figure(image("assets/dtm-doppio-nastro.svg", width: 65%))
 
 #v(12pt)
 
@@ -98,13 +98,11 @@ Un algoritmo più "veloce" di quello che abbiamo visto, è il seguente.
     columns: (60%, 20%, 20%),
     inset: 10pt,
     align: horizon,
-    
     [*Istruzione*], [*Tempo*], [*Spazio*],
-
     [Copia la stringa di input sul nastro di lavoro], [$n$], [$n$],
     [Sposta la testina del nastro di input in prima posizione (quella del nastro di lavoro sarà alla fine)], [$n$], [-],
     [Confronta i due caratteri, avanzando al testina di input e retrocedendo quella di lavoro], [$n$], [-],
-    [Accetta se tutti i confronti tornano, altrimenti rifiuta], [$t(n) = O(n)$], [$s(n) = O(n)$]
+    [Accetta se tutti i confronti tornano, altrimenti rifiuta], [$t(n) = O(n)$], [$s(n) = O(n)$],
   )
 ]
 
@@ -114,7 +112,7 @@ Esistono quindi diversi algoritmi per un dato problema che ottimizzano solo una 
 
 == Efficienza in termini di spazio
 
-Definiamo: 
+Definiamo:
 - $L = dspace(log(n))$ classe dei linguaggi accettati in spazio deterministico $O(log(n))$;
 - $fl = fspace(log(n))$ classe delle funzioni calcolate in spazio deterministico $O(log(n))$.
 

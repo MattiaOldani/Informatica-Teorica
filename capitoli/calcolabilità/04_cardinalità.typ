@@ -1,29 +1,12 @@
+// Setup
+
 #import "../alias.typ": *
 
-#import "@preview/lemmify:0.1.5": *
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
 
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
 
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
+// Capitolo
 
 = Cardinalità
 
@@ -46,7 +29,7 @@ Questo approccio permette di confrontare tra loro la cardinalità di insiemi inf
 
 == Cardinalità finita
 
-La prima classe di cardinalità che vediamo è quella delle *cardinalità finite*. 
+La prima classe di cardinalità che vediamo è quella delle *cardinalità finite*.
 
 Definiamo la seguente famiglia di insiemi: $ J_n = cases(emptyset & text(" se ") n = 0, {1,...,n} & text(" se ") n > 0) quad . $
 
@@ -81,18 +64,18 @@ Gli *insiemi non numerabili* sono insiemi a cardinalità infinita ma che non son
 
 Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
-#theorem(numbering: none)[
+#theorem()[
   L'insieme $RR$ non è numerabile ($RR tilde.not NN$).
 ]
 
-#proof[
-  \ Suddividiamo la dimostrazione in tre punti:
+#theorem-proof()[
+  \Suddividiamo la dimostrazione in tre punti:
   + dimostriamo che $RR tilde (0,1)$;
   + dimostriamo che $NN tilde.not (0,1)$;
   + dimostriamo che $RR tilde.not NN$.
 
   [1] Partiamo con il dimostrare che $RR tilde (0,1)$: serve trovare una biiezione tra $RR$ e $(0,1)$. Usiamo una rappresentazione grafica, costruita in questo modo:
-  - disegnare la circonferenza di raggio $1/2$ centrata in $1/2$;
+  - disegnare la circonferenza di raggio $1 / 2$ centrata in $1 / 2$;
   - disegnare la perpendicolare al punto da mappare che interseca la circonferenza;
   - disegnare la semiretta passante per il centro $C$ e l'intersezione precedente.
 
@@ -100,9 +83,7 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
 
   #v(-36pt)
 
-  #figure(
-      image("assets/biiezione.svg", width: 70%)
-  )
+  #figure(image("assets/biiezione.svg", width: 70%))
 
   #v(12pt)
 
@@ -117,7 +98,7 @@ Il più famoso insieme non numerabile è l'insieme dei numeri reali $RR$.
   Questo numero appartiene a $(0,1)$, ma non appare nella lista scritta sopra: ogni cifra $c_i$ del numero costruito differisce per almeno una posizione (quella sulla diagonale principale) da qualunque numero nella lista. Questo è assurdo, visto che avevamo assunto $(0,1)$ numerabile $arrow.long.double NN tilde.not (0,1)$.
 
   [3] Terminiamo dimostrando che $RR tilde.not NN$ per transitività.
-  
+
   Più in generale, non si riesce a listare nessun segmento di lunghezza maggiore di 0.
 ]
 
@@ -134,24 +115,24 @@ Vediamo due insiemi continui che saranno importanti successivamente.
 
 Il primo insieme che vediamo è l'*insieme delle parti* di $NN$, detto anche _power set_, ed è così definito: $ P(NN) = 2^NN = {S bar.v S "è sottoinsieme di" NN}. $
 
-#theorem(numbering: none)[
+#theorem()[
   $P(NN) tilde.not NN$.
 ]
 
-#proof[
-  \ Dimostriamo questo teorema tramite diagonalizzazione.
-  
+#theorem-proof()[
+  Dimostriamo questo teorema tramite diagonalizzazione.
+
   Il *vettore caratteristico* di un sottoinsieme è un vettore che nella posizione $p_i$ ha $1$ se $i in A$, altrimenti ha $0$.
 
   Rappresentiamo il sottoinsieme $A subset.eq NN$ sfruttando il suo vettore caratteristico: $ NN&: 0 space 1 space 2 space 3 space 4 space 5 space 6 space dots \ A&: 0 space 1 space 1 space 0 space 1 space 1 space 0 space dots quad . $
-  
+
   Per assurdo, sia $P(NN)$ numerabile. Vista questa proprietà, possiamo listare tutti i vettori caratteristici che appartengono a $P(NN)$ come: $ b_0 &= b_(00) space b_(01) space b_(02) space dots \ b_1 &= b_(10) space b_(11) space b_(12) space dots \ b_2 &= b_(20) space b_(21) space b_(22) space dots quad . $
 
   Vogliamo costruire un vettore che appartenga a $P(NN)$, ma non è presente nella lista precedente. Definiamo il seguente: $ c = overline(b_(00)) space overline(b_(11)) space overline(b_(22)) dots $ che contiene nella posizione $c_i$ il complemento di $b_(i i)$.
 
   Questo vettore appartiene a $P(NN)$ (perché rappresenta sicuramente un suo sottoinsieme), ma non è presente nella lista precedente perché è diverso da ogni elemento in almeno una cifra, quella sulla diagonale principale.
 
-  Questo è assurdo perché abbiamo assunto che $P(NN)$ fosse numerabile, quindi $P(NN) tilde.not NN$.
+  Questo è assurdo perché abbiamo assunto che $P(NN)$ fosse numerabile, quindi $ P(NN) tilde.not NN . qedhere $
 ]
 
 Visto questo teorema possiamo concludere che: $ P(NN) tilde [0,1] tilde overset(RR, .). $
@@ -160,13 +141,13 @@ Visto questo teorema possiamo concludere che: $ P(NN) tilde [0,1] tilde overset(
 
 Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$ così definito: $ NN_bot^NN = {f: NN arrow.long NN}. $
 
-#theorem(numbering: none)[
+#theorem()[
   $NN_bot^NN tilde.not NN$.
 ]
 
-#proof[
-  \ Anche in questo caso useremo la diagonalizzazione.
-  
+#theorem-proof()[
+  Anche in questo caso useremo la diagonalizzazione.
+
   Per assurdo, assumiamo $NN_bot^NN$ numerabile. Possiamo, quindi, listare $NN_bot^NN$ come ${f_0, f_1, f_2, dots}$.
 
   #align(center)[
@@ -174,13 +155,11 @@ Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$ cos
       columns: (10%, 15%, 15%, 15%, 15%, 15%, 15%),
       inset: 10pt,
       align: horizon,
-
       [], [$0$], [$1$], [$2$], [$3$], [$dots$], [$NN$],
-
       [$f_0$], [$f_0 (0)$], [$f_0 (1)$], [$f_0 (2)$], [$f_0 (3)$], [$dots$], [$dots$],
       [$f_1$], [$f_1 (0)$], [$f_1 (1)$], [$f_1 (2)$], [$f_1 (3)$], [$dots$], [$dots$],
       [$f_2$], [$f_2 (0)$], [$f_2 (1)$], [$f_2 (2)$], [$f_2 (3)$], [$dots$], [$dots$],
-      [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], 
+      [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$], [$dots$],
     )
   ]
 
@@ -189,6 +168,6 @@ Il secondo insieme che vediamo è l'*insieme delle funzioni* da $NN$ in $NN$ cos
   Definiamo quindi la funzione $ phi(n) = cases(1 & "se" f_n (n) = bot, f_n (n) + 1 quad & "se" f_n (n) arrow.b) quad . $
 
   Questa funzione è una funzione che appartiene a $NN_bot^NN$, ma non è presente nella lista precedente. Infatti, $forall k in NN$ otteniamo $ phi(k) = cases(1 eq.not f_k (k) = bot & "se" f_k (k) = bot, f_k (k) + 1 eq.not f_k (k) quad & "se" f_k (k) arrow.b) quad . $
-  
+
   Questo è assurdo, perché abbiamo assunto $P(NN)$ numerabile, quindi $P(NN) tilde.not NN$.
 ]

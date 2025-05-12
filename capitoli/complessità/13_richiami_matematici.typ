@@ -1,3 +1,8 @@
+// Setup
+
+
+// Capitolo
+
 = Richiami matematici: teoria dei linguaggi formali
 
 Dato un problema $P$, finora ci siamo chiesti _"*esiste* un programma per la sua soluzione automatica?"_ Tramite questa domanda abbiamo potuto indagare la *teoria della calcolabilità*, il cui oggetto di studio è l'esistenza (_o meno_) di un programma per un dato problema.

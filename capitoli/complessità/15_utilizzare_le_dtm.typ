@@ -1,21 +1,12 @@
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
+// Setup
 
 #import "../alias.typ": *
+
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 
 = Funzionalità di una DTM
@@ -36,17 +27,13 @@ Quando facciamo riconoscere un insieme $A$ a una DTM $M$, possiamo trovarci in d
   - arrestarsi rifiutando l'input, ovvero finisce in uno stato $q in.not F$, ma allora $A$ è ricorsivo;
   - andare in loop, ma allora $A$ è ricorsivamente numerabile.
 
-#theorem(
-  numbering: none
-)[
+#theorem()[
   La classe degli insiemi riconosciuti da DTM coincide con la classe degli insiemi ricorsivamente numerabili.
 ]
 
 Un *algoritmo deterministico* per il riconoscimento di un insieme $A subset.eq NN$ è una DTM $M$ tale che $L_A = L_M$ e tale che $M$ si arresta su ogni input.
 
-#theorem(
-  numbering: none
-)[
+#theorem()[
   La classe degli insiemi riconosciuti da algoritmi deterministici coincide con la classe degli insiemi ricorsivi.
 ]
 
@@ -79,10 +66,11 @@ Possiamo riscrivere la *tesi di Church-Turing* come
 #align(center)[
   #block(
     stroke: green + 1pt,
-    inset: 1em,
+    inset: 10pt,
+    radius: 5pt,
     breakable: true,
-    
-    [_"Una funzione è intuitivamente calcolabile se e solo se è calcolata da una DTM"_]
+
+    [_"Una funzione è intuitivamente calcolabile se e solo se è calcolata da una DTM"_],
   )
 ]
 

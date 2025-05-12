@@ -1,29 +1,12 @@
+// Setup
+
 #import "../alias.typ": *
 
-#import "@preview/lemmify:0.1.5": *
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
 
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
 
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
+// Capitolo
 
 = Riconoscibilità automatica di insiemi
 
@@ -105,7 +88,7 @@ Un'importante relazione ricorsiva è la relazione $ R_P = {(x,y) in NN^2 bar.v P
 - *clock* per contare i passi di interpretazione;
 - *check del clock* per controllare l'arrivo alla quota $y$.
 
-Definiamo quindi il programma $ overset(U,tilde) = U + "clock" + "check clock" $ tale che $ overset(U,tilde) equiv & "input"(x,y) \ & U(P,x) + "clock" \ & "ad ogni passo di" U(P,x): \ & quad "if clock" > y: \ & quad quad "output"(0) \ & quad "clock"++; \ & "output"("clock" == y) quad . $
+Definiamo quindi il programma $ overset(U, tilde) = U + "clock" + "check clock" $ tale che $ overset(U, tilde) equiv & "input"(x,y) \ & U(P,x) + "clock" \ & "ad ogni passo di" U(P,x): \ & quad "if clock" > y: \ & quad quad "output"(0) \ & quad "clock"++; \ & "output"("clock" == y) quad . $
 
 Nel sistema RAM, ad esempio, per capire se l'output è stato generato o meno osservo se il PC, contenuto nel registro $L$, è uguale a 0.
 
@@ -149,32 +132,32 @@ Visto che $f$ è ricorsiva totale esiste un/a programma/routine $F$ che la imple
 
 === Caratterizzazioni
 
-#theorem(numbering: none)[
+#theorem()[
   Le seguenti definizioni sono equivalenti:
   + $A$ è ricorsivamente numerabile, con $A = immagine(f)$ e $f in cal(T)$ funzione ricorsiva totale;
   + $A = dominio(f)$, con $f in cal(P)$ funzione ricorsiva parziale;
   + esiste una relazione $R subset.eq NN^2$ ricorsiva tale che $A = {x in NN bar.v exists y in NN bar.v (x,y) in R}$.
 ]
 
-#proof[
-  \ Per dimostrare questi teoremi dimostriamo che $1 arrow.long.double 2 arrow.long.double 3 arrow.long.double 1$, creando un'implicazione ciclica.
+#theorem-proof()[
+  Per dimostrare questi teoremi dimostriamo che $1 arrow.long.double 2 arrow.long.double 3 arrow.long.double 1$, creando un'implicazione ciclica.
 
   #block(
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [$1 arrow.long.double 2$] 
+
+    [$1 arrow.long.double 2$],
   )
-  
+
   Sappiamo che $A = immagine(f)$, con $f in cal(T)$, è ricorsivamente numerabile, quindi esistono la sua routine di calcolo $f$ e il suo algoritmo di parziale riconoscimento $P$, definiti in precedenza. Vista la definizione di $P$, abbiamo che $ phi_P (x) = cases(1 "se" x in A, bot "se" x in.not A) quad , $ ma allora $A = dominio(phi_P)$: il dominio è l'insieme dei valori dove la funzione è definita, in questo caso proprio l'insieme $A$. Inoltre, $phi_P in cal(P)$ perché ho mostrato che esiste un programma $P$ che la calcola.
 
   #block(
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [$2 arrow.long.double 3$]
+
+    [$2 arrow.long.double 3$],
   )
 
   Sappiamo che $A = dominio(f)$, con $f in cal(P)$, quindi esiste un programma $P$ tale che $phi_P = f$. Considero allora la relazione $ R_P = {(x,y) in NN^2 bar.v P "su input" x "termina in" y "passi"}, $ che abbiamo dimostrato prima essere ricorsiva. Definiamo $ B = {x in NN bar.v exists y bar.v (x,y) in R_P}. $ Dimostriamo che A = B. Infatti:
@@ -185,8 +168,8 @@ Visto che $f$ è ricorsiva totale esiste un/a programma/routine $F$ che la imple
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [$3 arrow.long.double 1$]
+
+    [$3 arrow.long.double 1$],
   )
 
   Sappiamo che $A = {x in NN bar.v exists y bar.v (x,y) in R}$, con $R$ relazione ricorsiva.
@@ -196,10 +179,10 @@ Visto che $f$ è ricorsiva totale esiste un/a programma/routine $F$ che la imple
   Visto che $R$ è una relazione ricorsiva esiste un programma $P_R$ che categorizza ogni numero naturale, ma allora la funzione $t$ è ricorsiva totale. Infatti, possiamo scrivere il programma $ P equiv & "input"(n) \ & x := cantorsin(n); \ & y := cantordes(n); \ & "if" (P_R (x,y) == 1) \ & quad "output"(x) \ & "else" \ & quad "output"(a) $ che implementa la funzione $t$, quindi $phi_P = t$.
 
   Dimostriamo che $A = immagine(t)$. Infatti:
-  - $A subset.eq immagine(t)$: se $x in A$ allora $(x,y) in R$, ma allora $t(cantor(x,y)) = x$, quindi $x in immagine(t)$;
+  - $A subset.eq immagine(t)$: se $x in A$ allora $(x,y) in R$, ma allora $t(cantor(x, y)) = x$, quindi $x in immagine(t)$;
   - $immagine(t) subset.eq A$: se $x in immagine(t)$ allora:
     - se $x = a$ per l'assioma della scelta $a in A$ quindi $x in A$;
-    - se $x = cantorsin(n)$, con $n = cantor(x,y)$ per qualche $y$ tale che $(x,y) in R$, allora $x in A$ per definizione di $A$.
+    - se $x = cantorsin(n)$, con $n = cantor(x, y)$ per qualche $y$ tale che $(x,y) in R$, allora $x in A$ per definizione di $A$. #qedhere
 ]
 
 Grazie a questo teorema abbiamo tre caratterizzazioni per gli insiemi ricorsivamente numerabili e possiamo sfruttare la formulazione che ci è più comoda.
@@ -216,7 +199,7 @@ Un esempio di insieme che non è ricorsivo, ma è ricorsivamente numerabile, è 
 
 Infatti, l'insieme $ A = {x in NN bar.v phi_x (x) arrow.b} $ non è ricorsivo, altrimenti il problema dell'arresto ristretto sarebbe decidibile.
 
-Tuttavia, questo insieme è *ricorsivamente numerabile*: infatti, il programma $ P equiv & "input"(x) \ & U(x,x); \ & "output"(1) $ decide parzialmente $A$. Come possiamo vedere, se $x in A$ allora $phi_x (x) arrow.b$, ovvero l'interprete universale $U$ termina, e il programma $P$ restituisce $1$, altrimenti non termina. 
+Tuttavia, questo insieme è *ricorsivamente numerabile*: infatti, il programma $ P equiv & "input"(x) \ & U(x,x); \ & "output"(1) $ decide parzialmente $A$. Come possiamo vedere, se $x in A$ allora $phi_x (x) arrow.b$, ovvero l'interprete universale $U$ termina, e il programma $P$ restituisce $1$, altrimenti non termina.
 
 Di conseguenza $ phi_P (x) = cases(1 & "se" phi_U (x,x) = phi_x (x) arrow.b, bot quad & "altrimenti") quad . $
 
@@ -226,12 +209,12 @@ Alternativamente, possiamo dire che $ A = {x in NN bar.v phi_x (x) arrow.b} = {x
 
 Come sono messi i due insiemi?
 
-#theorem(numbering: none)[
+#theorem()[
   Se $A subset.eq NN$ è ricorsivo allora è ricorsivamente numerabile.
 ]
 
-#proof[
-  \ Se $A$ è ricorsivo esiste un programma $P$ che è in grado di riconoscerlo, ovvero un programma che restituisce $1$ se $x in A$, altrimenti restituisce $0$.
+#theorem-proof()[
+  Se $A$ è ricorsivo esiste un programma $P$ che è in grado di riconoscerlo, ovvero un programma che restituisce $1$ se $x in A$, altrimenti restituisce $0$.
 
   Il programma $P$ è del tipo $ P equiv & "input"(x) \ & "if"(P_A(x) == 1) \ & quad quad "output"(1) \ & "else" \ & quad quad "while"(1>0); quad . $
 
@@ -240,9 +223,7 @@ Come sono messi i due insiemi?
 
 Poco fa abbiamo mostrato come $A = {x in NN bar.v phi_x (x) arrow.b}$ sia un insieme ricorsivamente numerabile ma non ricorsivo, ma allora vale $ "Ricorsivi" subset "Ricorsivamente numerabili" . $
 
-#figure(
-  image("assets/ricorsivi-rnumerabili-1.svg", width: 50%)
-)
+#figure(image("assets/ricorsivi-rnumerabili-1.svg", width: 50%))
 
 _Esistono insiemi che non sono ricorsivamente numerabili?_
 
@@ -250,36 +231,36 @@ _Esistono insiemi che non sono ricorsivamente numerabili?_
 
 Cerchiamo di sfruttare l'operazione di complemento di insiemi sui ricorsivamente numerabili per vedere di che natura è l'insieme $ A^C = {x in NN bar.v phi_x (x) arrow.t} . $
 
-#theorem(numbering: none)[
+#theorem()[
   La classe degli insiemi ricorsivi è un'Algebra di Boole, ovvero è chiusa per complemento, intersezione e unione.
 ]
 
-#proof[
-  \ Siano $A,B$ due insiemi ricorsivi. Allora esistono dei programmi $P_A, P_B$ che li riconoscono o, equivalentemente, esistono $chi_A, chi_B in cal(T)$.
+#theorem-proof()[
+  Siano $A,B$ due insiemi ricorsivi. Allora esistono dei programmi $P_A, P_B$ che li riconoscono o, equivalentemente, esistono $chi_A, chi_B in cal(T)$.
 
-  È facile dimostrare che le operazioni di unione, intersezione e complemento sono facilmente implementabili da programmi che terminano sempre. Di conseguenza, $ A union B, A sect B, A^C $ sono ricorsive.
+  È facile dimostrare che le operazioni di unione, intersezione e complemento sono facilmente implementabili da programmi che terminano sempre. Di conseguenza, $ A union B, A inter B, A^C $ sono ricorsive.
 
   Vediamo questi tre programmi:
   - *complemento* $ P_(A^C) equiv & "input"(x) \ & "output"(1 overset(-, .) P_A (x)) . $
-  - *intersezione* $ P_(A sect B) equiv & "input"(x) \ & "output"(min(P_A (x), P_B (x))) . $
+  - *intersezione* $ P_(A inter B) equiv & "input"(x) \ & "output"(min(P_A (x), P_B (x))) . $
   - *unione* $ P_(A union B) equiv & "input"(x) \ & "output"(max(P_A (x), P_B (x))) . $
 
   Allo stesso modo possiamo trovare le funzioni caratteristiche delle tre operazioni:
   - $chi_(A^C) (x) = 1 overset(-, .) chi_A (x)$;
-  - $chi_(A sect B) = chi_A (x) dot chi_B (x)$;
+  - $chi_(A inter B) = chi_A (x) dot chi_B (x)$;
   - $chi_(A union B) = 1 overset(-, .) (1 overset(-, .) chi_A (x))(1 overset(-, .) chi_B (x))$.
-  
-  Tutte queste funzioni sono ricorsive totali, quindi anche le funzioni $A^C, A sect B, A union B$ sono ricorsive totali.
+
+  Tutte queste funzioni sono ricorsive totali, quindi anche le funzioni $A^C, A inter B, A union B$ sono ricorsive totali.
 ]
 
 Ora, però, vediamo un risultato molto importante riguardante nello specifico il complemento dell'insieme dell'arresto $A^C$ che abbiamo definito prima.
 
-#theorem(numbering: none)[
+#theorem()[
   $A^C$ non è ricorsivo.
 ]
 
-#proof[
-  \ Se $A^C$ fosse ricorsivo, per la proprietà di chiusura dimostrata nel teorema precedente, avremmo $ (A^C)^C = A $ ricorsivo, il che è assurdo.
+#theorem-proof()[
+  Se $A^C$ fosse ricorsivo, per la proprietà di chiusura dimostrata nel teorema precedente, avremmo $ (A^C)^C = A $ ricorsivo, il che è assurdo.
 ]
 
 Ricapitolando abbiamo:
@@ -288,12 +269,14 @@ Ricapitolando abbiamo:
 
 _L'insieme $A^C$ Potrebbe essere ricorsivamente numerabile?_
 
-#theorem(numbering: none)[
+#theorem()[
   Se $A$ è ricorsivamente numerabile e $A^C$ è ricorsivamente numerabile allora $A$ è ricorsivo.
 ]
 
-#proof[\
-  \ *INFORMALE*
+#theorem-proof()[
+  Vediamo due diverse dimostrazioni.
+
+  *INFORMALE*
 
   Essendo $A$ e $A^C$ ricorsivamente numerabili, esistono due libri con infinite pagine su ognuna delle quali compare un elemento di $A$ (_primo libro_) e un elemento di $A^C$ (_secondo libro_).
 
@@ -303,7 +286,7 @@ _L'insieme $A^C$ Potrebbe essere ricorsivamente numerabile?_
     - se $x$ compare nel libro di $A$, stampa $1$,
     - se $x$ compare nel libro di $A^C$, stampa $0$,
     - se $x$ non compare su nessuna delle due pagine, voltiamo la pagina di ogni libro e ricominciamo.
-  
+
   Questo algoritmo termina sempre dato che $x$ o sta in $A$ o sta in $A^C$, quindi prima o poi verrà trovato su uno dei due libri.
 
   Ma allora questo algoritmo riconosce $A$, quindi $A$ è ricorsivo.
@@ -324,62 +307,58 @@ In generale, questo teorema ci fornisce uno strumento molto interessante per stu
 
 #v(12pt)
 
-#figure(
-  image("assets/ricorsivi-rnumerabili-2.svg", width: 50%)
-)
+#figure(image("assets/ricorsivi-rnumerabili-2.svg", width: 50%))
 
 #v(12pt)
 
 == Chiusura degli insiemi ricorsivamente numerabili
 
-#theorem(numbering: none)[
+#theorem()[
   La classe degli insiemi ricorsivamente numerabili è chiusa per unione e intersezione, ma non per complemento.
 ]
 
-#proof[
-  \ Per complemento, abbiamo mostrato che $A = {x : phi_x (x) arrow.b}$ è ricorsivamente numerabile, mentre $A^C = {x : phi_x (x) arrow.t}$ non lo è.
+#theorem-proof()[
+  Per complemento, abbiamo mostrato che $A = {x : phi_x (x) arrow.b}$ è ricorsivamente numerabile, mentre $A^C = {x : phi_x (x) arrow.t}$ non lo è.
 
-  Siano $A,B$ insiemi ricorsivamente numerabili. Esistono, perciò, $f, g in cal(T) bar.v A = immagine(f) and B = immagine(g)$. Sia $f$ implementata da $F$ e $g$ implementata da $G$. Siano 
-  
+  Siano $A,B$ insiemi ricorsivamente numerabili. Esistono, perciò, $f, g in cal(T) bar.v A = immagine(f) and B = immagine(g)$. Sia $f$ implementata da $F$ e $g$ implementata da $G$. Siano
+
   #grid(
     columns: (50%, 50%),
-    
     align(center)[
-      $ P_i equiv & "input"(x); \ & i := 0; \ & "while"(F(i) eq.not x) \ & quad i++; \ & i := 0; \ & "while"(G(i) eq.not x) \ & quad i++; \ & "output"(1); $
+      $
+        P_i equiv & "input"(x); \ & i := 0; \ & "while"(F(i) eq.not x) \ & quad i++; \ & i := 0; \ & "while"(G(i) eq.not x) \ & quad i++; \ & "output"(1);
+      $
     ],
-    
     align(center)[
-      $ P_u equiv & "input"(x); \ & i := 0; \ & "while"("true") \ & quad "if" (F(i) = x) \ & quad quad "output"(1); \ & quad "if" (G(i) = x) \ & quad quad "output"(1); \ & quad i++; $
-    ]
+      $
+        P_u equiv & "input"(x); \ & i := 0; \ & "while"("true") \ & quad "if" (F(i) = x) \ & quad quad "output"(1); \ & quad "if" (G(i) = x) \ & quad quad "output"(1); \ & quad i++;
+      $
+    ],
   )
 
-  i due programmi che calcolano rispettivamente $A sect B$ e $A union B$. Le loro semantiche sono
-  
+  i due programmi che calcolano rispettivamente $A inter B$ e $A union B$. Le loro semantiche sono
+
   #grid(
     columns: (50%, 50%),
-
     align(center)[
-      $ phi_(P_i) = cases(1 & "se" x in A sect B, bot quad & "altrimenti") $
+      $ phi_(P_i) = cases(1 & "se" x in A inter B, bot quad & "altrimenti") $
     ],
-
     align(center)[
       $ phi_(P_u) = cases(1 & "se" x in A union B, bot quad & "altrimenti") $
-    ]
+    ],
   )
   da cui ricaviamo che
 
   #grid(
     columns: (50%, 50%),
-
     align(center)[
-      $ A sect B = dominio(phi_P' in cal(P)) $
+      $ A inter B = dominio(phi_P' in cal(P)) $
     ],
-
     align(center)[
       $ A union B = dominio(phi_P'' in cal(P)) $
-    ]
+    ],
   )
-  
+
   I due insiemi sono quindi ricorsivamente numerabili per la seconda caratterizzazione.
 ]
 
@@ -393,24 +372,21 @@ In sostanza, $I$ rispetta le funzioni se e solo se, data una funzione calcolata 
 
 Per esempio, l'insieme $I = {x in NN bar.v phi_x (3) = 5}$ rispetta le funzioni. Infatti, $ underbracket(a in I, phi_a (3) = 5) and underbracket(phi_a = phi_b, phi_b (3) = 5) arrow.double b in I . $
 
-#theorem(
-  name: "Teorema di Rice",
-  numbering: none
-)[
+#theorem([Teorema di Rice])[
   Sia $I subset.eq NN$ un insieme che rispetta le funzioni. Allora $I$ è ricorsivo solo se $I = emptyset.rev$ oppure $I = NN$.
 ]
 
 Questo teorema ci dice che gli insiemi che rispettano le funzioni non sono mai ricorsivi, tolti i casi banali $emptyset.rev$ e $NN$.
 
-#proof[
-  Sia $I$ insieme che rispetta le funzioni con $I eq.not emptyset.rev$ e $I eq.not NN$. Assumiamo per assurdo che $I$ sia ricorsivo. 
-  
+#theorem-proof()[
+  Sia $I$ insieme che rispetta le funzioni con $I eq.not emptyset.rev$ e $I eq.not NN$. Assumiamo per assurdo che $I$ sia ricorsivo.
+
   Dato che $I eq.not emptyset.rev$, esiste almeno un elemento $a in I$. Inoltre, dato che $I eq.not NN$, esiste almeno un elemento $overline(a) in.not I$.
 
   Definiamo la funzione $t : NN arrow.long NN$ come: $ t(n) = cases(overline(a) quad & "se" n in I, a & "se" n in.not I) . $
 
   Sappiamo che $t in cal(T)$ dato che è calcolabile dal programma $ P equiv & "input"(x); \ & "if"(P_I (n) = 1) \ & quad "output"(overline(a)); \ & "else" \ & quad "output"(a) $
-  
+
   Visto che $t in cal(T)$, il _teorema di ricorsione_ assicura che in un SPA ${phi_i}$ esiste $d in NN$ tale che $ phi_d = phi_t(d) . $
 
   Per tale $d$ ci sono solo due possibilità rispetto a $I$:

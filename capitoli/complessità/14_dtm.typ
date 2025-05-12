@@ -1,7 +1,21 @@
-#import "@preview/algo:0.3.3": algo, i, d, code
+// Setup
 
 #import "../alias.typ": *
 
+#import "@preview/lovelace:0.3.0": pseudocode-list
+
+#let settings = (
+  line-numbering: "1:",
+  stroke: 1pt + blue,
+  hooks: 0.2em,
+  booktabs: true,
+  booktabs-stroke: 2pt + blue,
+)
+
+#let pseudocode-list = pseudocode-list.with(..settings)
+
+
+// Capitolo
 
 = Macchina di Turing deterministica (DTM)
 
@@ -51,7 +65,7 @@ Analizziamo nel dettaglio lo sviluppo di una DTM $M$ su input $x in Sigma^*$, vi
   - il controllo a stati finiti parte dallo stato $q_0$;
 - *computazione*: sequenza di mosse definite dalla funzione di transizione $delta$ che manda, ad ogni passo, da $(q_i,gamma_i)$ a $(q_(i+1), gamma_(i+1), {-1,0,+1})$.
 
-Se $delta(q,gamma) = bot$, la macchina $M$ si _arresta_. Quando la testina rimbalza tra due celle o rimane fissa in una sola, si verifica un _loop_. La macchina $M$ accetta $x in Sigma^*$ se e solo la computazione si arresta in uno stato $q in F$.
+Se $delta(q, gamma) = bot$, la macchina $M$ si _arresta_. Quando la testina rimbalza tra due celle o rimane fissa in una sola, si verifica un _loop_. La macchina $M$ accetta $x in Sigma^*$ se e solo la computazione si arresta in uno stato $q in F$.
 
 Come prima, $L_M = {x in Sigma^* bar.v M "accetta" x}$ è ancora il *linguaggio accettato* da $M$.
 
@@ -75,7 +89,7 @@ Definiamo quindi $C = (q,k,w)$ una configurazione con:
 
 All'inizio della computazione abbiamo la *configurazione iniziale* $C_0 = (q_0, 1, x)$.
 
-Diciamo che una configurazione $C$ è *accettante* se $C = (q in F, k, w)$ ed è *d'arresto* se $C = (q, k, w)$ con $delta(q,w) = bot$.
+Diciamo che una configurazione $C$ è *accettante* se $C = (q in F, k, w)$ ed è *d'arresto* se $C = (q, k, w)$ con $delta(q, w) = bot$.
 
 === Definizione computazione tramite configurazioni
 
@@ -124,42 +138,37 @@ Ricordando che $M = (Q, Sigma, Gamma, delta, q_0, F)$, la seguente macchina rico
 - $F = {z_1, z}$ insiemi degli stati finali;
 - $delta : Q times Gamma arrow.long Q times Sigma times {-1, 0, 1}$ funzione di transizione così definita:
 
-#align(center)[
-  #table(
-    columns: (25%, 25%, 25%, 25%),
-    inset: 10pt,
-    align: horizon,
-    
-    [$delta$], [$blank$], [$0$], [$1$],
-    
-    [$p$], [$bot$], [$(z_1, 0, +1)$], [$(mu, 1, +1)$],
-    [$z_1$], [$bot$], [$(r, 0, +1)$], [$(mu, 1, +1)$],
-    [$mu$], [$bot$], [$(z, 0, +1)$], [$(mu, 1, +1)$],
-    [$z$], [$bot$], [$(z, 0, +1)$], [$(mu, 1, +1)$],
-    [$r$], [$bot$], [$bot$], [$bot$],
-  )
-]
+#table(
+  columns: (25%, 25%, 25%, 25%),
+  inset: 10pt,
+  align: center + horizon,
+  [$delta$], [$blank$], [$0$], [$1$],
+  [$p$], [$bot$], [$(z_1, 0, +1)$], [$(mu, 1, +1)$],
+  [$z_1$], [$bot$], [$(r, 0, +1)$], [$(mu, 1, +1)$],
+  [$mu$], [$bot$], [$(z, 0, +1)$], [$(mu, 1, +1)$],
+  [$z$], [$bot$], [$(z, 0, +1)$], [$(mu, 1, +1)$],
+  [$r$], [$bot$], [$bot$], [$bot$],
+)
+
 
 Notiamo come, anche per un problema così semplice, abbiamo una funzione di transizione abbastanza complicata. Andiamo quindi a utilizzare uno pseudocodice:
 
-#algo(
-  title: "Parità",
-  parameters: ("n",)
-)[
-  i := 1; \
-  f := false; \
-  switch(x[i]) { #i \
-    case 0: #i \
-      i++; \
-      f := (x[i] == blank); \
-      break; #d \
-    case 1: #i \
-      do { #i \
-        f := (x[i] == 0); \
-        i++; #d \
-      } while (x[i] != blank); #d #d \
-  } \
-  return f;
+#align(center)[
+  #pseudocode-list(title: [Parità($n$)])[
+    + $i := 1$
+    + $f := ffalse$
+    + switch($x[i]$)
+      + case $0$:
+        + $i++$
+        + $f := (x[i] == blank)$
+        + break
+      + case $1$:
+        + do
+          + $f := (x[i] == 0)$
+          + $i++$
+        + while $(x[i] != blank)$
+    + return $f$
+  ]
 ]
 
 Alla fine della sua esecuzione avremo:

@@ -1,29 +1,12 @@
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
+// Setup
 
 #import "../alias.typ": *
 
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 = Tempo vs spazio
 
@@ -37,19 +20,19 @@ Viene naturale porsi due domande:
 
 Per rispondere a queste domande confrontiamo le classi $dtime(f(n))$ e $dspace(f(n))$.
 
-#theorem(numbering: none)[
+#theorem()[
   Tutti i linguaggi accettati in tempo $f(n)$, sono anche accettati in spazio $f(n)$. Formalmente:
   $ dtime(f(n)) subset.eq dspace(f(n)). $
 ]
 
-#proof[
-  \ Se $L in dtime(f(n))$ allora esiste una DTM $M$ che riconosce $L$ in tempo $t(n) = O(f(n))$, quindi su input $x$ di lunghezza $n$ la macchina $M$ compie $O(f(n))$ passi.
-  
+#theorem-proof()[
+  Se $L in dtime(f(n))$ allora esiste una DTM $M$ che riconosce $L$ in tempo $t(n) = O(f(n))$, quindi su input $x$ di lunghezza $n$ la macchina $M$ compie $O(f(n))$ passi.
+
   In tale computazione, _quante celle del nastro di lavoro posso occupare al massimo?_\
   Ovviamente $O(f(n))$ (una cella ad ogni passo). Quindi, $M$ ha complessità in spazio $s(n) = O(f(n))$, ma allora $L in dspace(f(n))$.
 ]
 
-#theorem(numbering: none)[
+#theorem()[
   Tutte le funzioni accettate in tempo $f(n)$, sono anche accettate in spazio $f(n)$. Formalmente:
   $ ftime(f(n)) subset.eq fspace(f(n)). $
 ]
@@ -62,12 +45,12 @@ Avendo un numero di celle prestabilito, è possibile iterare il loro utilizzo (a
 
 Notiamo che, in una DTM $M$, un loop si verifica quando visitiamo una configurazione già visitata in passato. Sfruttando questo fatto, è possibile trovare una limitazione al tempo, trovando dopo quanto tempo vengono visitate tutte le configurazioni possibili.
 
-#theorem(numbering: none)[
+#theorem()[
   Tutti i linguaggi accettati in spazio $f(n)$ vengono accettati in tempo $n dot.op alpha^(O(f(n)))$. $ dspace(f(n)) subset.eq dtime(n dot.op alpha^(O(f(n)))) $
 ]
 
-#proof[
-  \ Dato $L in dspace(f(n))$ e una DTM $M$ esistono una serie di configurazioni per $M$ tali che $ C_0 arrow.long^delta C_1 arrow.long^delta dots.c arrow.long^delta C_m, $ in cui $C_m$ è uno stato accettante per $L$.
+#theorem-proof()[
+  Dato $L in dspace(f(n))$ e una DTM $M$ esistono una serie di configurazioni per $M$ tali che $ C_0 arrow.long^delta C_1 arrow.long^delta dots.c arrow.long^delta C_m, $ in cui $C_m$ è uno stato accettante per $L$.
 
   Sappiamo che $dtime$ è calcolabile dal numero di volte che viene utilizzata la funzione transizione $delta$. Date $C_i$ e $C_j$ con $i eq.not j$, vale $C_i eq.not C_j$: infatti, se fossero uguali saremmo entrati in un loop. Di conseguenza, calcolando la cardinalità dell'insieme contenente tutte le configurazioni possibili, troviamo anche un upper bound per la risorsa tempo.
 
@@ -97,7 +80,7 @@ Notiamo che, in una DTM $M$, un loop si verifica quando visitiamo una configuraz
 
 Come per il tempo, il teorema dimostrato vale anche per gli insiemi $fspace$ e $ftime$.
 
-#theorem(numbering: none)[
+#theorem()[
   Tutti le funzioni calcolate in spazio $f(n)$ vengono calcolate in tempo $n dot.op alpha^(O(f(n)))$. $ fspace(f(n)) subset.eq ftime(n dot.op alpha^(O(f(n)))). $
 ]
 
@@ -105,12 +88,14 @@ Come per il tempo, il teorema dimostrato vale anche per gli insiemi $fspace$ e $
 
 Ottenuti questi risultati, vogliamo studiare le relazioni tra efficienza in termini di spazio (classe $L$) e l'efficienza in termini di tempo (classe $P$).
 
-#theorem(numbering: none)[
+#theorem()[
   Valgono le seguenti relazioni per efficienza in spazio e efficienza in tempo: $ L subset.eq P \ fl subset.eq fp. $
 ]
 
-#proof[
-  $ L = dspace(log(n)) & subset.eq dtime(n dot.op alpha^(O(log(n)))) = \ & = dtime(n dot.op alpha^(frac(log_alpha (n), log_alpha(2)))) = \ & = dtime(n dot.op (alpha^(log_alpha (n)))^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^beta) = dtime(n^(beta+1)) = dtime(n^k) = P $
+#theorem-proof()[
+  $
+    L = dspace(log(n)) & subset.eq dtime(n dot.op alpha^(O(log(n)))) = \ & = dtime(n dot.op alpha^(frac(log_alpha (n), log_alpha(2)))) = \ & = dtime(n dot.op (alpha^(log_alpha (n)))^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^(frac(1, log_alpha (2)))) = \ & = dtime(n dot.op n^beta) = dtime(n^(beta+1)) = dtime(n^k) = P
+  $
 
   Allo stesso modo è ottenibile l'inclusione per $fl$ e $fp$.
 ]

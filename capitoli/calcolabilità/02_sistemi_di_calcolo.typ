@@ -1,5 +1,9 @@
+// Setup
+
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Sistemi di calcolo
 
@@ -9,9 +13,7 @@ Un *sistema di calcolo* lo possiamo vedere come una _black-box_ che prende in in
 
 #v(12pt)
 
-#figure(
-  image("assets/architettura-von-neumann.svg", width: 20%)
-)
+#figure(image("assets/architettura-von-neumann.svg", width: 20%))
 
 #v(12pt)
 

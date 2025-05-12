@@ -1,35 +1,12 @@
-#import "@preview/lemmify:0.1.5": *
-
-#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
-  "thm-group",
-  lang: "it",
-)
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
-#show thm-selector("thm-group", subgroup: "corollary"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true,
-)
+// Setup
 
 #import "../alias.typ": *
 
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 = $P$ VS $NP$
 
@@ -39,15 +16,15 @@
 
 == Prima analisi
 
-#theorem(numbering: none)[
+#theorem()[
   $P subset.eq NP$
 ]
 
-#proof[
-  \ È facile dimostrare che $dtime(f(n)) subset.eq ntime(f(n))$.
+#theorem-proof()[
+  È facile dimostrare che $dtime(f(n)) subset.eq ntime(f(n))$.
 
   Dato $L in dtime(f(n))$, esiste una DTM $M$ che lo riconosce in $t(n) = O(f(n)). quad (*)$
-  
+
   Chiaramente $M$ può essere vista come una NDTM che ignora il modulo congetturale. La NDTM così ottenuta ripropone la stessa computazione di $M$ su ogni congettura generata inutilmente. È chiaro che questa NDTM accetta $L$ in tempo $t(n) = O(f(n))$, quindi $L in ntime(f(n))$.\
   Quindi vale: $ P = union.big_(k gt.eq 0) dtime(n^k) overset(subset.eq, (*)) union.big_(k gt.eq 0) ntime(n^k) = NP. $
 ]
@@ -104,13 +81,13 @@ Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o due problemi di decisione) di
 
 Le funzioni di riduzione polinomiale sono anche dette *many-one-reduction* perché non sono per forza funzioni iniettive (e quindi biiettive).
 
-#theorem(numbering:none)[
+#theorem()[
   Siano due linguaggi $A,B subset.eq Sigma^* bar.v A lt.eq_P B$. Allora $ B in P arrow.long.double A in P . $
 ]
 
-#proof[
-  \ Siccome $A lt.eq_P B$, sia $f in fp$ la funzione di riduzione polinomiale. Sappiamo inoltre che $B in P$. Consideriamo il seguente algoritmo: 
-  
+#theorem-proof()[
+  Siccome $A lt.eq_P B$, sia $f in fp$ la funzione di riduzione polinomiale. Sappiamo inoltre che $B in P$. Consideriamo il seguente algoritmo:
+
   $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 $
 
   Questo algoritmo è sicuramente deterministico, perché tutte le procedure che lo compongono sono deterministiche. Inoltre, riconosce $A$, per via della seconda condizione della riducibilità.
@@ -134,13 +111,13 @@ Un problema di decisione $Pi$ è *_NP_-completo* se e solo se:
 
 Sia $NPC$ la sottoclasse di _NP_ dei problemi _NP_-completi. Per provare che $NP subset.eq P$ posso restringere la mia ricerca di algoritmi di soluzione efficiente ai soli membri di $NPC$ grazie al seguente teorema.
 
-#theorem(numbering:none)[
+#theorem()[
   Sia $Pi in NPC$ e $Pi in P$. Allora, $NP subset.eq P$, e quindi $P = NP$.
 ]
 
-#proof[
-  \ Dato che $Pi in NPC$, vale $ forall overset(Pi, tilde) in NP quad overset(Pi, tilde) lt.eq_P Pi. $
-  
+#theorem-proof()[
+  Dato che $Pi in NPC$, vale $ forall overset(Pi, tilde) in NP quad overset(Pi, tilde) lt.eq_P Pi. $
+
   Visto che $Pi in P$, abbiamo dimostrato prima che $ overset(Pi, tilde) lt.eq_P Pi and Pi in P arrow.long.double overset(Pi, tilde) in P, $ otteniamo che ogni problema $overset(Pi, tilde) in NP$ appartiene anche a $P$, quindi $ NP subset.eq P $ e quindi anche che $ P = NP. $
 ]
 
@@ -165,7 +142,7 @@ Un altro problema _NP_-completo è _HC_ (_Hamiltonian Circuit_), allo stesso mod
 
 La comunità scientifica, dopo anni di tentativi e svariate ragioni, tende ormai a credere che $P eq.not NP$, di conseguenza dimostrare l'_NP_-completezza di un problema implica sancirne l'inefficienza di qualunque algoritmo di soluzione.
 
-Dopo aver stabilito l'NP-completezza, l'indagine sui problemi però non si ferma: si provano restrizioni, algoritmi probabilistici efficienti (_con margine di errore_), euristiche veloci di soluzione, eccetera. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del _miglior algoritmo che più si approssima a quella che consideriamo efficienza_. 
+Dopo aver stabilito l'NP-completezza, l'indagine sui problemi però non si ferma: si provano restrizioni, algoritmi probabilistici efficienti (_con margine di errore_), euristiche veloci di soluzione, eccetera. Questo perché questi problemi sono estremamente comuni e utili, quindi stabilire la loro inefficienza darebbe il via alla ricerca del _miglior algoritmo che più si approssima a quella che consideriamo efficienza_.
 
 Vediamo ora una tecnica per mostrare che un problema $Pi$ è _NP_-completo:
 + dimostrare che $Pi in NP$, solitamente il punto più semplice;
@@ -175,11 +152,11 @@ Vediamo ora una tecnica per mostrare che un problema $Pi$ è _NP_-completo:
 
 Infatti:
 + $Pi in NP$ per il punto 1;
-+ $forall overset(Pi,tilde) in NP$ abbiamo che $ overset(Pi,tilde) lt.eq_P^((2)) X lt.eq_P^((3)) Pi . $ Ma quindi per la transitività di $lt.eq_P$ del punto 4 abbiamo che $forall overset(Pi,tilde) in NP$ allora $overset(Pi,tilde) lt.eq Pi$, quindi $Pi$ è _NP_-completo.
++ $forall overset(Pi, tilde) in NP$ abbiamo che $ overset(Pi, tilde) lt.eq_P^((2)) X lt.eq_P^((3)) Pi . $ Ma quindi per la transitività di $lt.eq_P$ del punto 4 abbiamo che $forall overset(Pi, tilde) in NP$ allora $overset(Pi, tilde) lt.eq Pi$, quindi $Pi$ è _NP_-completo.
 
 == $P$ VS $L$ (secondo round)
 
-C'è un'inclusione che abbiamo lasciato in sospeso, ed è proprio quella che coinvolge le classi $L$ e $P$. Ricordiamo che $ L = dspace(log(n)), \ P = union.big_(k gt.eq 0) dtime( n^k). $
+C'è un'inclusione che abbiamo lasciato in sospeso, ed è proprio quella che coinvolge le classi $L$ e $P$. Ricordiamo che $ L = dspace(log(n)), \ P = union.big_(k gt.eq 0) dtime(n^k). $
 
 Abbiamo mostrato che $L subset.eq P$, _ma l'inclusione è propria? Oppure $P subset.eq L$?_
 
@@ -198,19 +175,19 @@ Dati due linguaggi $L_1, L_2 subset.eq Sigma^*$ (o due problemi di decisione), d
 
 Similmente a quanto vista prima, esiste un teorema che dimostra una sorta di transitività per due linguaggi tra cui esiste una relazione di riducibilità.
 
-#theorem(numbering:none)[
+#theorem()[
   Siano due linguaggi $A, B in Sigma^* bar.v A lt.eq_l B$. Allora $ B in L arrow.long.double A in L . $
 ]
 
-#proof[
-  \ Sappiamo che $A lt.eq_l B$, quindi esiste $f in fl$ funzione di log-space riduzione. Consideriamo il seguente algoritmo: $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 . $
+#theorem-proof()[
+  Sappiamo che $A lt.eq_l B$, quindi esiste $f in fl$ funzione di log-space riduzione. Consideriamo il seguente algoritmo: $ P equiv & "input"(x) \ & y := f(x); \ & "if" (y in B) \ & quad "return" 1 \ & "else" \ & quad "return" 0 . $
 
   Questo è sicuramente un algoritmo deterministico, in quanto è composto da _"moduli"_ a loro volta deterministici. Inoltre, riconosce $A$ per via della seconda condizione della riducibilità.
 
   La sua complessità in spazio, dati input $x$ di lunghezza $n$, è descritta dalla seguente complessità: $ s(n) = s_f (n) + s_(y in B) (|y|) = O(log(n)) + O(log(|y|)). $
 
-  _Quanto sarà la lunghezza di $y$?_ 
-  
+  _Quanto sarà la lunghezza di $y$?_
+
   Notiamo che $|y| lt.eq p(n)$, perché è output di una procedura che impiega spazio logaritmico e quindi un numero polinomiale di passi. Questo deriva dalla relazione $fl subset.eq fp$. Quindi: $ s(n) = O(log(n)) + O(log(p(n))) = O(log(n)). $
 
   In conclusione, l'algoritmo deterministico proposto riconosce $A$ in spazio logaritmico, dunque: $ A lt.eq_l B and B in L arrow.long.double A in L. $
@@ -228,12 +205,12 @@ Un problema di decisione $Pi$ è *_P_-completo* se e solo se:
 
 Chiamiamo $PC$ la sottoclasse di _P_ dei problemi _P_-completi.
 
-#theorem(numbering:none)[
+#theorem()[
   Sia $Pi in PC$ e $Pi in L$. Allora $P subset.eq L$.
 ]
 
-#proof[
-  \ Sappiamo che $Pi in PC$, quindi $ forall overset(Pi, tilde) in P quad overset(Pi, tilde) lt.eq_l Pi . $
+#theorem-proof()[
+  Sappiamo che $Pi in PC$, quindi $ forall overset(Pi, tilde) in P quad overset(Pi, tilde) lt.eq_l Pi . $
 
   Se assumiamo che $Pi in L$ otteniamo che $ forall overset(Pi, tilde) in P quad overset(Pi, tilde) in L, $ quindi possiamo concludere che $P subset.eq L$ e, di conseguenza, $P = L$.
 ]

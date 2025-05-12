@@ -1,24 +1,22 @@
 // Titolo e indice
+
 #import "template.typ": *
 
-#show: project.with(
-  title: "Informatica teorica"
-)
+#show: project.with(title: "Informatica teorica")
 
 #pagebreak()
 
 
 // Introduzione
+
 #include "capitoli/00_introduzione.typ"
 #pagebreak()
 
 
 // Teoria della calcolabilità
+
 #parte("Teoria della calcolabilità")
-
 #pagebreak()
-
-// Capitoli di teoria della calcolabilità
 
 #include "capitoli/calcolabilità/01_richiami_matematici.typ"
 #pagebreak()
@@ -58,11 +56,9 @@
 
 
 // Teoria della complessità
+
 #parte("Teoria della complessità")
-
 #pagebreak()
-
-// Capitoli di teoria della complessità
 
 #include "capitoli/complessità/13_richiami_matematici.typ"
 #pagebreak()

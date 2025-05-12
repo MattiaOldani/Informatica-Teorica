@@ -1,28 +1,18 @@
+// Setup
+
 #import "../alias.typ": *
 
-#import "@preview/lemmify:0.1.5": *
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
 
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
 
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
+// Capitolo
 
 = Richiami matematici: chiusura
 
 == Operazioni
 
-Dato un insieme $U$, si definisce *operazione* su $U$ una qualunque funzione $ "op": underbracket(U times dots times U, k) arrow.long U. $ 
+Dato un insieme $U$, si definisce *operazione* su $U$ una qualunque funzione $ "op": underbracket(U times dots times U, k) arrow.long U. $
 
 Il numero $k$ indica l'*arietà* (o _arità_) dell'operazione, ovvero la dimensione del dominio dell'operazione.
 
@@ -42,7 +32,7 @@ Due risposte ovvie a questo problema sono:
 + se $A$ è chiuso rispetto a $"op"$, allora $A$ stesso è l'insieme cercato;
 + sicuramente $U$ soddisfa le due richieste, _ma è il più piccolo?_
 
-#theorem(numbering: none)[
+#theorem()[
   Siano $A subset.eq U$ insieme e $"op" : U^k arrow.long U$ un'operazione su esso. Il più piccolo sottoinsieme di $U$ contenente $A$ e chiuso rispetto all'operazione $"op"$ si ottiene calcolando la *chiusura di $A$ rispetto a $"op"$*, e cioè l'insieme $A^"op"$ definito *induttivamente* come:
   + $forall a in A arrow.long.double a in A^"op"$;
   + $forall a_1, dots, a_k in A^"op" arrow.long.double "op"(a_1, dots, a_k) in A^"op"$;

@@ -1,10 +1,15 @@
+// Setup
+
+
+// Capitolo
+
 = Richiami matematici: simboli di Landau
 
 Quello che facciamo nella teoria della complessità è chiederci _"quanto costa questo programma?"_
 
 Per capire il costo di un dato programma valuteremo delle funzioni nella forma $f(n)$, dove $n$ indica la grandezza dell'input della DTM. Nel fare il confronto tra due algoritmi per uno stesso problema, bisogna tenere in considerazione che a fare la differenza (_in termini di prestazioni_) sono gli input di dimensione "ragionevolmente grande", dove con questa espressione intendiamo una dimensione significativa nel contesto d'applicazione del problema.
 
-Siano ad esempio $t_1$ e $t_2$ due funzioni tali che $ t_1 (n) = 2n quad bar.v quad t_2 (n) = 1/100 n^2 + 1/2 n + 1 . $
+Siano ad esempio $t_1$ e $t_2$ due funzioni tali che $ t_1 (n) = 2n quad bar.v quad t_2 (n) = 1 / 100 n^2 + 1 / 2 n + 1 . $
 
 Quale delle due è migliore? La risposta è _dipende_: se considero $n$ abbastanza piccoli allora $t_2$ è migliore perché i coefficienti ammortizzano il valore di $n^2$, mentre se considero $n$ sufficientemente grandi è migliore $t_1$.
 

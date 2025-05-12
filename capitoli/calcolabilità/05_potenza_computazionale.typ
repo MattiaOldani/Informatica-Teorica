@@ -1,5 +1,9 @@
+// Setup
+
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Potenza computazionale di un sistema di calcolo
 

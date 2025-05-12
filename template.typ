@@ -1,75 +1,69 @@
 #let project(title: "", body) = {
-    set document(title: title)
+  set document(title: title)
 
-    set text(font: "Source Sans Pro", lang: "it")
+  set text(font: "New Computer Modern Math", lang: "it")
 
-    set par(justify: true)
+  set par(justify: true)
 
-    set heading(numbering: "1.")
+  set page(numbering: "1")
 
-    set list(indent: 1.2em)
-    set enum(indent: 1.2em)
+  set heading(numbering: "1.")
 
-    set page(numbering: "1")
+  set list(indent: 1.2em)
+  set enum(indent: 1.2em)
 
-    align(center)[
-        #block(text(weight: 700, 1.75em, title))
-    ]
+  align(center + horizon)[
+    #block(text(weight: 700, 4.35em, title))
+  ]
 
-    v(1.75em)
+  pagebreak()
 
-    show figure.where(kind: "parte"): it => {
-        counter(heading).update(0)
-        set page(
-            footer: {
-            set text(weight: "regular", size: 11pt)
-            counter(page).display()
-            }
+  show figure.where(kind: "parte"): it => {
+    counter(heading).update(0)
+    set page(footer: { })
+    if it.numbering != none {
+      set text(size: 20pt)
+      align(
+        center + horizon,
+        strong(it.supplement + [ ] + it.counter.display(it.numbering)) + [ --- ] + strong(it.body),
+      )
+    }
+  }
+
+  show outline.entry: it => {
+    if it.element.func() == figure {
+      let res
+      if it.element.numbering != none {
+        res = link(
+          it.element.location(),
+          it.indented(it.prefix(), [ --- ] + it.element.body + h(1fr) + it.page()),
         )
-        if it.numbering != none {
-            set text(size: 20pt)
-            align(center + horizon, 
-            strong(it.supplement + [ ] + it.counter.display(it.numbering)) + [ --- ] + strong(it.body)
-            )
-        }
+      } else {
+        res = link(
+          it.element.location(),
+          it.indented(it.prefix(), it.element.body + h(1fr) + it.page()),
+        )
+      }
+
+      v(2.3em, weak: true)
+      strong(text(size: 16pt, res))
+    } else {
+      it
     }
+  }
 
-    show outline.entry: it => {
-        if it.element.func() == figure {
-            // https://github.com/typst/typst/issues/2461
-            let res = link(it.element.location(), 
-                if it.element.numbering != none {
-                    it.element.supplement + [ ] 
-                    numbering(it.element.numbering, ..it.element.counter.at(it.element.location()))
-                } + [ --- ] + it.element.body
-            )
-            
-            res += h(1fr)
+  show outline.entry.where(level: 1): it => {
+    v(12pt, weak: true)
+    strong(it)
+  }
 
-            res += link(it.element.location(), it.page)
-            v(2.3em, weak: true)
-            strong(text(size: 13pt, res))
-        } else {
-            h(1em * (it.level - 1)) + it
-        }
-    }
+  let chapters-and-headings = figure.where(kind: "parte", outlined: true).or(heading.where(outlined: true))
 
-    show outline.entry.where(
-        level: 1
-    ): it => {
-        v(12pt, weak: true)
-        strong(it)
-    }
+  outline(indent: 2em, target: chapters-and-headings)
 
-    let chapters-and-headings = figure.where(kind: "parte", outlined: true).or(heading.where(outlined: true))
+  show link: underline
 
-    pagebreak()
-
-    outline(indent: auto, target: chapters-and-headings)
-    
-    show link: underline
-
-    body
+  body
 }
 
 #let parte = figure.with(

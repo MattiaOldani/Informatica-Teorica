@@ -1,42 +1,28 @@
 // Setup
 
-#import "@preview/ouset:0.1.1": overset
-
-#import "@preview/algo:0.3.3": code, i, d
-
-#import "@preview/lemmify:0.1.5": *
-
-#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
-  "thm-group",
-  lang: "it",
-)
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
-#show thm-selector("thm-group", subgroup: "corollary"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
 #import "../alias.typ": *
 
-// Appunti
+#import "@preview/ouset:0.1.1": overset
+
+#import "@preview/algo:0.3.6": code
+
+#import "@preview/lovelace:0.3.0": pseudocode-list
+
+#let settings = (
+  line-numbering: "1:",
+  stroke: 1pt + blue,
+  hooks: 0.2em,
+  booktabs: true,
+  booktabs-stroke: 2pt + blue,
+)
+
+#let pseudocode-list = pseudocode-list.with(..settings)
+
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 /*********************************************/
 /***** DA CANCELLARE PRIMA DI COMMITTARE *****/
@@ -51,4 +37,4 @@
 /***** DA CANCELLARE PRIMA DI COMMITTARE *****/
 /*********************************************/
 
-= Lezione NN
+= Nome capitolo

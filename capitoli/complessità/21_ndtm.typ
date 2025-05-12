@@ -1,5 +1,9 @@
+// Setup
+
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Macchine di Turing non deterministiche (NDTM)
 
@@ -27,13 +31,17 @@ Dato un problema $Pi$, un'istanza $x in D$ e una proprietà $p(x)$, un algoritmo
 
 Vediamo un algoritmo non deterministico per la soluzione di _CNF-SAT_:
 
-$ P equiv & "input"(phi(x_1, dots, x_n)); \ & "genera ass." x in {0,1}^n; \ & "if" (phi(x_1, dots, x_n) == 1) \ & quad "return" 1; \ & "return 0"; $
+$
+  P equiv & "input"(phi(x_1, dots, x_n)); \ & "genera ass." x in {0,1}^n; \ & "if" (phi(x_1, dots, x_n) == 1) \ & quad "return" 1; \ & "return 0";
+$
 
 Ammettendo un modello di calcolo come quello descritto, questo è a tutti gli effetti un algoritmo non deterministico, formato da fase congetturale e fase di verifica.
 
 Vediamo invece un algoritmo non deterministico per trovare, se esiste, un circuito hamiltoniano in un grafo $G$.
 
-$ P equiv & "input"(G=(V,E)); \ & "genera perm." pi(v_1, dots, v_n); \ & "if" (pi(v_1, dots, v_n) "è un circuito in" G) \ & quad "return" 1; \ & "return 0"; $
+$
+  P equiv & "input"(G=(V,E)); \ & "genera perm." pi(v_1, dots, v_n); \ & "if" (pi(v_1, dots, v_n) "è un circuito in" G) \ & quad "return" 1; \ & "return 0";
+$
 
 Si vede chiaramente come sia simile a quello precedente, mostrando che la struttura di questi algoritmi e pressoché la stessa.
 

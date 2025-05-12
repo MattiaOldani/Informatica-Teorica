@@ -1,31 +1,12 @@
-#import "@preview/algo:0.3.3": algo, i, d, code
-
-#import "@preview/lemmify:0.1.5": *
-
-#let (
-  theorem, lemma, corollary,
-  remark, proposition, example,
-  proof, rules: thm-rules
-) = default-theorems("thm-group", lang: "it")
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true
-)
+// Setup
 
 #import "../alias.typ": *
 
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 = Definizione della risorsa tempo
 
@@ -68,15 +49,18 @@ Per quanto riguarda il tempo, data una funzione $t : NN arrow.long NN$ possiamo 
     columns: (30%, 40%, 30%),
     inset: 10pt,
     align: horizon,
-    
     [*Funzione*], [*Definizione formale*], [*Esempio*],
-
     [*Costante*], [$t(n) = O(1)$], [Segno di un numero in binario],
-    [*Logaritmica*], [$f(n) = O(log(n))$], [Difficile fare esempi per questo perché quasi mai riusciamo a dare una risposta leggendo $log(n)$ input dal nastro],
+    [*Logaritmica*],
+    [$f(n) = O(log(n))$],
+    [Difficile fare esempi per questo perché quasi mai riusciamo a dare una risposta leggendo $log(n)$ input dal nastro],
+
     [*Lineare*], [$f(n) = O(n)$], [Parità di un numero in binario],
     [*Quadratica*], [$f(n) = O(n^2)$], [Stringa palindroma],
     [*Polinomiale*], [$f(n) = O(n^k)$], [Qualsiasi funzione polinomiale],
-    [*Esponenziale*], [$f(n)$ non polinomiale ma super polinomiale], [Alcune funzioni super polinomiali sono $ e^n bar.v n! bar.v n^(log n) $]
+    [*Esponenziale*],
+    [$f(n)$ non polinomiale ma super polinomiale],
+    [Alcune funzioni super polinomiali sono $ e^n bar.v n! bar.v n^(log n) $],
   )
 ]
 
@@ -126,14 +110,13 @@ La seguente tabella mostra i tempi approssimati di alcune funzioni su input di g
 #align(center)[
   #table(
     columns: (35%, 35%),
-      inset: 10pt,
-      align: horizon,
-
+    inset: 10pt,
+    align: horizon,
     [*Funzione* $t(n)$], [*Tempo di esecuzione*],
-    [$n$], [$approx  mu s$],
-    [$n^2$], [$approx m s$], 
+    [$n$], [$approx mu s$],
+    [$n^2$], [$approx m s$],
     [$n^3$], [$approx s slash a$],
-    [$2^n$], [$1$ gogol, ovvero $10^100$ secondi, più dell'età dell'universo]
+    [$2^n$], [$1$ gogol, ovvero $10^100$ secondi, più dell'età dell'universo],
   )
 ]
 
@@ -147,17 +130,17 @@ La possiamo vedere come la _versione quantitativa_ della tesi di Church-Turing.
 
 == Chiusura di $P$
 
-#theorem(numbering: none)[
+#theorem()[
   La classe $P$ è un'algebra di Boole, ovvero è chiusa rispetto alle operazioni di unione, intersezione e complemento.
 ]
 
-#proof[
+#theorem-proof()[
   #block(
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [UNIONE] 
+
+    [*UNIONE*],
   )
 
   Date due istanze $A,B in P$, siano $M_A$ e $M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y or z) $ permette il calcolo dell'unione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
@@ -166,8 +149,8 @@ La possiamo vedere come la _versione quantitativa_ della tesi di Church-Turing.
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [INTERSEZIONE] 
+
+    [*INTERSEZIONE*],
   )
 
   Date due istanze $A,B in P$, siano $M_A$ e $M_B$ due DTM con tempi rispettivamente $p(n)$ e $q(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & z := M_B (x); \ & "output"(y and z) $ permette il calcolo dell'intersezione di $A$ e $B$ in tempo $t(n) = p(n) + q(n)$.
@@ -176,8 +159,8 @@ La possiamo vedere come la _versione quantitativa_ della tesi di Church-Turing.
     fill: rgb("#9FFFFF"),
     inset: 8pt,
     radius: 4pt,
-    
-    [COMPLEMENTO] 
+
+    [*COMPLEMENTO*],
   )
 
   Data l'istanza $A in P$, sia $M_A$ una DTM con tempo $p(n)$. Allora il seguente programma (_ad alto livello_) $ P equiv & "input"(n) \ & y := M_A (x); \ & "output"(not y) $ permette il calcolo del complemento di $A$ in tempo $t(n) = p(n)$.
@@ -187,6 +170,6 @@ La classe $P$, inoltre, è anche chiusa rispetto all'operazione di *composizione
 
 == Problemi difficili
 
-Esistono moltissimi problemi pratici e importanti per i quali ancora non sono stati trovati algoritmi efficienti e non è nemmeno stato provato che tali algoritmi non possano per natura esistere. 
+Esistono moltissimi problemi pratici e importanti per i quali ancora non sono stati trovati algoritmi efficienti e non è nemmeno stato provato che tali algoritmi non possano per natura esistere.
 
 In altre parole, non sappiamo se tutti i problemi sono in realtà efficientemente risolubili o se ne esistono alcuni il cui miglior algoritmo di risoluzione abbia una complessità esponenziale.

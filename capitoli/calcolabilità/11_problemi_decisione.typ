@@ -1,28 +1,12 @@
+// Setup
+
 #import "../alias.typ": *
 
-#import "@preview/lemmify:0.1.5": *
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
 
-#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
-  "thm-group",
-  lang: "it",
-)
 
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true,
-)
-
+// Capitolo
 
 = Problemi di decisione
 
@@ -102,9 +86,7 @@ Sia $Pi$ problema di decisione con istanza $x in D$ e domanda $p(x)$. $Pi$ è *d
 
 #v(12pt)
 
-#figure(
-  image("assets/decidibilità.svg", width: 50%),
-)
+#figure(image("assets/decidibilità.svg", width: 50%))
 
 #v(12pt)
 
@@ -124,13 +106,13 @@ Possiamo sfruttare questa cosa per sviluppare due tecniche di risoluzione del pr
 == Applicazione agli esempi
 
 1. *Parità*
-$ Phi_("PR") (n) = 1 overset(-,.) (n mod 2) in cal(T). $
+$ Phi_("PR") (n) = 1 overset(-, .) (n mod 2) in cal(T). $
 
 2. *Equazione diofantea*
-$ Phi_("ED") (a,b,c) = 1 overset(-,.) (c mod "mcd"(a,b)) in cal(T). $
+$ Phi_("ED") (a,b,c) = 1 overset(-, .) (c mod "mcd"(a,b)) in cal(T). $
 
 3. *Fermat*
-$ Phi_F (n) = 1 overset(-,.) (n overset(-,.) 2) in cal(T). $
+$ Phi_F (n) = 1 overset(-, .) (n overset(-, .) 2) in cal(T). $
 
 4. *Raggiungibilità*
   \ Sia $M_G in {0,1}^(n times n)$ matrice di adiacenza tale che $M_G [i,j] = 1$ se e solo se $(i,j) in E$. Inoltre, $M_G^k$ ha un 1 nella cella $[i,j]$ sse esiste un cammino lungo $k$ da $i$ a $j$.
@@ -146,10 +128,7 @@ $ Phi_F (n) = 1 overset(-,.) (n overset(-,.) 2) in cal(T). $
   L'algoritmo è inefficiente perché ci mette un tempo $O(n!)$, vista la natura combinatoria del problema, ma sicuramente questo problema è decidibile.
 
 6. *Circuito euleriano*
-#theorem(
-  name: "Teorema di Eulero (1936)",
-  numbering: none,
-)[
+#theorem([Teorema di Eulero (1936)])[
   Un grafo $G = (V,E)$ contiene un circuito euleriano se e solo se ogni vertice in $G$ ha grado pari.
 ]
 
@@ -159,7 +138,6 @@ Grazie a questo risultato, l'algoritmo di risoluzione deve solo verificare se il
 
 _Ma esistono dei *problemi indecidibili*?_
 
-// Lo lascerò
 #align(center)[
   #block(
     fill: rgb("#9FFFFF"),
@@ -185,7 +163,7 @@ In altre parole, ci chiediamo se il programma $P$ termina su input $x$. La rispo
 
 Ad esempio, se $ P_1 equiv & "input"(x) \ & x := x + 1; \ & "output"(x) $ allora la funzione $ Phi_(arresto(P_1)) (x) = 1 in cal(T) $ ci dice quando il problema $P_1$ termina o meno (_sempre_).
 
-Se invece $ P_2 equiv & "input"(x) \ & "if" (x mod 2 eq.not 0) \ & quad "while" (1 > 0); \ & "output"(x) $ allora la funzione $ Phi_(arresto(P_2)) (x) = 1 overset(-,.) (x mod 2) in cal(T) $ ci dice quando il problema $P_2$ termina o meno.
+Se invece $ P_2 equiv & "input"(x) \ & "if" (x mod 2 eq.not 0) \ & quad "while" (1 > 0); \ & "output"(x) $ allora la funzione $ Phi_(arresto(P_2)) (x) = 1 overset(-, .) (x mod 2) in cal(T) $ ci dice quando il problema $P_2$ termina o meno.
 
 Abbiamo quindi trovato due funzioni $Phi_(arresto(P)) in cal(T)$ che ci dicono quando i programmi $P_1$ e $P_2$ terminano o meno, _ma è sempre possibile?_
 
@@ -195,12 +173,12 @@ Abbiamo, quindi, un programma $x$ che lavora su un altro programma (_se stesso_)
 
 Come prima mi chiedo se $phi_x$ su input $x$ termina. A differenza di prima, ora il programma $P$ non è fissato e dipende dall'input, essendo $x$ sia input che programma.
 
-#theorem(numbering: none)[
+#theorem()[
   Dato $ ristretto equiv & "input"(x) \ & z := U(x,x); \ & "output"(z), $ $arresto(ristretto)$ è indecidibile.
 ]
 
-#proof[
-  \ Per assurdo assumiamo $arresto(ristretto)$ decidibile. Dunque esiste $ Phi_(arresto(ristretto)) (x) = cases(1 & "se" phi_ristretto (x) = phi_x (x) arrow.b, 0 quad & "se" phi_(ristretto) (x) = phi_x (x) arrow.t) quad in cal(T) $ calcolabile da un programma che termina sempre. Visto che $Phi_(ristretto) in cal(T)$, anche la funzione $ f(x) = cases(0 & "se" Phi_(arresto(ristretto)) (x) = 0 equiv phi_x (x) arrow.t, phi_x (x) + 1 quad & "se" Phi_(arresto(ristretto)) (x) = 1 equiv phi_x (x) arrow.b) $ è ricorsiva totale. Infatti, il programma $ A equiv & "input"(x) \ & "if" (Phi_(arresto(ristretto) (x)) == 0) \ & quad "output"(0) \ & "else" \ & quad "output"(U(x,x) + 1) $ calcola esattamente la funzione $f(x)$.
+#theorem-proof()[
+  Per assurdo assumiamo $arresto(ristretto)$ decidibile. Dunque esiste $ Phi_(arresto(ristretto)) (x) = cases(1 & "se" phi_ristretto (x) = phi_x (x) arrow.b, 0 quad & "se" phi_(ristretto) (x) = phi_x (x) arrow.t) quad in cal(T) $ calcolabile da un programma che termina sempre. Visto che $Phi_(ristretto) in cal(T)$, anche la funzione $ f(x) = cases(0 & "se" Phi_(arresto(ristretto)) (x) = 0 equiv phi_x (x) arrow.t, phi_x (x) + 1 quad & "se" Phi_(arresto(ristretto)) (x) = 1 equiv phi_x (x) arrow.b) $ è ricorsiva totale. Infatti, il programma $ A equiv & "input"(x) \ & "if" (Phi_(arresto(ristretto) (x)) == 0) \ & quad "output"(0) \ & "else" \ & quad "output"(U(x,x) + 1) $ calcola esattamente la funzione $f(x)$.
 
   Sia $alpha in NN$ la codifica del programma $A$, allora $phi_alpha = f$. Valutiamo $phi_alpha$ in $alpha$: $ phi_alpha (alpha) = cases(0 & "se" phi_alpha (alpha) arrow.t, phi_alpha (alpha) + 1 quad & "se" phi_alpha (alpha) arrow.b) quad . $
 
@@ -215,12 +193,12 @@ Come prima mi chiedo se $phi_x$ su input $x$ termina. A differenza di prima, ora
 
 La versione generale del problema dell'arresto ristretto è il *problema dell'arresto*, posto nel 1936 da Alan Turing.
 
-#theorem(numbering: none)[
+#theorem()[
   Dati $x,y in NN$ rispettivamente un dato e un programma, il problema dell'arresto AR con domanda $phi_y (x) arrow.b$ è indecidibile.
 ]
 
-#proof[
-  \ Assumiamo per assurdo che AR sia decidibile, ma allora esiste un programma $P_("AR") (x,y)$ che lo risolve, quindi restituisce:
+#theorem-proof()[
+  Assumiamo per assurdo che AR sia decidibile, ma allora esiste un programma $P_("AR") (x,y)$ che lo risolve, quindi restituisce:
   - 1 se $phi_y (x) arrow.b$;
   - 0 altrimenti.
 

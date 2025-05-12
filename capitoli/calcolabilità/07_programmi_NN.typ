@@ -1,30 +1,28 @@
+// Setup
+
 #import "../alias.typ": *
 
-#import "@preview/algo:0.3.3": code
+#import "@preview/ouset:0.1.1": overset
 
-#import "@preview/lemmify:0.1.5": *
+#import "@preview/algo:0.3.6": code
 
-#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
-  "thm-group",
-  lang: "it",
+#import "@preview/lovelace:0.3.0": pseudocode-list
+
+#let settings = (
+  line-numbering: "1:",
+  stroke: 1pt + blue,
+  hooks: 0.2em,
+  booktabs: true,
+  booktabs-stroke: 2pt + blue,
 )
 
-#show: thm-rules
+#let pseudocode-list = pseudocode-list.with(..settings)
 
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
 
-#show thm-selector("thm-group", subgroup: "proof"): it => block(
-  it,
-  stroke: green + 1pt,
-  inset: 1em,
-  breakable: true,
-)
 
+// Capitolo
 
 = $bold(programmi tilde NN)$
 
@@ -70,7 +68,7 @@ Le istruzioni nel linguaggio RAM sono:
 - *decremento*: $subsus(R_k)$;
 - *salto condizionato*: $ifgoto(R_k, m)$, con $m in {1, dots, |P|}$.
 
-L'istruzione di decremento é tale che $ x overset(-,.) y = cases(x - y quad & "se" x gt.eq y, 0 & "altrimenti") quad . $
+L'istruzione di decremento é tale che $ x overset(-, .) y = cases(x - y quad & "se" x gt.eq y, 0 & "altrimenti") quad . $
 
 === Esecuzione di un programma RAM
 
@@ -112,7 +110,7 @@ Definiamo ora come passiamo da uno stato all'altro. Per far ciò, definiamo:
 
 Ci manca da definire la _parte dinamica_ del programma, ovvero l'*esecuzione*. Definiamo la *funzione di stato prossimo* $ delta: stati times programmi arrow.long stati_bot $ tale che $ delta(S, P) = S', $ dove $S$ rappresenta lo stato attuale e $S'$ rappresenta lo stato prossimo dopo l'esecuzione di un'istruzione di $P$.
 
-La funzione $delta(S,P) = S'$ è tale che:
+La funzione $delta(S, P) = S'$ è tale che:
 - se $S(L) = 0$ ho $halt$, ovvero deve terminare la computazione. Poniamo lo stato come indefinito, quindi $S' = bot$;
 - se $S(L) > |P|$ vuol dire che $P$ non contiene istruzioni che bloccano esplicitamente l'esecuzione del programma. Lo stato $S'$ è tale che: $ S'(R) = cases(0 & "se" R = L, S(R_i) quad & "se" R = R_i space forall i) quad ; $
 - se $1 lt.eq S(L) lt.eq |P|$ considero l'istruzione $S(L)$-esima:
@@ -145,9 +143,9 @@ Dobbiamo quindi trovare una funzione biunivoca $ar : istruzioni arrow.long NN$ c
 
 === Applicazione ai programmi RAM
 
-Dovendo codificare tre istruzioni nel linguaggio RAM, definiamo la funzione $ar$ tale che: $ ar(I) = cases(3k & "se" I equiv inc(R_k), 3k + 1 & "se" I equiv subsus(R_k), 3 cantor(k,m) - 1 quad & "se" I equiv ifgoto(R_k, m)) quad . $
+Dovendo codificare tre istruzioni nel linguaggio RAM, definiamo la funzione $ar$ tale che: $ ar(I) = cases(3k & "se" I equiv inc(R_k), 3k + 1 & "se" I equiv subsus(R_k), 3 cantor(k, m) - 1 quad & "se" I equiv ifgoto(R_k, m)) quad . $
 
-Come è fatta l'inversa $ar^(-1)$? In base al modulo tra $n$ e $3$ ottengo una certa istruzione: $ ar^(-1)(n) = cases(inc(R_(n/3)) & "se" n mod 3 = 0, subsus(R_(frac(n-1,3))) & "se" n mod 3 = 1, "IF" R_(cantorsin(frac(n+1,3))) = 0 "THEN GOTO" cantordes(frac(n+1,3)) quad & "se" n mod 3 = 2) quad . $
+Come è fatta l'inversa $ar^(-1)$? In base al modulo tra $n$ e $3$ ottengo una certa istruzione: $ ar^(-1)(n) = cases(inc(R_(n / 3)) & "se" n mod 3 = 0, subsus(R_(frac(n-1, 3))) & "se" n mod 3 = 1, "IF" R_(cantorsin(frac(n+1, 3))) = 0 "THEN GOTO" cantordes(frac(n+1, 3)) quad & "se" n mod 3 = 2) quad . $
 
 La codifica del programma $P$ è quindi $ cod(P) = cantor(ar(istr(1)), dots, ar(istr(n))). $ Per tornare indietro devo prima invertire la funzione coppia di Cantor e poi invertire la funzione $ar$.
 
@@ -175,7 +173,7 @@ La *macchina WHILE*, come quella RAM, è molto semplice, essendo formata da una 
 
 Il linguaggio WHILE prevede una *definizione induttiva*: vengono definiti alcuni comandi base e i comandi più complessi sono una concatenazione dei comandi base.
 
-Il comando di base è l'*assegnamento*. In questo linguaggio ne esistono di tre tipi: $ x_k &:= 0, \ x_k &:= x_j + 1, \ x_k &:= x_j overset(-,.) 1. $ Vediamo come queste istruzioni siamo molto più complete rispetto alle istruzioni RAM $ inc(R_k) \ subsus(R_k) $ in quanto con una sola istruzione possiamo azzerare il valore di una variabile o assegnare ad una variabile il valore di un'altra aumentata/diminuita di $1$.
+Il comando di base è l'*assegnamento*. In questo linguaggio ne esistono di tre tipi: $ x_k &:= 0, \ x_k &:= x_j + 1, \ x_k &:= x_j overset(-, .) 1. $ Vediamo come queste istruzioni siamo molto più complete rispetto alle istruzioni RAM $ inc(R_k) \ subsus(R_k) $ in quanto con una sola istruzione possiamo azzerare il valore di una variabile o assegnare ad una variabile il valore di un'altra aumentata/diminuita di $1$.
 
 I comandi "induttivi" sono invece il comando while e il comando composto.
 
@@ -231,7 +229,7 @@ Viene naturale andare a confrontare i due sistemi di calcolo descritti, cercando
 
 Ci sono quattro possibili situazioni:
 - $F(ram) subset.neq F(mwhile)$, che sarebbe anche comprensibile vista l'estrema semplicità del sistema $ram$;
-- $F(ram) sect F(mwhile) = emptyset.rev$ (_insiemi disgiunti_) o abbia elementi (_insiemi sghembi_). Questo scenario sarebbe preoccupante, perché il concetto di calcolabile dipenderebbe dalla macchina che si sta utilizzando;
+- $F(ram) inter F(mwhile) = emptyset.rev$ (_insiemi disgiunti_) o abbia elementi (_insiemi sghembi_). Questo scenario sarebbe preoccupante, perché il concetto di calcolabile dipenderebbe dalla macchina che si sta utilizzando;
 - $F(mwhile) subset.eq F(ram)$, che sarebbe sorprendente dato che il sistema $mwhile$ sembra più sofisticato del sistema $ram$, ma la relazione decreterebbe che il sistema $mwhile$ non è più potente del sistema $ram$;
 - $F(mwhile) = F(ram)$, sarebbe il risultato migliore, perché il concetto di _calcolabile_ non dipenderebbe dalla tecnologia utilizzata, ma sarebbe intrinseco nei problemi.
 
@@ -248,15 +246,15 @@ Dati $C_1$ e $C_2$ due sistemi di calcolo, definiamo *traduzione* da $C_1$ a $C_
 - *completa*: sappia tradurre *ogni* programma in $c1programmi$ in un programma in $c2programmi$;
 - *corretta*: mantiene la semantica del programma di partenza, ovvero $ forall P in c1programmi quad Psi_P = phi_T(P), $ dove $Psi$ rappresenta la semantica dei programmi in $c1programmi$ e $phi$ rappresenta la semantica dei programmi in $c2programmi$.
 
-#theorem(numbering: none)[
+#theorem()[
   Se esiste $T : c1programmi arrow.long c2programmi$ allora $F(C_1) subset.eq F(C_2)$.
 ]
 
-#proof[
-  \ Se $f in F(C_1)$ allora esiste un programma $P_1 in c1programmi$ tale che $Psi_P_1 = f$.
+#theorem-proof()[
+  Se $f in F(C_1)$ allora esiste un programma $P_1 in c1programmi$ tale che $Psi_P_1 = f$.
 
   A questo programma $P_1$ applico $T$, ottenendo $T(P_1) = P_2 in c2programmi$ (per _completezza_) tale che $phi_P_2 = Psi_P_1 = f$ (per _correttezza_).
-  
+
   Ho trovato un programma $P_2 in c2programmi$ la cui semantica è $f$, allora $f in F(C_2)$\ $arrow.double.long F(C_1) subset.eq F(C_2)$.
 ]
 
@@ -278,11 +276,13 @@ Nelle traduzioni andremo a mappare la variabile WHILE $x_k$ nel registro $ram R_
 
 Il primo assegnamento che mappiamo è $x_k := 0$.
 
-$ compilatore(x_k := 0) = "LOOP" : & ifgoto(R_k, "EXIT") \ & subsus(R_k) \ & ifgoto(R_21, "LOOP") \ "EXIT" : & subsus(R_K) quad . $
+$
+  compilatore(x_k := 0) = "LOOP" : & ifgoto(R_k, "EXIT") \ & subsus(R_k) \ & ifgoto(R_21, "LOOP") \ "EXIT" : & subsus(R_K) quad .
+$
 
 Questo programma $ram$ azzera il valore di $R_k$ usando il registro $R_21$ per saltare al check della condizione iniziale. Viene utilizzato il registro $R_21$ perché, non essendo mappato su nessuna variabile $mwhile$, sarà sempre nullo dopo la fase di inizializzazione.
 
-Gli altri due assegnamenti da mappare sono $x_k := x_j + 1$ e $x_k := x_j overset(-,.) 1$.
+Gli altri due assegnamenti da mappare sono $x_k := x_j + 1$ e $x_k := x_j overset(-, .) 1$.
 
 Se $k = j$,la traduzione è immediata e banale e l'istruzione $ram$ è $ compilatore(x_k := x_k plus.minus 1) = R_k arrow.long.l R_k plus.minus 1. $
 
@@ -296,9 +296,11 @@ Ricapitolando:
 + #text(green)[rigeneriamo $R_j$ e settiamo $R_k$ da $R_22$;]
 + #text(blue)[$plus.minus 1$ in $R_k$.]
 
-$ compilatore(x_k := x_j plus.minus 1) = colorcode(#red, "LOOP" : & ifgoto(R_j, "EXIT1") \ & subsus(R_j) \ & inc(R_22) \ & ifgoto(R_21, "LOOP")) \ colorcode(#orange, "EXIT1" : & ifgoto(R_k, "EXIT2") \ & subsus(R_k) \ & ifgoto(R_21, "EXIT1")) \ colorcode(#green, "EXIT2" : & ifgoto(R_22, "EXIT3") \ & inc(R_k) \ & inc(R_j) \ & subsus(R_22) \ & ifgoto(R_21, "EXIT2")) \ colorcode(#blue, "EXIT3" : & R_k arrow.long.l R_k plus.minus 1) quad . $
+$
+  compilatore(x_k := x_j plus.minus 1) = colorcode(#red, "LOOP" : & ifgoto(R_j, "EXIT1") \ & subsus(R_j) \ & inc(R_22) \ & ifgoto(R_21, "LOOP")) \ colorcode(#orange, "EXIT1" : & ifgoto(R_k, "EXIT2") \ & subsus(R_k) \ & ifgoto(R_21, "EXIT1")) \ colorcode(#green, "EXIT2" : & ifgoto(R_22, "EXIT3") \ & inc(R_k) \ & inc(R_j) \ & subsus(R_22) \ & ifgoto(R_21, "EXIT2")) \ colorcode(#blue, "EXIT3" : & R_k arrow.long.l R_k plus.minus 1) quad .
+$
 
-Per ipotesi induttiva, sappiamo come compilare $C_1, dots, C_m$. Possiamo calcolare la compilazione del comando composto come $ compilatore(composto) = & compilatore(C_1) \  & dots \ & compilatore(C_m) quad . $
+Per ipotesi induttiva, sappiamo come compilare $C_1, dots, C_m$. Possiamo calcolare la compilazione del comando composto come $ compilatore(composto) = & compilatore(C_1) \ & dots \ & compilatore(C_m) quad . $
 
 Per ipotesi induttiva, sappiamo come compilare $C$. Possiamo calcolare la compilazione del comando while come $ compilatore(comandowhile) = "LOOP" : & ifgoto(R_k, "EXIT") \ & compilatore(C) \ & ifgoto(R_21, "LOOP") \ "EXIT" : & subsus(R_k) quad . $
 
@@ -316,9 +318,9 @@ Notiamo come l'interprete non crei dei prodotti intermedi, ma si limita ad esegu
 
 Abbiamo due problemi principali:
 + il primo riguarda il tipo di input della macchina $mwhile$: questa non sa leggere il programma $P$ (listato di istruzioni $ram$), sa leggere solo numeri. Dobbiamo modificare $I_W$ in modo che non passi più $P$, piuttosto la sua codifica $cod(P) = n in NN$. Questo mi restituisce la semantica del programma codificato con $n$, che è $P$, quindi $phi_n (x) = phi_P (x)$.
-+ il secondo problema riguarda la quantità di dati di input della macchina $mwhile$: quest'ultima legge l'input da un singolo registro, mentre qui ne stiamo passando due. Dobbiamo modificare $I_W$ condensando l'input con la funzione coppia di Cantor, che diventa $cantor(x,n)$.
++ il secondo problema riguarda la quantità di dati di input della macchina $mwhile$: quest'ultima legge l'input da un singolo registro, mentre qui ne stiamo passando due. Dobbiamo modificare $I_W$ condensando l'input con la funzione coppia di Cantor, che diventa $cantor(x, n)$.
 
-La semantica di $I_W$ diventa $ forall x,n in NN quad Psi_I_W (cantor(x,n)) = phi_n (x) = phi_P (x). $
+La semantica di $I_W$ diventa $ forall x,n in NN quad Psi_I_W (cantor(x, n)) = phi_n (x) = phi_P (x). $
 
 Come prima, per comodità di scrittura useremo un altro linguaggio, il *macro-$mwhile$*. Questo include alcune macro che saranno molto comode nella scrittura di $I_W$. Visto che viene modificata solo la sintassi, la potenza del linguaggio $mwhile$ non aumenta.
 
@@ -345,7 +347,7 @@ La risposta è no. Infatti, se $cod(P) = n$ allora $P$ non utilizza mai dei regi
 
 Di conseguenza, possiamo restringerci a modellare i registri $R_0, dots, R_(n+2)$. Usiamo i registri fino a a $n+2$ solo per avere un paio di registri in più che potrebbero tornare utili. Ciò ci permette di codificare la memoria utilizzata dal programma $P$ tramite la funzione di Cantor.
 
-Vediamo, nel dettaglio, l'interno di $I_w (cantor(x,n)) = phi_n (x)$:
+Vediamo, nel dettaglio, l'interno di $I_w (cantor(x, n)) = phi_n (x)$:
 - $x_0 arrow.long.l cantor(R_0, dots, R_(n+2))$: stato della memoria della macchina RAM;
 - $x_1 arrow.long.l L$: program counter;
 - $x_2 arrow.long.l x$: dato su cui lavora $P$;
@@ -361,7 +363,7 @@ Ricordiamo che all'avvio l'interprete $I_w$ trova il suo input nella variabile d
   line-numbers: false,
   radius: 4pt,
   row-gutter: 6pt,
-  stroke: 1pt + black
+  stroke: 1pt + black,
 )[
   ```py
   # Inizializzazione
@@ -405,7 +407,7 @@ Questo significa che il compilatore non fa altro che cablare all'input $x$ il pr
 Vediamo se le tre proprietà di un compilatore sono soddisfatte:
 - *programmabile*: sì, lo abbiamo appena fatto;
 - *completo*: l'interprete riesce a riconoscere ogni istruzione RAM e la riesce a codificare;
-- *corretto*: vale la relazione $P in programmi arrow.double.long compilatore(P) in wprogrammi$, quindi: $ Psi_(compilatore(P)) (x) = Psi_I_W (cantor(x,n)) = phi_n (x) = phi_P (x) $ rappresenta la sua semantica.
+- *corretto*: vale la relazione $P in programmi arrow.double.long compilatore(P) in wprogrammi$, quindi: $ Psi_(compilatore(P)) (x) = Psi_I_W (cantor(x, n)) = phi_n (x) = phi_P (x) $ rappresenta la sua semantica.
 
 Abbiamo dimostrato quindi che $ F(ram) subset.eq F(mwhile), $ che è l'inclusione opposta del precedente risultato.
 
@@ -413,10 +415,7 @@ Abbiamo dimostrato quindi che $ F(ram) subset.eq F(mwhile), $ che è l'inclusion
 
 Il risultato appena ottenuto ci permette di definire un teorema molto importante.
 
-#theorem(
-  name: "Teorema di Böhm-Jacopini (1970)",
-  numbering: none,
-)[
+#theorem([Teorema di Böhm-Jacopini (1970)])[
   Per ogni programma con GOTO (RAM) ne esiste uno equivalente in un linguaggio strutturato (WHILE).
 ]
 
@@ -432,7 +431,7 @@ Un altro risultato che abbiamo dimostrato _formalmente_ è che nei sistemi di pr
 
 Facciamo una mossa esotica: usiamo il compilatore da WHILE a RAM $ compilatore : wprogrammi arrow programmi $ sul programma $I_w$. _Lo possiamo fare?_ Certo, posso compilare $I_W$ perché è un programma WHILE.
 
-Chiamiamo questo risultato $ cal(U) = compilatore(I_W) in programmi. $ La sua semantica è $ phi_(cal(U)) (cantor(x,n)) = Psi_(I_W) (cantor(x,n)) = phi_n (x) $ dove $n$ è la codifica del programma RAM e $x$ il dato di input.
+Chiamiamo questo risultato $ cal(U) = compilatore(I_W) in programmi. $ La sua semantica è $ phi_(cal(U)) (cantor(x, n)) = Psi_(I_W) (cantor(x, n)) = phi_n (x) $ dove $n$ è la codifica del programma RAM e $x$ il dato di input.
 
 Cosa abbiamo fatto vedere? Abbiamo appena mostrato che esiste un programma RAM in grado di *simulare* tutti gli altri programmi RAM. Questo programma viene detto *interprete universale*.
 

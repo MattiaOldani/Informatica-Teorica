@@ -1,5 +1,9 @@
+// Setup
+
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Richiami matematici: funzioni e prodotto cartesiano
 
@@ -62,7 +66,7 @@ L'operazione "opposta" è effettuata dal *proiettore* $i$-esimo: esso è una fun
 
 == Funzione di valutazione
 
-Dati $A, B$ e $B_bot^A$ si definisce *funzione di valutazione* la funzione: $ omega : B_bot^A times A arrow.long B $ tale che $ omega(f,a) = f(a). $
+Dati $A, B$ e $B_bot^A$ si definisce *funzione di valutazione* la funzione: $ omega : B_bot^A times A arrow.long B $ tale che $ omega(f, a) = f(a). $
 
 In poche parole, è una funzione che prende una funzione $f$ e la valuta su un elemento $a$ del dominio.
 

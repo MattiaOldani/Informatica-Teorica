@@ -1,5 +1,9 @@
+// Setup
+
 #import "../alias.typ": *
 
+
+// Capitolo
 
 = Situazione finale
 
@@ -7,9 +11,7 @@ Dopo tutto ciò che è stato visto in queste dispense, ecco un'illustrazione che
 
 #v(12pt)
 
-#figure(
-  image("assets/situazione-finale.svg", width: 100%)
-)
+#figure(image("assets/situazione-finale.svg", width: 100%))
 
 #v(12pt)
 

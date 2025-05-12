@@ -1,21 +1,12 @@
-#import "@preview/lemmify:0.1.5": *
-
-#let (theorem, lemma, corollary, remark, proposition, example, proof, rules: thm-rules) = default-theorems(
-  "thm-group",
-  lang: "it",
-)
-
-#show: thm-rules
-
-#show thm-selector("thm-group", subgroup: "theorem"): it => block(
-  it,
-  stroke: red + 1pt,
-  inset: 1em,
-  breakable: true,
-)
+// Setup
 
 #import "../alias.typ": *
 
+#import "@local/typst-theorems:1.0.0": *
+#show: thmrules.with(qed-symbol: $square.filled$)
+
+
+// Capitolo
 
 = La "zona grigia"
 
@@ -58,7 +49,7 @@ Dato $G = (V,E)$ un grafo non diretto, vogliamo sapere se $G$ contiene un circui
 
 Ricordiamo che un circuito euleriano è un circuito in cui tutti gli archi di $G$ vengono visitati una e una sola volta. Potrebbe sembrare simile al problema precedente, ma non lo è!
 
-#theorem(numbering: none, name: "Eulero 1736")[
+#theorem([Teorema di Eulero (1736)])[
   Un grafo $G$ contiene un circuito euleriano se e solo se ogni suo vertice ha grado pari, ovvero $ forall v in V quad "GRADO"(v) = 2k bar.v k in NN. $
 ]
 
